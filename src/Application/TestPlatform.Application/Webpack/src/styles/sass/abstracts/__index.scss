@@ -1,0 +1,22 @@
+/*
+================================================================================
+
+    Here is the place where all style files in this folder and nested folders
+    [__index.scss] file should be included, do NOT write any styles here.
+
+================================================================================
+*/
+
+@forward "./functions/_independent-functions.scss";
+
+@forward "./variables/__index.scss";
+
+@forward "./functions/_dependent-functions.scss";
+
+@forward "./_placeholders.scss";
+
+@forward "./_mixins.scss";
+
+@use "./_fonts.scss";
+
+@forward "./_animations.scss";

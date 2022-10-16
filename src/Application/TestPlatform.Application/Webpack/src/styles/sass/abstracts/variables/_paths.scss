@@ -1,0 +1,34 @@
+/*
+================================================================================
+
+    This file is for variables describing paths to general application resources
+    like fonts and images, do NOT write any styles here.
+
+    MUST: End variables without ending slash.
+
+================================================================================
+*/
+
+/* BEGIN - Fonts variables
+================================================================================ */
+
+$base-fonts-path: '../../fonts';
+$base-serif-fonts-path: $base-fonts-path + "/text/serif";
+$base-sans-serif-fonts-path: $base-fonts-path + "/text/sans-serif";
+$base-icon-fonts-path: $base-fonts-path + "/icon";
+
+$roboto-font-path: $base-sans-serif-fonts-path + "/Roboto";
+$roboto-slab-font-path: $base-serif-fonts-path + "/Roboto_Slab/static";
+$icomoon-font-path: $base-icon-fonts-path + "/icomoon-v1.0";
+
+
+/* END - Fonts variables
+================================================================================ */
+
+/* BEGIN - Images variables
+================================================================================ */
+
+$base-images-path: '../../images';
+
+/* END - Images variables
+================================================================================ */

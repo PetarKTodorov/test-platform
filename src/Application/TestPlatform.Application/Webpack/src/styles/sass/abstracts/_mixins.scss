@@ -1,0 +1,23 @@
+/*
+================================================================================
+
+    This file is for application mixins, do NOT write any styles here.
+
+================================================================================
+*/
+
+@use "./functions/dependent-functions" as *;
+
+@mixin respond($size-in-px, $type: "min-width") {
+    $size-in-em: px-to-em($size-in-px);
+
+    @if ($type == "min-width") {
+        @media screen and (min-width: $size-in-em) {
+            @content;
+        }
+    } @else if($type == "max-width") {
+        @media screen and (max-width: $size-in-em) {
+            @content;
+        }
+    }
+}

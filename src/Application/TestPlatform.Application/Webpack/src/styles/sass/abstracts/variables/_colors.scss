@@ -1,0 +1,31 @@
+/*
+================================================================================
+
+    This file is only for color variables, do NOT write any styles here.
+
+    MUST: Use the nameing convention (color-[nameOfTheColor]-100 till
+    color-[nameOfTheColor]-900) for color variables.
+
+    IMPORTANT: color-[nameOfTheColor]-500 is the main color, not 400
+
+================================================================================
+*/
+
+$color-white: #FFFFFF !default;
+$color-white-500: $color-white !default;
+$color-white--600: #FFFAFA !default;
+$color-white--700: #fffff0 !default;
+
+$color-black: #000000 !default;
+$color-black-300: #0D0D0D !default;
+$color-black-400: #080808 !default;
+$color-black-500: $color-black !default;
+
+$color-gray: #808080 !default;
+$color-gray-300: tint-color($color-gray, 40%) !default;
+$color-gray-400: tint-color($color-gray, 20%) !default;
+$color-gray-500: $color-gray !default;
+$color-gray-600: shade-color($color-gray, 20%) !default;
+$color-gray-700: shade-color($color-gray, 40%) !default;
+$color-gray-800: shade-color($color-gray, 60%) !default;
+$color-gray-900: shade-color($color-gray, 80%) !default;

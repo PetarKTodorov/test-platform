@@ -1,0 +1,14 @@
+/*
+================================================================================
+
+    This file is for CSS images variables, do NOT write any styles here.
+
+================================================================================
+*/
+
+@use "./paths.scss" as *;
+
+$jpg-extention: '.jpg';
+$png-extention: '.png';
+
+/* $example-image: url("#{$base-images-path}/example-image#{$jpg-extention}"); */
