@@ -1,0 +1,18 @@
+/*
+================================================================================
+
+    This file is for configuring application animations: @keyframes.
+
+================================================================================
+*/
+
+@use "./variables/__index.scss" as *;
+
+@keyframes reset-button {
+    0% {
+        background-color: $color-black-500;
+    }
+    100% {
+        background-color: $color-black-300;
+    }
+}

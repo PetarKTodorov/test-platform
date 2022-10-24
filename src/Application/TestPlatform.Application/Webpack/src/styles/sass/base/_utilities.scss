@@ -1,0 +1,12 @@
+/*
+================================================================================
+
+    This files is for utility rules
+    MUST: Every css selector "class" starts with "u-"
+
+================================================================================
+*/
+
+.u-small-text {
+    font-size: var(--font-size-small-text);
+}

@@ -1,0 +1,106 @@
+/*
+================================================================================
+
+    This file is for application base typography styles, this means set
+    properties like: "font, color, text-decoration, etc.", to css selectors.
+
+================================================================================
+*/
+
+@use "sass:meta";
+
+@use "../abstracts/__index.scss" as *;
+
+$font-sizes: generate-fluid-fonts("small-screens");
+
+:root {
+    --font-size-small-text: #{meta.inspect(map-get($map: $font-sizes, $key: "small-text"))};
+    --font-size-text: #{meta.inspect(map-get($map: $font-sizes, $key: "text"))};
+    --font-size-heading-1: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-1"))};
+    --font-size-heading-2: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-2"))};
+    --font-size-heading-3: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-3"))};
+    --font-size-heading-4: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-4"))};
+    --font-size-heading-5: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-5"))};
+    --font-size-heading-6: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-6"))};
+}
+
+html {
+    font-size: 1rem;
+}
+
+body {
+    font-family: $default-text-font-family, sans-serif;
+    font-size: var(--font-size-text);
+    font-weight: 400;
+    line-height: $default-font-line-height;
+    color: $color-black-500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-block: 0.5em;
+
+    font-family: $default-heading-font-family, serif;
+    font-weight: bold;
+    line-height: calc(2px + 2ex + 2px);
+}
+
+$headings: (
+    h1: var(--font-size-heading-1), 
+    h2: var(--font-size-heading-2), 
+    h3: var(--font-size-heading-3), 
+    h4: var(--font-size-heading-4), 
+    h5: var(--font-size-heading-5),
+    h6: var(--font-size-heading-6)
+);
+
+@each $heading, $size in $headings {
+	#{$heading} { 
+        font-size: $size; 
+    }
+}
+
+p {
+    max-width: 60ch;
+
+    margin-bottom: 0.3em;
+}
+
+b,
+strong {
+    font-weight: 700;
+}
+
+@include respond(500) {
+    $font-sizes: generate-fluid-fonts("normal-screens");
+
+    :root {
+        --font-size-small-text: #{meta.inspect(map-get($map: $font-sizes, $key: "small-text"))};
+        --font-size-text: #{meta.inspect(map-get($map: $font-sizes, $key: "text"))};
+        --font-size-heading-1: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-1"))};
+        --font-size-heading-2: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-2"))};
+        --font-size-heading-3: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-3"))};
+        --font-size-heading-4: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-4"))};
+        --font-size-heading-5: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-5"))};
+        --font-size-heading-6: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-6"))};
+    }
+}
+
+@include respond(2000) {
+    $font-sizes: generate-fluid-fonts("big-screens");
+
+    :root {
+        --font-size-small-text: #{meta.inspect(map-get($map: $font-sizes, $key: "small-text"))};
+        --font-size-text: #{meta.inspect(map-get($map: $font-sizes, $key: "text"))};
+        --font-size-heading-1: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-1"))};
+        --font-size-heading-2: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-2"))};
+        --font-size-heading-3: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-3"))};
+        --font-size-heading-4: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-4"))};
+        --font-size-heading-5: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-5"))};
+        --font-size-heading-6: #{meta.inspect(map-get($map: $font-sizes, $key: "heading-6"))};
+    }
+}

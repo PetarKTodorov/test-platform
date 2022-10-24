@@ -1,0 +1,56 @@
+/*
+================================================================================
+
+    This file is for global/base HTML elements like "img" tag,
+    that need to be modified to work better, but do not write typography styles.
+
+================================================================================
+*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+html,
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+}
+
+img,
+picture {
+    display: block;
+
+    max-width: 100%;
+}
+
+a {
+    background-color: transparent;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup {
+    font: inherit;
+    font-family: inherit;
+}

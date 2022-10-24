@@ -1,0 +1,131 @@
+/*
+================================================================================
+
+    This file is for application independent functions,
+    do NOT write any styles here.
+
+================================================================================
+*/
+
+@use "sass:math";
+
+/* Tint a color: mix a color with white */
+@function tint-color($color, $weight) {
+    @return mix(#FFFFFF, $color, $weight);
+}
+
+/* Shade a color: mix a color with black */
+@function shade-color($color, $weight) {
+    @return mix(#000000, $color, $weight);
+}
+
+/* Remove units from css unit value */
+@function strip-unit($number) {
+    $message: "";
+
+    @if (type-of($number) !="number") {
+        $message: 'Parameter $number: ("#{$number}") is not a number.';
+    }
+
+    @if ($message !="") {
+        @warn $message;
+        @error $message;
+    }
+
+    @if (not unitless($number)) {
+        $number: math.div($number, ($number * 0 + 1));
+    }
+
+    @return $number;
+}
+
+/* Transform number to css unit value */
+@function transform-to-unit($number, $unit) {
+    $css-units: (
+            "px": 1px,
+            "rem": 1rem,
+            "em": 1em,
+            "%": 1%,
+            "vw": 1vw,
+            "vh": 1vh,
+            "vmin": 1vmin,
+            "vmax": 1vmax,
+            "ch": 1ch,
+            "ex": 1ex,
+            "pc": 1pc,
+            "pt": 1pt,
+            "in": 1in,
+            "cm": 1cm,
+            "mm": 1mm,
+        );
+    $message: "";
+
+    @if (not unitless($number)) {
+        $message: 'Parameter $number: ("#{$number}") should not have a unit.';
+        @warn $message;
+        @error $message;
+    }
+
+    @if (type-of($unit) !="string") {
+        $message: 'Parameter $unit: "#{$unit}" should be a string.';
+        @warn $message;
+        @error $message;
+    }
+
+    $number: strip-unit($number);
+
+    $unit-multiplicator: map-get($map: $css-units, $key: $unit);
+
+    @if (not $unit-multiplicator) {
+        $message: 'Unknown css unit "#{$unit}". See $css-units variable for more information.';
+        @warn $message;
+        @error $message;
+    }
+
+    $result: $number * $unit-multiplicator;
+
+    @return $result;
+}
+
+/* Round number to desired decimal number */
+@function decimal-round($number, $digits: 2) {
+    $warnMessage: "";
+    $errorMessage: "";
+
+    @if (not unitless($digits)) {
+        $warnMessage: 'Parameter $digits: "#{$digits}" should not have a unit.';
+    }
+
+    @if ($digits < 0) {
+        $errorMessage: 'Parameter $digits: "#{$digits}" should not be negative.';
+    }
+
+    @if ($warnMessage !="") {
+        @warn $warnMessage;
+    }
+
+    @if ($errorMessage !="") {
+        @warn $errorMessage;
+        @error errorMessage;
+    }
+
+    $numberUnits: "#{unit($number)}";
+    $number: strip-unit($number);
+    $digits: strip-unit($digits);
+
+    $n: 1;
+
+    @if ($digits > 0) {
+        @for $i from 1 through $digits {
+            $n: $n * 10;
+        }
+    }
+
+    $result: calc(round($number * $n) / $n);
+
+    @if ($numberUnits !="") {
+        $result: transform-to-unit($result, $numberUnits);
+    }
+
+    @return $result;
+}

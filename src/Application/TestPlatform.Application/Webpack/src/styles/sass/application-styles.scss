@@ -1,0 +1,22 @@
+/*
+================================================================================
+
+    Here is the place where all application styles from other main folders are
+    included, do NOT write any styles here
+
+================================================================================
+*/
+
+@use "./vendors/__index.scss" as vendors;
+
+@use "./abstracts/__index.scss" as abstracts;
+
+@use "./base/__index.scss" as base;
+
+@use "./layout/__index.scss" as layout;
+
+@use "./pages/__index.scss" as pages;
+
+@use "./components/__index.scss" as components;
+
+@use "./shame/__index.scss" as shame;

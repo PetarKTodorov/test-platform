@@ -1,0 +1,80 @@
+/*
+================================================================================
+
+    This file is for application dependent functions on variables,
+    do NOT write any styles here.
+
+================================================================================
+*/
+
+@use "sass:math";
+@use "sass:meta";
+
+@use "../functions/_independent-functions.scss" as *;
+@use "../variables/__index.scss" as *;
+
+@function px-to-em($pixels, $default-font-size: $default-font-size) {
+    $pixel: strip-unit($pixels);
+
+    $em: calc(($pixel / $default-font-size) * 1em);
+
+    @return $em;
+}
+
+@function generate-fluid-fonts($font-screen, $default-font-size: $default-font-size) {
+    $font-screen: map-get($map: $fluid-fonts, $key: $font-screen);
+    
+    $fluid-min-width: map-get($map: $font-screen, $key: "fluid-min-width");
+    $fluid-max-width: map-get($map: $font-screen, $key: "fluid-max-width");
+    $fluid-min-size: map-get($map: $font-screen, $key: "fluid-min-size");
+    $fluid-max-size: map-get($map: $font-screen, $key: "fluid-max-size");
+    $fluid-min-ratio: map-get($map: $font-screen, $key: "fluid-min-ratio");
+    $fluid-max-ratio: map-get($map: $font-screen, $key: "fluid-max-ratio");
+
+    $font-sizes: $font-sizes;
+
+    $font-min-scale: 1;
+    $font-max-scale: 1;
+    @each $font-size-key in map-keys($font-sizes) {
+        $font-min-scale: $font-min-scale * $fluid-min-ratio;
+        $font-max-scale: $font-max-scale * $fluid-max-ratio;
+
+        $font-min-size: $fluid-min-size * $font-min-scale;
+        $font-max-size: $fluid-max-size * $font-max-scale;
+
+        @if ($font-size-key == "text" or $font-size-key == "heading-6" or $font-size-key == "small-text") {
+            $font-min-scale: 1;
+            $font-max-scale: 1;
+
+            $font-min-scale: $fluid-min-ratio;
+            $font-max-scale: $fluid-max-ratio;
+            $font-min-size: $fluid-min-size;
+            $font-max-size: $fluid-max-size;
+        }
+
+        @if ($font-size-key == "small-text") {
+            $font-min-size: calc($fluid-min-size / $font-min-scale);
+            $font-max-size: calc($fluid-max-size / $font-max-scale);
+        }
+
+        $slope: calc(($font-max-size - $font-min-size) / ($fluid-max-width - $fluid-min-width));
+        $intersection: calc((-1 * $fluid-min-width) * $slope + $font-min-size);
+
+        $min-font-size: decimal-round(calc(($font-min-size / $default-font-size) * 1rem), 2);
+        $min-font-size: max($min-font-size, decimal-round(calc(($default-font-min-size / $default-font-size) * 1rem), 2));
+
+        $calc-factor-1: decimal-round((math.div($intersection, $default-font-size) * 1rem), 2);
+        $calc-factor-2: decimal-round(($slope * 100vw), 2);
+        $calc-font-size: calc($calc-factor-1 + $calc-factor-2);
+
+        $max-font-size: decimal-round(calc(($font-max-size / $default-font-size) * 1rem), 2);
+
+        $font-size: clamp($min-font-size, $calc-font-size, $max-font-size);
+
+        $font: ($font-size-key: $font-size);
+
+        $font-sizes: map-merge($font-sizes, $font);
+    }
+
+    @return $font-sizes;
+}
