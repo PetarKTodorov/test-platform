@@ -5,7 +5,7 @@
 |  Name                      | version       | Details                              |
 | -------------------------- |:-------------:| -----------------------------------: |
 | .NET                       | 6.0           | Check files .csproj                  |
-| Node                       | 16.18.0       | Check .nvmrc file                    |
+| Node                       | 16.18.0       | Check .tool-versions file            |
 | SQL Server                 | 2019          | Express editition                    |
 | Microsoft Visual Studio    | 2022          | Community editition                  |
 
@@ -14,19 +14,15 @@
 |  Name                        |  Description             | Installation                                 |
 | ---------------------------- | ------------------------ | -------------------------------------------- |
 | Linux Bash Shell for Windows | Linux shell in Windows   | https://itsfoss.com/install-bash-on-windows/ |
-| NVM                          | Multiple nodejs versions | https://github.com/nvm-sh/nvm                |
+| asdf                         | Manage multiple runtime versions with a single CLI tool | https://asdf-vm.com/                |
 
 
 ## Initial setup
 
 ### Project setup
- ```shell
-nvm install
-```
 
 ### Starting the project locally
 ```shell
-nvm use
 npm install
 ```
 
