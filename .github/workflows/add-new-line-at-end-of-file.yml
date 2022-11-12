@@ -27,6 +27,7 @@ jobs:
       - name: All files end with newline
         run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
       - name: Git commit and push
+        if: git diff --cached --numstat | wc -l > 0
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git commit -am "Github workflow: Add empty line at the end of files"
