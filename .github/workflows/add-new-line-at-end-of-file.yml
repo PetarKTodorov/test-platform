@@ -14,7 +14,7 @@ jobs:
       # Your normal steps go here.
       # Added:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: Git config
@@ -28,6 +28,9 @@ jobs:
         run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
       - name: Git commit and push
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "Github workflow: Add empty line at the end of files"
-          git push
+          if [ git diff --cached --numstat | wc -l > 0 ]
+          then
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git commit -am "Github workflow: Add empty line at the end of files"
+            git push
+          fi
