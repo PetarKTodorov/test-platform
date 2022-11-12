@@ -1,18 +1,14 @@
-name: Quotes
+name: Add empty line at the end of file
 
 on:
   push:
-    branches: [ '**' ]
-  pull_request:
-    branches: [ '**' ]
+    branches: [ 'develop' ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Your normal steps go here.
-      # Added:
       - name: Git checkout
         uses: actions/checkout@v3
         with:
@@ -24,8 +20,10 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git status
+
       - name: All files end with newline
         run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
+        
       - name: Git commit and push
         run: |
           if [ git diff --cached --numstat | wc -l > 0 ]
