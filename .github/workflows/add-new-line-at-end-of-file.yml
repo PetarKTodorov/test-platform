@@ -13,5 +13,21 @@ jobs:
     steps:
       # Your normal steps go here.
       # Added:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git status
       - name: All files end with newline
-        run: find dir1 dir2 -type f | xargs -L1 bash -c 'test "$(tail -c1 "$0")" && echo "No newline at end of $0"'
+        run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
+      - name: Git commit and push
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Github workflow: Add empty line at the end of files"
+          git push
