@@ -24,9 +24,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <Authors>Author One; Author Two</Authors>
+        <Authors>Gabriel Petkov; Petar Todorov;</Authors>
         <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-        <Description>Example project description.</Description>
+        <Description>Test platform project.</Description>
         <PackageTags>dotnet</PackageTags>
     </PropertyGroup>
 </Project>
