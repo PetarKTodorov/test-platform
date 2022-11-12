@@ -14,5 +14,5 @@ jobs:
       # Your normal steps go here.
       # Added:
       - name: All files end with newline
-        working-directory: ./src
+        working-directory: .
         run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
