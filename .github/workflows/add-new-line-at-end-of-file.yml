@@ -29,6 +29,7 @@ jobs:
       - name: Git commit and push
         run: |
           if [ git diff --cached --numstat | wc -l > 0 ]
+          then
             git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
             git commit -am "Github workflow: Add empty line at the end of files"
             git push
