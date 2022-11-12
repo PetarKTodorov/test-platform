@@ -1,4 +1,4 @@
-namespace TestPlatform.Application
+﻿namespace TestPlatform.Application
 {
     public class Program
     {

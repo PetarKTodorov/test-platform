@@ -13,19 +13,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTOs", "DTOs", "{BC9B08D6-4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5BAF303E-B9A1-453A-B3BD-DC8FF70996FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Application", "Application\TestPlatform.Application\TestPlatform.Application.csproj", "{1B6A9ED8-D0D4-4933-A8DE-1D568FEC13B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Application", "Application\TestPlatform.Application\TestPlatform.Application.csproj", "{1B6A9ED8-D0D4-4933-A8DE-1D568FEC13B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Database", "Database\TestPlatform.Database\TestPlatform.Database.csproj", "{B15AC3A4-BD51-4620-B0BF-A82EA3A1EF94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Database", "Database\TestPlatform.Database\TestPlatform.Database.csproj", "{B15AC3A4-BD51-4620-B0BF-A82EA3A1EF94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Common", "Common\TestPlatform.Common\TestPlatform.Common.csproj", "{42DF3465-611F-47D7-9AE9-1D3EBBEC65F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Common", "Common\TestPlatform.Common\TestPlatform.Common.csproj", "{42DF3465-611F-47D7-9AE9-1D3EBBEC65F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.DTOs.ViewModels", "DTOs\TestPlatform.DTOs.ViewModels\TestPlatform.DTOs.ViewModels.csproj", "{5E7EA809-E9C0-40C5-9FC1-E3F77110084E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.DTOs.ViewModels", "DTOs\TestPlatform.DTOs.ViewModels\TestPlatform.DTOs.ViewModels.csproj", "{5E7EA809-E9C0-40C5-9FC1-E3F77110084E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.DTOs.BindingModels", "DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj", "{D477F793-CA3D-43AB-8121-A4EDC48081E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.DTOs.BindingModels", "DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj", "{D477F793-CA3D-43AB-8121-A4EDC48081E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Services.Database", "Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj", "{5C989D30-114B-49B4-A9AF-5959632D8A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Services.Database", "Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj", "{5C989D30-114B-49B4-A9AF-5959632D8A46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Database.Models", "Database\TestPlatform.Database.Models\TestPlatform.Database.Models.csproj", "{EC4D4CFF-354B-41E0-87BC-4B9222ED97C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Database.Models", "Database\TestPlatform.Database.Models\TestPlatform.Database.Models.csproj", "{EC4D4CFF-354B-41E0-87BC-4B9222ED97C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C19C7EC-7607-4476-9EA2-C641953BC0F8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
