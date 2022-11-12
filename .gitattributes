@@ -1,3 +1,4 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
 # All files are checked into the repo with CRLF
 * text eol=crlf
 
