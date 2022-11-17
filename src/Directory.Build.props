@@ -1,0 +1,32 @@
+<Project>
+    <!-- General -->
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Features>strict</Features>
+    </PropertyGroup>
+
+    <!-- Build -->
+    <PropertyGroup>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> <!-- Enable linter -->
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    
+    <!-- Packaging -->
+    <PropertyGroup>
+        <!-- Enable packaging on a per-project basis. -->
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Authors>Gabriel Petkov; Petar Todorov;</Authors>
+        <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+        <Description>Test platform project.</Description>
+        <PackageTags>dotnet</PackageTags>
+    </PropertyGroup>
+</Project>
