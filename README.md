@@ -9,7 +9,7 @@
 | SQL Server                 | 2019          | Express editition                    |
 | Microsoft Visual Studio    | 2022          | Community editition                  |
 
-## Optional tools
+## Required tools
 
 |  Name                        |  Description             | Installation                                 |
 | ---------------------------- | ------------------------ | -------------------------------------------- |
