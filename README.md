@@ -5,7 +5,7 @@
 |  Name                      | version       | Details                              |
 | -------------------------- |:-------------:| -----------------------------------: |
 | .NET                       | 6.0           | Check files .csproj                  |
-| Node                       | 16.18.0       | Check .tool-versions file            |
+| Node                       | 16.18.1       | Check .tool-versions file            |
 | SQL Server                 | 2019          | Express editition                    |
 | Microsoft Visual Studio    | 2022          | Community editition                  |
 
