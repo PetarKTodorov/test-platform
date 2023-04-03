@@ -1,6 +1,7 @@
 ﻿namespace TestPlatform.Database.Entities.Rooms
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using TestPlatform.Database.Entities.Tests;
 
@@ -11,14 +12,17 @@
             this.Participants = new HashSet<RoomParticipantMap>();
         }
 
+        // TODO: Make a DateComparisonValidationAttribute to stop end date be before start date
+        [Required]
         public DateTime StartDateTime { get; set; }
 
+        [Required]
         public DateTime EndDateTime { get; set; }
 
         public Guid TestId { get; set; }
         public virtual Test Test { get; set; }
 
-        // TODO: Ignor it to database
+        // Is ignored using Fluent API
         public int ParticipantsCount => this.Participants.Count();
 
         public virtual ICollection<RoomParticipantMap> Participants { get; set; }

@@ -4,4 +4,8 @@
     <NoWarn>CS8618</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
+  </ItemGroup>
+
 </Project>

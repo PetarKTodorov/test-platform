@@ -1,7 +1,9 @@
 ﻿namespace TestPlatform.Database.Entities.Authorization
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Entities.Tests;
@@ -10,6 +12,7 @@
     {
         public User()
         {
+            this.IsEmailConfirmed = false;
             this.Roles = new HashSet<UserRoleMap>();
             this.Rooms = new HashSet<RoomParticipantMap>();
             this.ApprovedTests = new HashSet<TestApprovalMap>();
@@ -17,14 +20,27 @@
             this.Tests = new HashSet<TestUserMap>();
         }
 
+        [Required]
+        [EmailAddress]
+        [RegularExpression(Validations.EMAIL_REGEX)]
         public string Email { get; set; }
 
+        [Required]
         public bool IsEmailConfirmed { get; set; }
 
+        [Required]
+        [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string FirstName { get; set; }
 
+        [Required]
+        [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string LastName { get; set; }
 
+        [Required]
         public string PasswordHash { get; set; }
 
         public virtual ICollection<UserRoleMap> Roles { get; set; }

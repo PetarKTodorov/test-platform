@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using TestPlatform.Database.Entities.Subjects;
 
@@ -22,6 +23,7 @@
         public Guid SubjectTagId { get; set; }
         public virtual SubjectTag SubjectTag { get; set; }
 
+        [Required]
         public bool HasRandomizedAnswers { get; set; }
 
         public int CorrectAnswersCount { get; set; }

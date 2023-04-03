@@ -1,5 +1,8 @@
 ﻿namespace TestPlatform.Database.Entities.Subjects
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
 
     public class SubjectTag : BaseEntity
@@ -11,6 +14,8 @@
             this.Tests = new HashSet<TestSubjectTagMap>();
         }
 
+        [Required]
+        [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string Name { get; set; }
 
         public virtual ICollection<QuestionCopy> Questions { get; set; }
