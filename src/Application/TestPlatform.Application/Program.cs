@@ -5,6 +5,8 @@
 
     using Infrastructures.ExtensionMethods;
     using TestPlatform.Database;
+    using TestPlatform.Database.Repositories.Interfaces;
+    using TestPlatform.Database.Repositories;
 
     public class Program
     {
@@ -17,6 +19,8 @@
 
             builder.Services.AddDbContext<TestPlatformDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            AddRepositories(builder.Services);
 
             var app = builder.Build();
 
@@ -46,6 +50,11 @@
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        private static void AddRepositories(IServiceCollection services)
+        {
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         }
     }
 }

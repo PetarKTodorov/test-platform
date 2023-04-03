@@ -10,6 +10,7 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database\TestPlatform.Database.csproj" />
     <ProjectReference Include="..\..\Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj" />
     <ProjectReference Include="..\TestPlatform.Application.Infrastructures\TestPlatform.Application.Infrastructures.csproj" />
