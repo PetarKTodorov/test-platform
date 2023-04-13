@@ -12,7 +12,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database\TestPlatform.Database.csproj" />
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj" />
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.ViewModels\TestPlatform.DTOs.ViewModels.csproj" />
     <ProjectReference Include="..\..\Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj" />
     <ProjectReference Include="..\TestPlatform.Application.Infrastructures\TestPlatform.Application.Infrastructures.csproj" />
   </ItemGroup>
 
