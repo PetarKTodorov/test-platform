@@ -13,7 +13,7 @@
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
 
-            if (ApplicationDbSeeder.IsNotSeeded())
+            if (ApplicationDbSeeder.IsNotSeeded(serviceScope.ServiceProvider))
             {
                 await ApplicationDbSeeder.SeedAsync(serviceScope.ServiceProvider);
             }
