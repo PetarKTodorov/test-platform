@@ -79,10 +79,12 @@
             const string VIEW_MODELS_ASSEMBLY_NAME = "TestPlatform.DTOs.ViewModels";
             const string DATABASE_ENTITIES_ASSEMBLY_NAME = "TestPlatform.Database.Entities";
 
-            List<Assembly> assemblies = new List<Assembly>();
-            assemblies.Add(Assembly.Load(VIEW_MODELS_ASSEMBLY_NAME));
-            assemblies.Add(Assembly.Load(BINDING_MODELS_ASSEMBLY_NAME));
-            assemblies.Add(Assembly.Load(DATABASE_ENTITIES_ASSEMBLY_NAME));
+            List<Assembly> assemblies = new List<Assembly>()
+            {
+                Assembly.Load(VIEW_MODELS_ASSEMBLY_NAME),
+                Assembly.Load(BINDING_MODELS_ASSEMBLY_NAME),
+                Assembly.Load(DATABASE_ENTITIES_ASSEMBLY_NAME)
+            };
 
             AutoMapperConfig.RegisterMappings(assemblies.ToArray());
 

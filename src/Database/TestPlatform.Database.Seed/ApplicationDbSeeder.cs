@@ -1,6 +1,7 @@
 ﻿namespace TestPlatform.Database.Seed
 {
     using Microsoft.Extensions.DependencyInjection;
+
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.Database.Seed.Seeders.Authorization;
 
@@ -28,7 +29,7 @@
         {
             var dbContext = serviceProvider.GetRequiredService<TestPlatformDbContext>();
 
-            bool isNotSeeded = dbContext.Roles.Count() == 0;
+            bool isNotSeeded = dbContext.Roles.Any() == false;
 
             return isNotSeeded;
         }

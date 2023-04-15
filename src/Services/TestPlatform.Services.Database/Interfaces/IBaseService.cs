@@ -12,5 +12,7 @@
         Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model);
 
         Task<T> DeleteAsync<T>(Guid id);
+
+        Task<IEnumerable<TEntity>> GetAllAsync();
     }
 }

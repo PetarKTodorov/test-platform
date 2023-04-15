@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
-
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.DTOs.BindingModels.Authorization;
@@ -15,9 +14,14 @@
         {
             var roleService = serviceProvider.GetRequiredService<IRoleService>();
 
-            var adminRole = new RoleBM() { Name = "Admin" };
+            string jsonFileName = "roles";
 
-            await roleService.CreateAsync<Role, RoleBM>(adminRole);
+            var dtoObjects = await Deserializer.DeserializeAsync<RoleBM>(jsonFileName);
+
+            foreach (var dto in dtoObjects)
+            {
+                await roleService.CreateAsync<Role, RoleBM>(dto);
+            }
         }
     }
 }

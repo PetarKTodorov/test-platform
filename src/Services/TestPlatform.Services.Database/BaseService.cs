@@ -1,6 +1,7 @@
 ﻿namespace TestPlatform.Services.Database
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -53,6 +54,13 @@
             T entityToReturn = this.Mapper.Map<T>(deletedEntity);
 
             return entityToReturn;
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            var colection = await this.BaseRepository.GetAllAsync();
+
+            return colection;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
