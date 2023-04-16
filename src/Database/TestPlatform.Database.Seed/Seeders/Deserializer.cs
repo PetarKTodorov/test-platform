@@ -2,13 +2,16 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Reflection;
+
+    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
+    using TestPlatform.Database.Entities;
 
     internal static class Deserializer
     {
         private const string DATA_SETS_JSON_RELATIVE_DIRECTORY = @"Database\TestPlatform.Database.Seed\DataSets";
 
-        internal static async Task<IEnumerable<DTO>> DeserializeAsync<DTO>(string jsonFileName)
+        internal static async Task<IEnumerable<DTO>> DeserializeAsync<DTO>(string jsonFileName, ILogger logger)
         {
             string jsonContent = await GetJSONContentAsync(jsonFileName);
 
@@ -20,7 +23,8 @@
             {
                 if (IsDTOValid(deserializedDTO) == false)
                 {
-                    // TODO add ILogger with message $"DTO {deserializedDTO.GetType().Name} is invalid."
+                    var entity = deserializedDTO as BaseEntity;
+                    logger.LogError($"Failed to seed entity {deserializedDTO.GetType().Name} with Id: {entity.Id}.");
                     continue;
                 }
 

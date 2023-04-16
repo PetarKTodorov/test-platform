@@ -1,7 +1,8 @@
 ﻿namespace TestPlatform.Database.Seed
 {
     using Microsoft.Extensions.DependencyInjection;
-
+    using Microsoft.Extensions.Logging;
+    using TestPlatform.Database.Seed.DataSets;
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.Database.Seed.Seeders.Authorization;
 
@@ -14,14 +15,17 @@
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
 
+            ILogger logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger(typeof(TestPlatformDbContext));
+
             var seeders = new List<ISeeder>
                 {
-                    new RolesSeeder(),
+                    new RolesSeeder(serviceProvider, logger, Constants.ROLES_JSON_FILE_NAME),
+                    new UserSeeder(serviceProvider, logger, Constants.USERS_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)
             {
-                await seeder.SeedAsync(serviceProvider);
+                await seeder.SeedAsync();
             }
         }
 

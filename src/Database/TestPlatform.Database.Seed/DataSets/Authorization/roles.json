@@ -1,18 +1,22 @@
 [
     {
         "Id": "2EE73BF7-FE5D-4096-BE3A-8E35400FD350",
-        "Name": "Administrator"
+        "Name": "Administrator",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
     },
     {
         "Id": "2EE73BF7-FE5D-4096-BE3A-8E35400FD351",
-        "Name": "Director"
+        "Name": "Director",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
     },
     {
         "Id": "2EE73BF7-FE5D-4096-BE3A-8E35400FD352",
-        "Name": "Teacher"
+        "Name": "Teacher",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
     },
     {
         "Id": "2EE73BF7-FE5D-4096-BE3A-8E35400FD353",
-        "Name": "Student"
+        "Name": "Student",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
     }
 ]

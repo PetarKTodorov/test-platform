@@ -2,7 +2,6 @@
 {
     using System;
     using System.Threading.Tasks;
-
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -10,22 +9,22 @@
     using TestPlatform.DTOs.BindingModels.Authorization;
     using TestPlatform.Services.Database.Authorization.Interfaces;
 
-    internal class RolesSeeder : BaseSeeder
+    internal class UserSeeder : BaseSeeder
     {
-        public RolesSeeder(IServiceProvider serviceProvider, ILogger logger, string jsonFileName)
+        public UserSeeder(IServiceProvider serviceProvider, ILogger logger, string jsonFileName)
             : base(serviceProvider, logger, jsonFileName)
         {
         }
 
         public override async Task SeedAsync()
         {
-            var roleService = this.ServiceProvider.GetRequiredService<IRoleService>();
+            var userService = this.ServiceProvider.GetRequiredService<IUserService>();
 
-            var dtoObjects = await Deserializer.DeserializeAsync<RoleBM>(this.JsonFileName, this.Logger);
+            var dtoObjects = await Deserializer.DeserializeAsync<CreateUserBM>(this.JsonFileName, this.Logger);
 
             foreach (var dto in dtoObjects)
             {
-                await roleService.CreateAsync<Role, RoleBM>(dto);
+                await userService.CreateAsync<User, CreateUserBM>(dto);
             }
         }
     }

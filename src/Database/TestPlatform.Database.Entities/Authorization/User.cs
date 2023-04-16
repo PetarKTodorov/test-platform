@@ -41,7 +41,8 @@
         public string LastName { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        [RegularExpression(Validations.PASSWORD_REGEX)]
+        public string Password { get; set; }
 
         public virtual ICollection<UserRoleMap> Roles { get; set; }
 

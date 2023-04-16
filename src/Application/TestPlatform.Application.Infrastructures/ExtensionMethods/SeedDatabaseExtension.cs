@@ -4,7 +4,6 @@
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
-
     using TestPlatform.Database.Seed;
 
     public static class SeedDatabaseExtension
