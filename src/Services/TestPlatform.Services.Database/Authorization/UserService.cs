@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Repositories.Interfaces;

@@ -6,7 +6,7 @@
 ================================================================================
 */
 
-@use "./functions/dependent-functions" as *;
+@use "./functions/_functions" as *;
 
 @mixin respond($size-in-px, $type: "min-width") {
     $size-in-em: px-to-em($size-in-px);

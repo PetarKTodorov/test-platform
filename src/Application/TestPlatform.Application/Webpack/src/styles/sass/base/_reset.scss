@@ -7,36 +7,3 @@
 ================================================================================
 */
 
-@use "../abstracts/__index.scss" as *;
-
-button {
-    display: inline-block;
-
-    margin: 0;
-    padding: 1em 3em;
-
-    outline: none;
-    border: none;
-
-    background: transparent;
-    background-color: $color-black-500;
-
-    font: inherit;
-    font-family: inherit;
-    text-decoration: none;
-    text-align: center;
-    color: $color-white-500;
-
-    cursor: pointer;
-
-    animation-duration: 0.3s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-
-    &:hover,
-    &:focus,
-    &:active {
-        animation-name: reset-button;
-    }
-}
