@@ -63,7 +63,6 @@
             return colection;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
         public virtual async Task<T> GetByIdAsync<T>(Guid id)
         {
             T entity = await this.BaseRepository.GetByIdAsQueryable(id)
