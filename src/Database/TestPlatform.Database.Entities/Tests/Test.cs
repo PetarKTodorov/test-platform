@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Rooms;
@@ -36,7 +36,7 @@
         public bool HasRandomizeQuestions { get; set; }
 
         // TODO: calculate property
-        // Is ignored using Fluent API
+        [NotMapped]
         public double TotalPoints { get; set; }
 
         public virtual ICollection<TestApprovalMap> Approvers { get; set; }

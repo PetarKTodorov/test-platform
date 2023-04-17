@@ -18,9 +18,6 @@
                 .HasOne(t => t.Еvaluation)
                 .WithOne(e => e.Test)
                 .HasForeignKey<Test>(t => t.ЕvaluationId);
-
-            builder
-                .Ignore(t => t.TotalPoints);
         }
     }
 }

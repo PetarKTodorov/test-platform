@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Database.Entities.Tests;
 
     public class Room : BaseEntity
@@ -22,7 +22,7 @@
         public Guid TestId { get; set; }
         public virtual Test Test { get; set; }
 
-        // Is ignored using Fluent API
+        [NotMapped]
         public int ParticipantsCount => this.Participants.Count();
 
         public virtual ICollection<RoomParticipantMap> Participants { get; set; }

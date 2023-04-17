@@ -13,9 +13,6 @@
                 .HasOne(r => r.Test)
                 .WithMany(t => t.Rooms)
                 .HasForeignKey(r => r.TestId);
-
-            builder
-                .Ignore(r => r.ParticipantsCount);
         }
     }
 }
