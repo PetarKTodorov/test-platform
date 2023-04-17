@@ -6,7 +6,7 @@
     using Microsoft.Extensions.Logging;
 
     using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.DTOs.BindingModels.Authorization;
+    using TestPlatform.Database.Seed.BindingModels.Authorization;
     using TestPlatform.Services.Database.Authorization.Interfaces;
 
     internal class UserSeeder : BaseSeeder
@@ -20,11 +20,11 @@
         {
             var userService = this.ServiceProvider.GetRequiredService<IUserService>();
 
-            var dtoObjects = await Deserializer.DeserializeAsync<CreateUserBM>(this.JsonFileName, this.Logger);
+            var dtoObjects = await Deserializer.DeserializeAsync<SeedCreateUserBM>(this.JsonFileName, this.Logger);
 
             foreach (var dto in dtoObjects)
             {
-                await userService.CreateAsync<User, CreateUserBM>(dto);
+                await userService.CreateAsync<User, SeedCreateUserBM>(dto);
             }
         }
     }

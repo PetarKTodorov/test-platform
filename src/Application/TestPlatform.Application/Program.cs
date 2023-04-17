@@ -14,6 +14,9 @@
     using TestPlatform.Services.Mapper;
     using TestPlatform.Services.Database.Authorization;
     using TestPlatform.Services.Database.Authorization.Interfaces;
+    using TestPlatform.Database.Entities;
+    using TestPlatform.DTOs.ViewModels;
+    using TestPlatform.Database.Seed.BindingModels;
 
     public class Program
     {
@@ -75,15 +78,12 @@
 
         private static void RegisterAutoMapper(IServiceCollection services)
         {
-            const string BINDING_MODELS_ASSEMBLY_NAME = "TestPlatform.DTOs.BindingModels";
-            const string VIEW_MODELS_ASSEMBLY_NAME = "TestPlatform.DTOs.ViewModels";
-            const string DATABASE_ENTITIES_ASSEMBLY_NAME = "TestPlatform.Database.Entities";
-
             List<Assembly> assemblies = new List<Assembly>()
             {
-                Assembly.Load(VIEW_MODELS_ASSEMBLY_NAME),
-                Assembly.Load(BINDING_MODELS_ASSEMBLY_NAME),
-                Assembly.Load(DATABASE_ENTITIES_ASSEMBLY_NAME)
+                Assembly.GetAssembly(typeof(BaseEntity)),
+                Assembly.GetAssembly(typeof(ViewModel)),
+                Assembly.GetAssembly(typeof(BindingModel)),
+                Assembly.GetAssembly(typeof(SeedBindingModel)),
             };
 
             AutoMapperConfig.RegisterMappings(assemblies.ToArray());

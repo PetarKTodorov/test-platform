@@ -1,13 +1,15 @@
-﻿namespace TestPlatform.DTOs.BindingModels.Authorization
+﻿namespace TestPlatform.Database.Seed.BindingModels.Authorization
 {
     using System.ComponentModel.DataAnnotations;
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Services.Mapper.Interfaces;
 
-    public class CreateUserBM : BaseEntity, IMapTo<User>
+    public class SeedCreateUserBM : IMapTo<User>
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required]
         [EmailAddress]
         [RegularExpression(Validations.EMAIL_REGEX)]
@@ -28,5 +30,8 @@
         [Required]
         [RegularExpression(Validations.PASSWORD_REGEX)]
         public string Password { get; set; }
+
+        [Required]
+        public Guid CreatedBy { get; set; }
     }
 }
