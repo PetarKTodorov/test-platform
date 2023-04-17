@@ -32,6 +32,7 @@
         {
             return await this.DbSet
                 .Where(t => t.IsDeleted == isDeletedFlag)
+                .AsNoTracking()
                 .ToListAsync<TEntity>();
         }
 
@@ -47,6 +48,7 @@
         {
             var model = await this.DbSet
                 .Where(t => t.IsDeleted == isDeletedFlag)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(t => t.Id == id);
 
             return model;
