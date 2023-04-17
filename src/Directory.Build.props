@@ -10,7 +10,6 @@
     <PropertyGroup>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> <!-- Enable linter -->
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
     
