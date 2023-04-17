@@ -56,7 +56,7 @@
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            entity.CreatedDate = DateTime.Now;
+            entity.CreatedDate = DateTime.UtcNow;
 
             var entityEntry = await this.DbSet
                 .AddAsync(entity)
