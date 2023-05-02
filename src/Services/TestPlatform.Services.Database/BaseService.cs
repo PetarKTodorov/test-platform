@@ -17,15 +17,10 @@
     public abstract class BaseService<TEntity> : IBaseService<TEntity>
         where TEntity : BaseEntity
     {
-        protected BaseService(IMapper mapper)
-        {
-            this.Mapper = mapper;
-        }
-
         protected BaseService(IBaseRepository<TEntity> baseRepository, IMapper mapper)
-            : this(mapper)
         {
             this.BaseRepository = baseRepository;
+            this.Mapper = mapper;
         }
 
         protected virtual IMapper Mapper { get; }

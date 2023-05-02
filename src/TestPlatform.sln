@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Services.Mappe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Database.Seed", "Database\TestPlatform.Database.Seed\TestPlatform.Database.Seed.csproj", "{5AEA4E37-C8E1-4809-80A2-86599777E35C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Services.Managers", "Services\TestPlatform.Services.Managers\TestPlatform.Services.Managers.csproj", "{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{5AEA4E37-C8E1-4809-80A2-86599777E35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEA4E37-C8E1-4809-80A2-86599777E35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEA4E37-C8E1-4809-80A2-86599777E35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{575DD2AC-62A0-4E2C-8F62-A0CAF11825BE} = {AF6FDCA0-8A74-4A71-A616-30FBFFF1AEAD}
 		{984F6D2A-4215-4A8F-B238-791FA9A08535} = {5BAF303E-B9A1-453A-B3BD-DC8FF70996FB}
 		{5AEA4E37-C8E1-4809-80A2-86599777E35C} = {AF6FDCA0-8A74-4A71-A616-30FBFFF1AEAD}
+		{B0A0EE62-FDE2-442D-8341-399D3AAC2A8B} = {5BAF303E-B9A1-453A-B3BD-DC8FF70996FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFC3C3CE-E4CA-439A-BACA-77EF129EC0BA}

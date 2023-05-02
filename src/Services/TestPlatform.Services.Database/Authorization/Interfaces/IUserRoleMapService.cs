@@ -3,8 +3,8 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Services.Database.Interfaces;
 
-    public interface IRoleService : IBaseService<Role>
+    public interface IUserRoleMapService : IBaseService<UserRoleMap>
     {
-        Task<T> GetByNameAsync<T>(string name);
+
     }
 }
