@@ -37,9 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Application.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Database.Repositories", "Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj", "{575DD2AC-62A0-4E2C-8F62-A0CAF11825BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Services.Mapper", "Services\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj", "{984F6D2A-4215-4A8F-B238-791FA9A08535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Services.Mapper", "Services\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj", "{984F6D2A-4215-4A8F-B238-791FA9A08535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlatform.Database.Seed", "Database\TestPlatform.Database.Seed\TestPlatform.Database.Seed.csproj", "{5AEA4E37-C8E1-4809-80A2-86599777E35C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlatform.Database.Seed", "Database\TestPlatform.Database.Seed\TestPlatform.Database.Seed.csproj", "{5AEA4E37-C8E1-4809-80A2-86599777E35C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
