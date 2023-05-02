@@ -40,6 +40,14 @@
 
             services.AddControllersWithViews();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "TestPlatform";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton(configuration);
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -74,6 +82,8 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");

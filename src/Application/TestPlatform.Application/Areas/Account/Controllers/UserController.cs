@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
-    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
 
     using TestPlatform.Services.Managers.Interfaces;
@@ -47,7 +46,16 @@
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserBM model)
         {
-            return this.View();
+            bool isSucceeded = await this.userManager.LoginAsync(model, this.HttpContext);
+
+            if (isSucceeded == false)
+            {
+                this.ViewBag.LoginError = "Invalid password or email.";
+
+                return this.View(model);
+            }
+
+            return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
         }
     }
 }

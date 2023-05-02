@@ -1,6 +1,9 @@
 ﻿namespace TestPlatform.Services.Managers
 {
+    using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
@@ -20,9 +23,19 @@
             this.userRoleMapService = userRoleMapService;
         }
 
-        public async Task LoginAsync(LoginUserBM model)
+        public async Task<bool> LoginAsync(LoginUserBM model, HttpContext httpContext)
         {
-            throw new NotImplementedException();
+            var user = await this.userService.FindByEmailAndPasswordAsync<User>(model.Email, model.Password);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            httpContext.Session.Set("UserEmail", Encoding.UTF8.GetBytes(user.Email));
+            httpContext.Session.Set("UserId", Encoding.UTF8.GetBytes(user.Id.ToString()));
+
+            return true;
         }
 
         public async Task RegisterAsync(RegisterUserBM model)

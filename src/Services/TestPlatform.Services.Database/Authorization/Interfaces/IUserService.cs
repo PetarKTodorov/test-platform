@@ -5,6 +5,8 @@
 
     public interface IUserService : IBaseService<User>
     {
+        Task<T> FindByEmailAndPasswordAsync<T>(string email, string password);
 
+        Task<T> FindByEmailAsync<T>(string email);
     }
 }

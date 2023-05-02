@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using TestPlatform.Common.Helpers;
     using TestPlatform.Database.Entities.Authorization;
@@ -24,6 +25,38 @@
 
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(entity);
+
+            return entityToReturn;
+        }
+
+        public async Task<T> FindByEmailAndPasswordAsync<T>(string email, string password)
+        {
+            User entity = await this.FindByEmailAsync<User>(email);
+
+            if (entity == null)
+            {
+                return default(T);
+            }
+
+            bool isUserPassword = PasswordHasher.VerifyPassword(password, entity.Password);
+
+            if (isUserPassword == false)
+            {
+                return default(T);
+            }
+
+            T entityToReturn = this.Mapper.Map<T>(entity);
+
+            return entityToReturn;
+        }
+
+        public async Task<T> FindByEmailAsync<T>(string email)
+        {
+            User entity = await this.BaseRepository
+                .GetAllAsQueryable()
+                .SingleOrDefaultAsync(u => u.Email == email);
 
             T entityToReturn = this.Mapper.Map<T>(entity);
 
