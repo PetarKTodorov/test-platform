@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Managers
 {
+    using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
@@ -34,6 +35,14 @@
 
             httpContext.Session.Set("UserEmail", Encoding.UTF8.GetBytes(user.Email));
             httpContext.Session.Set("UserId", Encoding.UTF8.GetBytes(user.Id.ToString()));
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+            };
+            var identity = new ClaimsIdentity(claims, "MyCustomAuthenticationScheme");
+            var principal = new ClaimsPrincipal(identity);
+            httpContext.User = principal;
 
             return true;
         }
