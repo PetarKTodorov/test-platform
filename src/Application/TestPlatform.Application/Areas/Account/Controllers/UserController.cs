@@ -2,32 +2,52 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
-    using TestPlatform.Services.Database.Authorization.Interfaces;
+
+    using TestPlatform.Services.Managers.Interfaces;
 
     public class UserController : BaseAccountController
     {
-        private readonly IUserService userService;
+        private readonly IUserManager userManager;
 
-        public UserController(IUserService userService)
+        public UserController(IUserManager userManager)
         {
-            this.userService = userService;
+            this.userManager = userManager;
         }
 
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            return View();
+            return this.View();
         }
 
         [AllowAnonymous]
         [ValidateModelState]
         [HttpPost]
-        public async Task<IActionResult> Register(CreateUserBM model)
+        public async Task<IActionResult> Register(RegisterUserBM model)
         {
-            return View();
+            await this.userManager.RegisterAsync(model);
+
+            return this.RedirectToAction("Login");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Login()
+        {
+            return this.View();
+        }
+
+        [AllowAnonymous]
+        [ValidateModelState]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginUserBM model)
+        {
+            return this.View();
         }
     }
 }

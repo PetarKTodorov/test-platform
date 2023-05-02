@@ -17,6 +17,8 @@
     using TestPlatform.Database.Entities;
     using TestPlatform.DTOs.ViewModels;
     using TestPlatform.Database.Seed.BindingModels;
+    using TestPlatform.Services.Managers.Interfaces;
+    using TestPlatform.Services.Managers;
 
     public class Program
     {
@@ -44,6 +46,7 @@
 
             RegisterAutoMapper(services);
             RegisterDatabaseServices(services);
+            RegisterManagers(services);
         }
 
         private static void Configure(WebApplication app)
@@ -95,6 +98,12 @@
         {
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRoleMapService, UserRoleMapService>();
+        }
+
+        private static void RegisterManagers(IServiceCollection services)
+        {
+            services.AddTransient<IUserManager, UserManager>();
         }
     }
 }

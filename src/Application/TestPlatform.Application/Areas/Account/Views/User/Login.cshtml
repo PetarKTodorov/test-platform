@@ -1,0 +1,19 @@
+﻿@model LoginUserBM
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="text-center my-5">Login</h1>
+
+<div class="container">
+    <form asp-area="Account" asp-controller="User" asp-action="Login" method="post">
+
+        @Html.FormGroupFor(model => model.Email)
+
+        @Html.FormGroupFor(model => model.Password)
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Login</button>
+        </div>
+    </form>
+</div>
