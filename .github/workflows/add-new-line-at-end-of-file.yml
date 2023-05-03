@@ -22,7 +22,7 @@ jobs:
           git status
 
       - name: All files end with newline
-        run: for f in $(git grep --cached -Il ''); do tail -c1 $f | read -r _ || echo >> $f; done
+        run: git ls-files -z | while IFS= read -rd '' f; do if file --mime-encoding "$f" | grep -qv binary; then tail -c1 < "$f" | read -r _ || echo >> "$f"; fi; done
         
       - name: Git commit and push
         run: |
