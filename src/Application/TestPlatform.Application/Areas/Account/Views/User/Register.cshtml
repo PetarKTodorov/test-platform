@@ -1,0 +1,28 @@
+﻿@model RegisterUserBM
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1 class="text-center my-5">Register</h1>
+
+<div class="container">
+    <form asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Register" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.FormGroupFor(model => model.Email)
+
+        @Html.FormGroupFor(model => model.FirstName)
+
+        @Html.FormGroupFor(model => model.MiddleName)
+
+        @Html.FormGroupFor(model => model.LastName)
+
+        @Html.FormGroupFor(model => model.Password)
+
+        @Html.FormGroupFor(model => model.ConfirmPassword)
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Register</button>
+        </div>
+    </form>
+</div>

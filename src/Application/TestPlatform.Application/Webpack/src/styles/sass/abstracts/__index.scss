@@ -7,11 +7,9 @@
 ================================================================================
 */
 
-@forward "./functions/_independent-functions.scss";
+@forward "./functions/_functions.scss";
 
 @forward "./variables/__index.scss";
-
-@forward "./functions/_dependent-functions.scss";
 
 @forward "./_placeholders.scss";
 

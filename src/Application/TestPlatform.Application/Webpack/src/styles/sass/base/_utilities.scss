@@ -7,6 +7,23 @@
 ================================================================================
 */
 
-.u-small-text {
-    font-size: var(--font-size-small-text);
+@use "../abstracts/__index.scss" as *;
+
+.u-split-background {
+    background: linear-gradient(160deg, var(--bs-primary) 25%, var(--bs-light) 100%);
+}
+
+.u-letter-spacing {
+    letter-spacing: 5px;
+}
+
+.u-text-shadow {
+    text-shadow: 1px 1px $color-black-500;
+}
+
+.u-absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

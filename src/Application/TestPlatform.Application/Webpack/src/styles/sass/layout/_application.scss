@@ -1,21 +1,18 @@
 .application {
+    display: flex;
+    flex-direction: column;
+
     &__header {
 
     }
 
     &__main {
+        position: relative;
 
+        flex-grow: 1;
     }
 
     &__footer {
-
-    }
-
-    &__scripts {
-
-    }
-
-    &__noscript {
 
     }
 }

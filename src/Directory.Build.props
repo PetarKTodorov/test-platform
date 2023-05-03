@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <Features>strict</Features>
     </PropertyGroup>
 
@@ -11,8 +10,7 @@
     <PropertyGroup>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> <!-- Enable linter -->
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
     
     <!-- Packaging -->

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestPlatform.Database.Entities\TestPlatform.Database.Entities.csproj" />
+    <ProjectReference Include="..\TestPlatform.Database\TestPlatform.Database.csproj" />
+  </ItemGroup>
+
+</Project>

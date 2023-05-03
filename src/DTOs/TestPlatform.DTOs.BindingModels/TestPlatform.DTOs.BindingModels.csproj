@@ -1,2 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Entities\TestPlatform.Database.Entities.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj" />
+  </ItemGroup>
 </Project>

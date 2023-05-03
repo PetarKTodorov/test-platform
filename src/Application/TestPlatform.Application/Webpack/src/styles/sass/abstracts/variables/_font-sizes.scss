@@ -6,59 +6,9 @@
 ================================================================================
 */
 
-$default-font-min-size: 12;
 $default-font-size: 16;
 $default-font-line-height: 1.5;
 
 $default-text-font-family: "Roboto";
 $default-heading-font-family: "Roboto Slab";
 $default-icon-font-family: "icomoon";
-
-$font-type-ratios: (
-    "minor-second": 1.067,
-    "major-second": 1.125,
-    "minor-third": 1.2,
-    "major-third": 1.25,
-    "perfect-fourth": 1.333,
-    "augmented-fourth": 1.414,
-    "perfect-fifth": 1.5,
-    "golden-ratio": 1.618,
-);
-
-$font-sizes: (
-    "small-text": "",
-    "text": "",
-    "heading-6": "",
-    "heading-5": "",
-    "heading-4": "",
-    "heading-3": "",
-    "heading-2": "",
-    "heading-1": "",
-);
-
-$fluid-fonts: (
-    "small-screens": (
-        "fluid-min-width": 250,
-        "fluid-max-width": 400,
-        "fluid-min-size": 14,
-        "fluid-max-size": 16,
-        "fluid-min-ratio": map-get($map: $font-type-ratios, $key: "minor-third"),
-        "fluid-max-ratio": map-get($map: $font-type-ratios, $key: "major-third"),
-    ),
-    "normal-screens": (
-        "fluid-min-width": 500,
-        "fluid-max-width": 1920,
-        "fluid-min-size": 16,
-        "fluid-max-size": 20,
-        "fluid-min-ratio": map-get($map: $font-type-ratios, $key: "major-third"),
-        "fluid-max-ratio": map-get($map: $font-type-ratios, $key: "perfect-fourth"),
-    ),
-    "big-screens": (
-        "fluid-min-width": 1920,
-        "fluid-max-width": 2560,
-        "fluid-min-size": 20,
-        "fluid-max-size": 28,
-        "fluid-min-ratio": map-get($map: $font-type-ratios, $key: "perfect-fourth"),
-        "fluid-max-ratio": map-get($map: $font-type-ratios, $key: "perfect-fourth"),
-    )
-);
