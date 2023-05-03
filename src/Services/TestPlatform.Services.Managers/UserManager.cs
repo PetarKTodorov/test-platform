@@ -1,15 +1,17 @@
 ﻿namespace TestPlatform.Services.Managers
 {
     using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
+
     using TestPlatform.Application.Infrastructures.Helpers;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
+    using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -39,10 +41,14 @@
             {
                 new Claim(UserClaimTypes.ID, user.Id.ToString()),
                 new Claim(UserClaimTypes.EMAIL, user.Email),
-                new Claim(UserClaimTypes.FULL_NAME, user.FullName)
+                new Claim(UserClaimTypes.FULL_NAME, user.FullName),
+                new Claim(UserClaimTypes.ROLE, "Admin"),
             };
 
-            //new Claim(UserClaimTypes.ROLE, "Admin"),
+            var userRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(user.Id);
+            userRoles.Roles
+                .ToList()
+                .ForEach(role => claims.Add(new Claim(UserClaimTypes.ROLE, role.RoleName)));
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -56,7 +62,7 @@
         {
             var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
 
-            var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.Student.ToString());
+            var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
 
             Task.WaitAll(userTask, roleTask);
 
@@ -70,6 +76,11 @@
             };
 
             await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap);
+        }
+
+        public async Task Logout(HttpContext httpContext)
+        {
+            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }

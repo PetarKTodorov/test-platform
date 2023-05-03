@@ -6,12 +6,23 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="main-navbar">
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="Account" asp-controller="User" asp-action="Login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="Account" asp-controller="User" asp-action="Register">Register</a>
-                </li>
+                @{
+                    if(!this.User.Claims.Any())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="Account" asp-controller="User" asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="Account" asp-controller="User" asp-action="Register">Register</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="Account" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+                    }
+                }
             </ul>
         </div>
     </div>

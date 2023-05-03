@@ -1,13 +1,16 @@
 ﻿namespace TestPlatform.Application.Areas.Account.Controllers
 {
-    using System.Security.Claims;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Common.Constants;
     using TestPlatform.DTOs.BindingModels.User;
 
     using TestPlatform.Services.Managers.Interfaces;
+    using TestPlatform.Application.Controllers;
 
     public class UserController : BaseAccountController
     {
@@ -18,13 +21,9 @@
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = "User,Admin1")]
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            var tmp = this.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
-            var tmp2 = this.User.FindFirst(ClaimTypes.Role).Value;
-
             return this.View();
         }
 
@@ -34,7 +33,6 @@
         public async Task<IActionResult> Register(RegisterUserBM model)
         {
             await this.userManager.RegisterAsync(model);
-
 
             return this.RedirectToAction("Login");
         }
@@ -61,6 +59,15 @@
             }
 
             return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await this.userManager.Logout(this.HttpContext);
+
+            return this.RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }

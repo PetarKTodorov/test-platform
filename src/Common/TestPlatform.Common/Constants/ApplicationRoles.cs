@@ -1,10 +1,10 @@
 ﻿namespace TestPlatform.Common.Constants
 {
-    public enum ApplicationRoles
+    public static class ApplicationRoles
     {
-        Administrator = 0,
-        Director = 1,
-        Teacher = 2,
-        Student = 3
+        public const string ADMINISTRATOR = "Administrator";
+        public const string DIRECTOR = "Director";
+        public const string TEACHER = "Teacher";
+        public const string STUDENT = "Student";
     }
 }

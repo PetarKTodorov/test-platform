@@ -9,5 +9,7 @@
         Task RegisterAsync(RegisterUserBM model);
 
         Task<bool> LoginAsync(LoginUserBM model, HttpContext httpContext);
+
+        Task Logout(HttpContext httpContext);
     }
 }
