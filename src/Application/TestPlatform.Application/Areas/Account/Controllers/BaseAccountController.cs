@@ -1,8 +1,9 @@
 ﻿namespace TestPlatform.Application.Areas.Account.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Common.Constants;
 
-    [Area("Account")]
+    [Area(ApplicationAreas.ACCOUNT)]
     public class BaseAccountController : Controller
     {
 

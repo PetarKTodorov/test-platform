@@ -6,7 +6,7 @@
 <h1 class="text-center my-5">Register</h1>
 
 <div class="container">
-    <form asp-area="Account" asp-controller="User" asp-action="Register" method="post">
+    <form asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Register" method="post">
         @Html.AntiForgeryToken()
 
         @Html.FormGroupFor(model => model.Email)
