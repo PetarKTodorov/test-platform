@@ -1,4 +1,4 @@
-﻿namespace TestPlatform.Services.Database.Authorization
+namespace TestPlatform.Services.Database.Authorization
 {
     using System;
     using System.Threading.Tasks;
@@ -67,7 +67,12 @@
 
         public async Task<T> FindUserRolesAsync<T>(Guid userId)
         {
-            throw new NotImplementedException();
+            var user = await this.BaseRepository
+                .GetByIdAsQueryable(userId)
+                .To<T>()
+                .SingleOrDefaultAsync();
+
+            return user;
         }
     }
 }
