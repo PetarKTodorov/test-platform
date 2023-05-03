@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Common.Constants;
     using TestPlatform.DTOs.BindingModels.User;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -15,8 +16,7 @@
         {
             this.userManager = userManager;
         }
-
-        [AllowAnonymous]
+        
         [PreventAuthorize]
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -24,7 +24,6 @@
             return this.View();
         }
 
-        [AllowAnonymous]
         [PreventAuthorize]
         [ValidateModelState]
         [HttpPost]
@@ -61,7 +60,7 @@
             return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
         }
 
-        [Authorize]
+        [CustomAuthorize(ApplicationRoles.DIRECTOR, ApplicationRoles.STUDENT)]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

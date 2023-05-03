@@ -1,12 +1,11 @@
 ﻿namespace TestPlatform.Application.Areas.Administrator.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Common.Constants;
 
     [Area(ApplicationAreas.ADMINISTRATOR)]
-    [Authorize(Roles = ApplicationRoles.ADMINISTRATOR)]
+    [CustomAuthorize(ApplicationRoles.ADMINISTRATOR)]
     public class BaseAdministratorController : Controller
     {
 
