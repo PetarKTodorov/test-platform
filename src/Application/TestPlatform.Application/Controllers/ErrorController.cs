@@ -5,6 +5,11 @@
     [Route("Error")]
     public class ErrorController : Controller
     {
+        public IActionResult Index()
+        {
+            return this.View();
+        }
+
         [Route("404")]
         public IActionResult NotFound()
         {
