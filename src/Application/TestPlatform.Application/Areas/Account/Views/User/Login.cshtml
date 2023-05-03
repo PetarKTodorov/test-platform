@@ -9,6 +9,7 @@
     <div class="text-danger fs-3">@ViewBag.LoginError</div>
 
     <form asp-area="Account" asp-controller="User" asp-action="Login" method="post">
+        @Html.AntiForgeryToken()
 
         @Html.FormGroupFor(model => model.Email)
 

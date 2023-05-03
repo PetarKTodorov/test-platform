@@ -23,6 +23,7 @@
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.CookiePolicy;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -42,7 +43,11 @@
             services.AddDbContext<TestPlatformDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                // To escape the global filter [IgnoreAntiforgeryToken]
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             services.AddDistributedMemoryCache();
             services.AddSession();
