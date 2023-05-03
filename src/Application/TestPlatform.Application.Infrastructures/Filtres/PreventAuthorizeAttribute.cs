@@ -12,7 +12,7 @@
         {
             if (context.HttpContext.User.Claims.Any())
             {
-                context.Result = new ForbidResult();
+                context.Result = new NotFoundResult();
             }
         }
     }
