@@ -19,6 +19,7 @@
     using TestPlatform.Database.Seed.BindingModels;
     using TestPlatform.Services.Managers.Interfaces;
     using TestPlatform.Services.Managers;
+    using Microsoft.AspNetCore.Authorization;
 
     public class Program
     {
@@ -44,8 +45,10 @@
             services.AddSession(options =>
             {
                 options.Cookie.Name = "TestPlatform";
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromHours(8);
                 options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
 
             services.AddSingleton(configuration);

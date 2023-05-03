@@ -1,9 +1,13 @@
 ﻿namespace TestPlatform.Application.Areas.Account.Controllers
 {
+    using System.Security.Claims;
+    using System.Text;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
 
     using TestPlatform.Services.Managers.Interfaces;
@@ -21,6 +25,8 @@
         [HttpGet]
         public async Task<IActionResult> Register()
         {
+            string test = Encoding.UTF8.GetString(this.HttpContext.Session.Get("UserEmail"));
+
             return this.View();
         }
 
@@ -54,6 +60,15 @@
 
                 return this.View(model);
             }
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email, "aaa"),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var principal = new ClaimsPrincipal(identity);
+
+            this.SignIn(principal);
 
             return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
         }
