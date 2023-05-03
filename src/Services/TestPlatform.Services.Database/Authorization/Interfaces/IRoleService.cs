@@ -5,6 +5,6 @@
 
     public interface IRoleService : IBaseService<Role>
     {
-        Task<T> GetByNameAsync<T>(string name);
+        Task<T> FindByNameAsync<T>(string name);
     }
 }

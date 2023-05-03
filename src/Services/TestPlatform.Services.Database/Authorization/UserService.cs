@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Database.Authorization
 {
+    using System;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -9,6 +10,7 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class UserService : BaseService<User>, IUserService
     {
@@ -61,6 +63,11 @@
             T entityToReturn = this.Mapper.Map<T>(entity);
 
             return entityToReturn;
+        }
+
+        public async Task<T> FindUserRolesAsync<T>(Guid userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

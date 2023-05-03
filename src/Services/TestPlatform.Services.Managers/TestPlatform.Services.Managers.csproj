@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\TestPlatform.Application.Infrastructures\TestPlatform.Application.Infrastructures.csproj" />
     <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj" />
     <ProjectReference Include="..\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj" />
   </ItemGroup>

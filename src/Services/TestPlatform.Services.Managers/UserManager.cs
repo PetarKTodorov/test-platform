@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
+    using TestPlatform.Application.Infrastructures.Helpers;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
@@ -34,34 +35,19 @@
                 return false;
             }
 
-            //httpContext.Session.Set("Email", Encoding.UTF8.GetBytes(user.Email));
-            //httpContext.Session.Set("UserId", Encoding.UTF8.GetBytes(user.Id.ToString()));
-
-            //var claims = new[]
-            //{
-            //    new Claim(ClaimTypes.Email, user.Email),
-            //};
-            //var identity = new ClaimsIdentity(claims);
-            //var principal = new ClaimsPrincipal(identity);
-
-            //httpContext.User = principal;
-
-
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, model.Email),
-                new Claim(ClaimTypes.Role, "User"),
+                new Claim(UserClaimTypes.ID, user.Id.ToString()),
+                new Claim(UserClaimTypes.EMAIL, user.Email),
+                new Claim(UserClaimTypes.FULL_NAME, user.FullName)
             };
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTime.Now.AddMinutes(10),
-            };
-            await httpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+
+            //new Claim(UserClaimTypes.ROLE, "Admin"),
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await httpContext.SignInAsync(claimsPrincipal);
 
             return true;
         }
@@ -70,7 +56,7 @@
         {
             var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
 
-            var roleTask = this.roleService.GetByNameAsync<Role>(ApplicationRoles.Student.ToString());
+            var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.Student.ToString());
 
             Task.WaitAll(userTask, roleTask);
 

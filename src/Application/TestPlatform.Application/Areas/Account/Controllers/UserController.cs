@@ -1,15 +1,10 @@
 ﻿namespace TestPlatform.Application.Areas.Account.Controllers
 {
     using System.Security.Claims;
-    using System.Text;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
-    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
 
     using TestPlatform.Services.Managers.Interfaces;
@@ -23,13 +18,12 @@
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin1")]
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            //string test = Encoding.UTF8.GetString(this.HttpContext.Session.Get("Email"));
             var tmp = this.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
-            var tmp2 = this.User.FindFirst(ClaimTypes.Email).Value;
+            var tmp2 = this.User.FindFirst(ClaimTypes.Role).Value;
 
             return this.View();
         }

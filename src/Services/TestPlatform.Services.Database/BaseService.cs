@@ -41,7 +41,7 @@
 
         public virtual async Task<T> DeleteAsync<T>(Guid id)
         {
-            TEntity entity = await this.GetByIdAsync<TEntity>(id);
+            TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
             TEntity deletedEntity = this.BaseRepository.Delete(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -51,14 +51,14 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> FindAllAsync()
         {
             var colection = await this.BaseRepository.GetAllAsync();
 
             return colection;
         }
 
-        public virtual async Task<T> GetByIdAsync<T>(Guid id)
+        public virtual async Task<T> FindByIdAsync<T>(Guid id)
         {
             T entity = await this.BaseRepository.GetByIdAsQueryable(id)
                 .To<T>()
@@ -75,7 +75,7 @@
 
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model)
         {
-            TEntity entity = await this.GetByIdAsync<TEntity>(id);
+            TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
             TEntity updatedEntity = this.Mapper.Map(model, entity);
 

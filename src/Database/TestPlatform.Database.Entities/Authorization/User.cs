@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Entities.Subjects;
@@ -39,6 +39,9 @@
         [Required]
         [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string LastName { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{this.FirstName} {this.MiddleName} {this.LastName}";
 
         [Required]
         [RegularExpression(Validations.PASSWORD_REGEX)]

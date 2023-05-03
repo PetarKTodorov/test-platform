@@ -18,7 +18,7 @@
 
         }
 
-        public async Task<T> GetByNameAsync<T>(string name)
+        public async Task<T> FindByNameAsync<T>(string name)
         {
             Role entity = await this.BaseRepository.GetAllAsQueryable()
                 .SingleOrDefaultAsync(r => r.Name == name);
