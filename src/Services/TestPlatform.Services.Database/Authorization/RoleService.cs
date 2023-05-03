@@ -8,7 +8,6 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
-    using TestPlatform.Services.Mapper;
 
     public class RoleService : BaseService<Role>, IRoleService
     {
