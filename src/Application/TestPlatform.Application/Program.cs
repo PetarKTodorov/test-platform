@@ -2,12 +2,9 @@
 {
     using System.Reflection;
 
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-
     using AutoMapper;
 
-    using Infrastructures.ExtensionMethods;
+    using TestPlatform.Application.Infrastructures.ExtensionMethods;
     using TestPlatform.Database;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Database.Repositories;
@@ -19,7 +16,9 @@
     using TestPlatform.Database.Seed.BindingModels;
     using TestPlatform.Services.Managers.Interfaces;
     using TestPlatform.Services.Managers;
-    using Microsoft.AspNetCore.Authorization;
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.CookiePolicy;
@@ -84,6 +83,8 @@
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
