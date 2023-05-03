@@ -16,6 +16,8 @@
             this.userManager = userManager;
         }
 
+        [AllowAnonymous]
+        [PreventAuthorize]
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -23,6 +25,7 @@
         }
 
         [AllowAnonymous]
+        [PreventAuthorize]
         [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserBM model)
@@ -33,6 +36,7 @@
         }
 
         [AllowAnonymous]
+        [PreventAuthorize]
         [HttpGet]
         public async Task<IActionResult> Login()
         {
@@ -40,6 +44,7 @@
         }
 
         [AllowAnonymous]
+        [PreventAuthorize]
         [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserBM model)
