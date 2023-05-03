@@ -10,7 +10,8 @@
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (context.HttpContext.User.Claims.Any())
+            if (context.HttpContext.User.Identity == null
+                || context.HttpContext.User.Identity.IsAuthenticated)
             {
                 context.Result = new NotFoundResult();
             }

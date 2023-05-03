@@ -21,8 +21,9 @@
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var userClaims = context.HttpContext.User.Claims;
-            if (!userClaims.Any())
+            var isAuthenticated = context.HttpContext.User.Identity == null
+                || context.HttpContext.User.Identity.IsAuthenticated;
+            if (!isAuthenticated)
             {
                 context.Result = new NotFoundResult();
                 return;
