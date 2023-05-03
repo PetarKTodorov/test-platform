@@ -20,3 +20,10 @@
 .u-text-shadow {
     text-shadow: 1px 1px $color-black-500;
 }
+
+.u-absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
