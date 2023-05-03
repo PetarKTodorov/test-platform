@@ -1,0 +1,38 @@
+[
+    {
+        "Id": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Email": "administrator@email.mail",
+        "FirstName": "Administrator",
+        "MiddleName": "Administrator",
+        "LastName": "Administrator",
+        "Password": "12msHZ&!srd",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "2EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Email": "director@email.mail",
+        "FirstName": "Director",
+        "MiddleName": "Director",
+        "LastName": "Director",
+        "Password": "12msHZ&!srd",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Email": "teacher@email.mail",
+        "FirstName": "Teacher",
+        "MiddleName": "Teacher",
+        "LastName": "Teacher",
+        "Password": "12msHZ&!srd",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "4EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Email": "student@email.mail",
+        "FirstName": "Student",
+        "MiddleName": "Student",
+        "LastName": "Student",
+        "Password": "12msHZ&!srd",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    }
+]

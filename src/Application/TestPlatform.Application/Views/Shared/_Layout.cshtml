@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="./_BaseMetaTags.cshtml" />
+
+    <link rel="stylesheet" asp-href-include="~/css/application-styles*.css" />
+
+    <title>@ViewData["Title"]</title>
+</head>
+<body class="application">
+    <noscript>
+        Sorry, your browser does not support JavaScript!
+    </noscript>
+
+    <partial name="./_MainNavigation.cshtml" />
+
+    <header class="application__header">
+        
+    </header>
+
+    <main class="application__main">
+        @RenderBody()
+    </main>
+
+    <footer class="application__footer">
+        <partial name="./_MainFooter.cshtml" />
+    </footer>
+
+    <script asp-src-include="~/js/libraries*.js" defer></script>
+    <script asp-src-include="~/js/application*.js" defer></script>
+</body>
+</html>

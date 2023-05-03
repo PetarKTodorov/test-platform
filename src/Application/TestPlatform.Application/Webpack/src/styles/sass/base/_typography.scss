@@ -1,0 +1,45 @@
+/*
+================================================================================
+
+    This file is for application base typography styles, this means set
+    properties like: "font, color, text-decoration, etc.", to css selectors.
+
+================================================================================
+*/
+
+@use "sass:meta";
+
+@use "../abstracts/__index.scss" as *;
+
+html {
+    font-size: 1rem;
+}
+
+body {
+    font-family: $default-text-font-family, sans-serif;
+    font-weight: 400;
+    line-height: $default-font-line-height;
+    color: $color-black-500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-block: 0.5em;
+
+    font-family: $default-heading-font-family, serif;
+    font-weight: bold;
+    line-height: calc(2px + 2ex + 2px);
+}
+
+p {
+    margin-bottom: 0.3em;
+}
+
+b,
+strong {
+    font-weight: 700;
+}

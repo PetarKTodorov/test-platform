@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj" />
+    <ProjectReference Include="..\TestPlatform.Database\TestPlatform.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataSets\Authorization\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

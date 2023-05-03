@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="6.0.16" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Entities\TestPlatform.Database.Entities.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj" />
+    <ProjectReference Include="..\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj" />
+  </ItemGroup>
+</Project>
