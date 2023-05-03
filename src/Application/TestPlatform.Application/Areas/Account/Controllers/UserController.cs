@@ -16,15 +16,15 @@
         {
             this.userManager = userManager;
         }
-        
-        [PreventAuthorize]
+
+        [CustomAllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Register()
         {
             return this.View();
         }
 
-        [PreventAuthorize]
+        [CustomAllowAnonymous]
         [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserBM model)
@@ -34,16 +34,14 @@
             return this.RedirectToAction("Login");
         }
 
-        [AllowAnonymous]
-        [PreventAuthorize]
+        [CustomAllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Login()
         {
             return this.View();
         }
 
-        [AllowAnonymous]
-        [PreventAuthorize]
+        [CustomAllowAnonymous]
         [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserBM model)

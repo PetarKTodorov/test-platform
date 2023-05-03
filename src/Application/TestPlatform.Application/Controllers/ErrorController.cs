@@ -1,9 +1,9 @@
 ﻿namespace TestPlatform.Application.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Application.Infrastructures.Filtres;
 
-    [AllowAnonymous]
+    [CustomAllowAnonymous]
     [Route("Error")]
     public class ErrorController : Controller
     {

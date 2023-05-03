@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc.Filters;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class PreventAuthorizeAttribute : Attribute, IAuthorizationFilter
+    public class CustomAllowAnonymousAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
