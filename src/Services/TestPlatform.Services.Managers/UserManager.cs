@@ -3,8 +3,9 @@
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
-
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
@@ -33,8 +34,8 @@
                 return false;
             }
 
-            httpContext.Session.Set("UserEmail", Encoding.UTF8.GetBytes(user.Email));
-            httpContext.Session.Set("UserId", Encoding.UTF8.GetBytes(user.Id.ToString()));
+            //httpContext.Session.Set("Email", Encoding.UTF8.GetBytes(user.Email));
+            //httpContext.Session.Set("UserId", Encoding.UTF8.GetBytes(user.Id.ToString()));
 
             //var claims = new[]
             //{
@@ -44,6 +45,23 @@
             //var principal = new ClaimsPrincipal(identity);
 
             //httpContext.User = principal;
+
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, model.Email),
+                new Claim(ClaimTypes.Role, "User"),
+            };
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.Now.AddMinutes(10),
+            };
+            await httpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
 
             return true;
         }

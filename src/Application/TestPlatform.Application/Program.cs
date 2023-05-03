@@ -20,6 +20,8 @@
     using TestPlatform.Services.Managers.Interfaces;
     using TestPlatform.Services.Managers;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Builder;
 
     public class Program
     {
@@ -39,17 +41,26 @@
             services.AddDbContext<TestPlatformDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                    options.SlidingExpiration = true;
+                    options.AccessDeniedPath = "/Forbidden/";
+                });
+
             services.AddControllersWithViews();
 
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = "TestPlatform";
-                options.IdleTimeout = TimeSpan.FromHours(8);
-                options.Cookie.IsEssential = true;
-                options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            });
+            //services.AddSession(options =>
+            //{
+            //    options.Cookie.Name = "TestPlatform";
+            //    options.IdleTimeout = TimeSpan.FromHours(8);
+            //    options.Cookie.IsEssential = true;
+            //    options.Cookie.SameSite = SameSiteMode.Strict;
+            //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            //});
 
             services.AddSingleton(configuration);
 
@@ -82,6 +93,14 @@
             app.UseCookiePolicy();
 
             app.UseRouting();
+
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.None,
+            };
+            app.UseCookiePolicy(cookiePolicyOptions);
 
             app.UseAuthentication();
             app.UseAuthorization();
