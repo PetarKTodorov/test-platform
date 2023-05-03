@@ -16,7 +16,7 @@
                     .FirstOrDefault(arg => arg.Key.ToLower().Contains(FILTER_MODEL))
                     .Value;
 
-                Controller controller = context.Controller as Controller;
+                Controller? controller = context.Controller as Controller;
                 if (controller != null)
                 {
                     ViewResult view = controller.View(model);
