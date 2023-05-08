@@ -58,7 +58,6 @@
             return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
         }
 
-        [CustomAuthorize(ApplicationRoles.DIRECTOR, ApplicationRoles.STUDENT)]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
