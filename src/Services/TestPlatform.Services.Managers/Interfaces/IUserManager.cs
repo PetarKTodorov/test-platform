@@ -6,7 +6,7 @@
 
     public interface IUserManager
     {
-        Task RegisterAsync(RegisterUserBM model);
+        Task<bool> RegisterAsync(RegisterUserBM model);
 
         Task<bool> LoginAsync(LoginUserBM model, HttpContext httpContext);
 

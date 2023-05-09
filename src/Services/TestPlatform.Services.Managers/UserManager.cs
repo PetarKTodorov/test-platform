@@ -58,8 +58,15 @@
             return true;
         }
 
-        public async Task RegisterAsync(RegisterUserBM model)
+        public async Task<bool> RegisterAsync(RegisterUserBM model)
         {
+            var registeredUser = await this.userService.FindByEmailAsync<User>(model.Email);
+
+            if (registeredUser != null)
+            {
+                return false;
+            }
+
             var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
 
             var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
@@ -76,6 +83,8 @@
             };
 
             await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap);
+
+            return true;
         }
 
         public async Task Logout(HttpContext httpContext)

@@ -29,7 +29,14 @@
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserBM model)
         {
-            await this.userManager.RegisterAsync(model);
+            bool isSucceeded = await this.userManager.RegisterAsync(model);
+
+            if (isSucceeded == false)
+            {
+                this.ViewBag.RegisterError = "This email is already used on the platform";
+
+                return this.View(model);
+            }
 
             return this.RedirectToAction("Login");
         }
