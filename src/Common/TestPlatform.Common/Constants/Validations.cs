@@ -16,6 +16,8 @@
 
         public const int TWO_POWER_SIXTEEN = 65536;
 
+        public const int DEFAULT_PAGE_SIZE = 10;
+
         public const string EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
         // Have at least 10 characters, including at least two uppercase letters, two lowercase letters, two numbers, and two special characters
