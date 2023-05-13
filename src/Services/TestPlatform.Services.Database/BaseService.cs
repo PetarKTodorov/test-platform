@@ -51,11 +51,22 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> FindAllAsync()
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>()
         {
-            var colection = await this.BaseRepository.GetAllAsync();
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .To<T>()
+                .ToListAsync();
 
             return colection;
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag)
+        {
+            var colection = await this.BaseRepository.GetAllAsync(isDeletedFlag);
+
+            var mappedCollection = this.Mapper.Map<IEnumerable<T>>(colection);
+
+            return mappedCollection;
         }
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id)

@@ -13,6 +13,8 @@
 
         Task<T> DeleteAsync<T>(Guid id);
 
-        Task<IEnumerable<TEntity>> FindAllAsync();
+        Task<IEnumerable<T>> FindAllAsync<T>();
+
+        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag);
     }
 }
