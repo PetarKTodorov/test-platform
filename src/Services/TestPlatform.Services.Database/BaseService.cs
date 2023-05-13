@@ -89,6 +89,21 @@
             return entity;
         }
 
+        public async Task<int> GetCountOfAllAsyns()
+        {
+            var countOfAllResults = await this.BaseRepository.GetAllAsQueryable()
+                .CountAsync();
+
+            return countOfAllResults;
+        }
+
+        public async Task<int> GetCountOfAllAsyns(bool isDeleted)
+        {
+            var collection = await this.BaseRepository.GetAllAsync(isDeleted);
+
+            return collection.Count();
+        }
+
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model)
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);

@@ -14,7 +14,9 @@
 
         Task<T> DeleteAsync<T>(Guid id);
 
+        Task<int> GetCountOfAllAsyns();
 
+        Task<int> GetCountOfAllAsyns(bool isDeleted);
 
         Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize = Validations.DEFAULT_PAGE_SIZE);
 
