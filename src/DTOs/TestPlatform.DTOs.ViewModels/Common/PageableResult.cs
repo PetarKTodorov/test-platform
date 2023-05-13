@@ -17,13 +17,13 @@
 
         public int CurrentPage { get; set; }
 
-        public int PageSize { get; set; }
+        public double PageSize { get; set; }
 
         public int PagesCount
         {
             get
             {
-                var pagesCount = this.Results.Count() / (double)this.PageSize;
+                var pagesCount = this.AllResultsCount / this.PageSize;
                 return (int)Math.Ceiling(pagesCount);
             }
         }
@@ -31,6 +31,8 @@
         public int BoundaryCount { get; set; }
 
         public int SiblingCount { get; set; }
+
+        public int AllResultsCount { get; set; }
 
         public IEnumerable<T> Results { get; set; }
     }
