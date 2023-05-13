@@ -51,22 +51,27 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>()
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize = Validations.DEFAULT_PAGE_SIZE)
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
                 .To<T>()
                 .ToListAsync();
 
             return colection;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag)
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize = Validations.DEFAULT_PAGE_SIZE)
         {
-            var colection = await this.BaseRepository.GetAllAsync(isDeletedFlag);
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .Where(x => x.IsDeleted == isDeletedFlag)
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .To<T>()
+                .ToListAsync();
 
-            var mappedCollection = this.Mapper.Map<IEnumerable<T>>(colection);
-
-            return mappedCollection;
+            return colection;
         }
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id)
