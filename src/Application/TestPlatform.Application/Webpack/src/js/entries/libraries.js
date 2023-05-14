@@ -1,5 +1,5 @@
-import $ from 'jquery';
+import $ from "jquery";
 global.$ = global.jQuery = $;
 
 import "bootstrap";
-import 'select2';
+import "select2";
