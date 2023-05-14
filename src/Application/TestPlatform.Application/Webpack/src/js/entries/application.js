@@ -1,8 +1,1 @@
-﻿(() => {
-    
-})();
-
-$(() => {
-    // initialize globally select2
-    $('.select2-enable').select2();
-});
+﻿require("../configurations/select2-config.js");
