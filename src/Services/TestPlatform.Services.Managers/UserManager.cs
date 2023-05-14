@@ -6,8 +6,7 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
-
-    using TestPlatform.Application.Infrastructures.Helpers;
+    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
@@ -42,7 +41,6 @@
                 new Claim(UserClaimTypes.ID, user.Id.ToString()),
                 new Claim(UserClaimTypes.EMAIL, user.Email),
                 new Claim(UserClaimTypes.FULL_NAME, user.FullName),
-                new Claim(UserClaimTypes.ROLE, "Admin"),
             };
 
             var userRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(user.Id);
@@ -58,8 +56,15 @@
             return true;
         }
 
-        public async Task RegisterAsync(RegisterUserBM model)
+        public async Task<bool> RegisterAsync(RegisterUserBM model)
         {
+            var registeredUser = await this.userService.FindByEmailAsync<User>(model.Email);
+
+            if (registeredUser != null)
+            {
+                return false;
+            }
+
             var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
 
             var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
@@ -76,6 +81,8 @@
             };
 
             await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap);
+
+            return true;
         }
 
         public async Task Logout(HttpContext httpContext)

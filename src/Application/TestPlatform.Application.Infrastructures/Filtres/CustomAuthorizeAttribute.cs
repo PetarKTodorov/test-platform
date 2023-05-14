@@ -6,8 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
-
-    using TestPlatform.Application.Infrastructures.Helpers;
+    using TestPlatform.Application.Infrastructures.ApplicationUser;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilter
@@ -23,9 +22,16 @@
         {
             var isAuthenticated = context.HttpContext.User.Identity == null
                 || context.HttpContext.User.Identity.IsAuthenticated;
+
             if (!isAuthenticated)
             {
                 context.Result = new NotFoundResult();
+                return;
+            }
+
+            // Protect route just for the user regardless of the role
+            if (!this.AllowedRoleNames.Any())
+            {
                 return;
             }
 

@@ -1,12 +1,12 @@
-﻿@model LoginUserBM
+﻿@model CreateTestBM
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Create Test";
 }
 
-<h1 class="text-center my-5">Login</h1>
+<h1 class="text-center my-5">Create Test</h1>
 
 <div class="container">
-    @{
+    @*@{
         if (ViewBag.LoginError != null)
         {
             <div class="mb-3">
@@ -20,14 +20,14 @@
                 </div>
             </div>
         }
-    }
+    }*@
 
-    <form asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Login" method="post">
+    <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create" method="post">
         @Html.AntiForgeryToken()
 
-        @Html.FormGroupFor(model => model.Email)
+        @*@Html.FormGroupFor(model => model.Email)
 
-        @Html.FormGroupFor(model => model.Password)
+        @Html.FormGroupFor(model => model.Password)*@
 
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-success">Login</button>
