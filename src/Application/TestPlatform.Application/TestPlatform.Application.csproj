@@ -4,7 +4,6 @@
     <Folder Include="Areas\Administrator\Views\" />
     <Folder Include="Areas\Director\Views\" />
     <Folder Include="Areas\Student\Views\" />
-    <Folder Include="Areas\Teacher\Views\" />
     <Folder Include="Webpack\" />
   </ItemGroup>
 	

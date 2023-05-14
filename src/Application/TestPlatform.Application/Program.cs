@@ -23,6 +23,8 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.CookiePolicy;
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Services.Database.Test.Interfaces;
+    using TestPlatform.Services.Database.Test;
 
     public class Program
     {
@@ -129,6 +131,8 @@
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRoleMapService, UserRoleMapService>();
+
+            services.AddTransient<ITestService, TestService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)

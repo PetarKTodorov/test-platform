@@ -1,4 +1,4 @@
-﻿namespace TestPlatform.Application.Infrastructures.Helpers
+﻿namespace TestPlatform.Application.Infrastructures.ApplicationUser
 {
     public static class UserClaimTypes
     {
