@@ -18,8 +18,8 @@
 
         Task<int> GetCountOfAllAsyns(bool isDeleted);
 
-        Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize = Validations.DEFAULT_PAGE_SIZE);
+        Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize);
 
-        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize = Validations.DEFAULT_PAGE_SIZE);
+        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize);
     }
 }

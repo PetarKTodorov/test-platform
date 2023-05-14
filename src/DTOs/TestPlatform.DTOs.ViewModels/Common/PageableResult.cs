@@ -1,29 +1,30 @@
 ﻿namespace TestPlatform.DTOs.ViewModels.Common
 {
     using System.Collections.Generic;
-    using TestPlatform.Common.Constants;
 
     public class PageableResult<T>
     {
+        private const int DEFAULT_PAGE_SIZE = 10;
+
         public PageableResult()
         {
             this.Results = new List<T>();
 
-            this.CurrentPage = Validations.ONE;
-            this.BoundaryCount = Validations.ONE;
-            this.SiblingCount = Validations.ONE;
-            this.PageSize = Validations.DEFAULT_PAGE_SIZE;
+            this.CurrentPage = 1;
+            this.BoundaryCount = 1;
+            this.SiblingCount = 1;
+            this.PageSize = DEFAULT_PAGE_SIZE;
         }
 
         public int CurrentPage { get; set; }
 
-        public double PageSize { get; set; }
+        public int PageSize { get; set; }
 
         public int PagesCount
         {
             get
             {
-                var pagesCount = this.AllResultsCount / this.PageSize;
+                var pagesCount = this.AllResultsCount / (double)this.PageSize;
                 return (int)Math.Ceiling(pagesCount);
             }
         }

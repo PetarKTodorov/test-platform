@@ -16,7 +16,6 @@
                 PageToCheck = 1, 
                 ButtonType = "Previous",
             }).Result
-            
             @* --Previous button *@
 
             @* Page links from front boundary *@
@@ -82,7 +81,7 @@
             }
             @* --Ellipsis between the page links *@
 
-            @* Page links from back  boundary *@
+            @* Page links from back boundary *@
             @if (Model.PagesCount != 1)
             {
                 @Html.PartialAsync("Pagination/_PaginationPageLinks", new {

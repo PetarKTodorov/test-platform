@@ -21,10 +21,10 @@
                 page = 1;
             }
 
-            var users = await this.userService.FindAllAsync<UserInformationViewModel>(page.Value);
+            var result = new PageableResult<UserInformationViewModel>();
+            var users = await this.userService.FindAllAsync<UserInformationViewModel>(page.Value, result.PageSize);
             var usersCount = await this.userService.GetCountOfAllAsyns();
 
-            var result = new PageableResult<UserInformationViewModel>();
             result.Results = users;
             result.AllResultsCount = usersCount;
             result.CurrentPage = page.Value;

@@ -51,7 +51,7 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize = Validations.DEFAULT_PAGE_SIZE)
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize)
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
                 .Skip(pageSize * (page - 1))
@@ -62,7 +62,7 @@
             return colection;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize = Validations.DEFAULT_PAGE_SIZE)
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize)
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
                 .Where(x => x.IsDeleted == isDeletedFlag)
