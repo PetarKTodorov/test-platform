@@ -26,6 +26,17 @@
                             </ul>
                         </li>
                     }
+                    if (currentUser.IsInRole(ApplicationRoles.ADMINISTRATOR))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Users
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="Index">All</a></li>
+                            </ul>
+                        </li>
+                    }
                 }
             </ul>
 

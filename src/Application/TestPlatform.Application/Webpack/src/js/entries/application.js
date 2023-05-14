@@ -1,3 +1,1 @@
-﻿(() => {
-    console.log("test");
-})();
+﻿require("../configurations/select2-config.js");

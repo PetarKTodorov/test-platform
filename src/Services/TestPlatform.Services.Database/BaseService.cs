@@ -51,9 +51,25 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> FindAllAsync()
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize)
         {
-            var colection = await this.BaseRepository.GetAllAsync();
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .To<T>()
+                .ToListAsync();
+
+            return colection;
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize)
+        {
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .Where(x => x.IsDeleted == isDeletedFlag)
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .To<T>()
+                .ToListAsync();
 
             return colection;
         }
@@ -71,6 +87,21 @@
             }
 
             return entity;
+        }
+
+        public async Task<int> GetCountOfAllAsyns()
+        {
+            var countOfAllResults = await this.BaseRepository.GetAllAsQueryable()
+                .CountAsync();
+
+            return countOfAllResults;
+        }
+
+        public async Task<int> GetCountOfAllAsyns(bool isDeleted)
+        {
+            var collection = await this.BaseRepository.GetAllAsync(isDeleted);
+
+            return collection.Count();
         }
 
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model)

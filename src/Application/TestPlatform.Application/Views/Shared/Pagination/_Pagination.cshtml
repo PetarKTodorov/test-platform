@@ -1,0 +1,105 @@
+﻿@if (Model.PagesCount != 1) 
+{
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-end">
+            @{
+                var indexOfFirstPageLinkBeforeEllipsisAppears = Model.CurrentPage - Model.SiblingCount - 1 - 1 - Model.BoundaryCount;
+                var indexOfLastPageLinkAfterEllipsisDisappears = Model.PagesCount - Model.BoundaryCount - Model.CurrentPage - Model.SiblingCount - 1;
+
+                var paginatorSequence = Model.BoundaryCount + Model.SiblingCount + 1 + Model.SiblingCount;
+            }
+
+            @* Previous button *@
+            @Html.PartialAsync("Pagination/_PaginationNavigationButton", new { 
+                CurrentPage = Model.CurrentPage, 
+                NewPage = Model.CurrentPage - 1, 
+                PageToCheck = 1, 
+                ButtonType = "Previous",
+            }).Result
+            @* --Previous button *@
+
+            @* Page links from front boundary *@
+            @Html.PartialAsync("Pagination/_PaginationPageLinks", new {
+                StartingBoundaryIndex = 1,
+                EndingBoundaryIndex = Model.BoundaryCount,
+                CurrentPage = Model.CurrentPage,
+            }).Result
+            @* --Page links from front boundary *@
+
+            @* Ellipsis between the page links *@
+            @if (indexOfFirstPageLinkBeforeEllipsisAppears > 0)
+            {
+                @Html.PartialAsync("Pagination/_PaginationEllipsisLink").Result
+            }
+            @* --Ellipsis between the page links *@
+
+            @* Page links with siblings around *@
+            @{
+                // starting index of rendering page links
+                var startingIndexAfterBoundary = Model.CurrentPage - Model.SiblingCount;
+                // if the starting index is smaller than the beginning boundary
+                // then take the element after boundary
+                if (startingIndexAfterBoundary - Model.BoundaryCount - 1 <= 1)
+                {
+                    startingIndexAfterBoundary = Model.BoundaryCount + 1;
+                }
+                // if the starting index is at the last pages
+                // then set the index to specific value so we can see the last few pages
+                else if (indexOfLastPageLinkAfterEllipsisDisappears <= 0)
+                {
+                    // PagesCounet - (Boundary + Sibling + Current Page Link + Sibling)
+                    startingIndexAfterBoundary = Model.PagesCount - paginatorSequence;
+                }
+                
+                // ending index of rendering page links
+                var endingIndexBeforeBoundary = Model.CurrentPage + Model.SiblingCount;
+                // if the ending index is bigger than the ending boundary
+                // then take the element before boundary
+                if (Model.PagesCount - Model.BoundaryCount - endingIndexBeforeBoundary <= 1)
+                {
+                    endingIndexBeforeBoundary = Model.PagesCount - Model.BoundaryCount;
+                }
+                // if the ending index is at the first pages
+                // then set the index to specific value so we can see the first few pages
+                else if (indexOfFirstPageLinkBeforeEllipsisAppears <= 0)
+                {
+                    // Boundary + Sibling + Current Page Link + Sibling + 1 (because we start the loop from 1)
+                    endingIndexBeforeBoundary = paginatorSequence + 1;
+                }
+            }
+            @Html.PartialAsync("Pagination/_PaginationPageLinks", new {
+                StartingBoundaryIndex = startingIndexAfterBoundary,
+                EndingBoundaryIndex = endingIndexBeforeBoundary,
+                CurrentPage = Model.CurrentPage,
+            }).Result
+            @* --Page links with siblings around *@
+
+            @* Ellipsis between the page links *@
+            @if (indexOfLastPageLinkAfterEllipsisDisappears > 0)
+            {
+                @Html.PartialAsync("Pagination/_PaginationEllipsisLink").Result
+            }
+            @* --Ellipsis between the page links *@
+
+            @* Page links from back boundary *@
+            @if (Model.PagesCount != 1)
+            {
+                @Html.PartialAsync("Pagination/_PaginationPageLinks", new {
+                    StartingBoundaryIndex = Model.PagesCount - Model.BoundaryCount + 1,
+                    EndingBoundaryIndex = Model.PagesCount,
+                    CurrentPage = Model.CurrentPage,
+                }).Result
+            }
+            @* --Page links from back boundary *@
+
+            @* Next button *@
+            @Html.PartialAsync("Pagination/_PaginationNavigationButton", new { 
+                CurrentPage = Model.CurrentPage, 
+                NewPage = Model.CurrentPage + 1, 
+                PageToCheck = Model.PagesCount, 
+                ButtonType = "Next",
+            }).Result
+            @* --Next button *@
+        </ul>
+    </nav>
+}

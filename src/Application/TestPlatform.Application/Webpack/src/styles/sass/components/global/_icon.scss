@@ -23,6 +23,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+    &--trash:before {
+        content: "\e900";
+    }
+
     &--heart:before {
         content: "\f004";
     }

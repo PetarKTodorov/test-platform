@@ -1,0 +1,8 @@
+﻿@for (var boundaryIndex = Model.StartingBoundaryIndex; boundaryIndex <= Model.EndingBoundaryIndex; boundaryIndex++)
+{
+    var isPageLinkSelected = boundaryIndex == Model.CurrentPage;
+    var pageLinkActiveClass = isPageLinkSelected ? "active" : string.Empty;
+    <li class="page-item @pageLinkActiveClass">
+        <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-page="@boundaryIndex">@boundaryIndex</a>
+    </li>
+}

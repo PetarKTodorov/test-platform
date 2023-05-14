@@ -6,8 +6,6 @@
 
         public const string ADMINISTRATOR = "Administrator";
 
-        public const string DIRECTOR = "Director";
-
         public const string TEACHER = "Teacher";
 
         public const string STUDENT = "Student";

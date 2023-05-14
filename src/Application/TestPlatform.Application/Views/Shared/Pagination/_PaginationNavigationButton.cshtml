@@ -1,0 +1,11 @@
+﻿<li class="page-item">
+    @{
+        var isPageSelected = Model.CurrentPage == Model.PageToCheck;
+        var pageLinkDisabledClass = isPageSelected ? "disabled" : string.Empty;
+
+        var symbol = Model.ButtonType == "Next" ? "&raquo;" : "&laquo;";
+    }
+    <a class="page-link @pageLinkDisabledClass" asp-action="Index" asp-route-page="@Model.NewPage" aria-label="@Model.ButtonType">
+        <span aria-hidden="true">@Html.Raw(symbol)</span>
+    </a>
+</li>

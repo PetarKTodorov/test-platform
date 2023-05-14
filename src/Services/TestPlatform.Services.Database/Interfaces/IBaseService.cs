@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Database.Interfaces
 {
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities;
 
     public interface IBaseService<TEntity>
@@ -13,6 +14,12 @@
 
         Task<T> DeleteAsync<T>(Guid id);
 
-        Task<IEnumerable<TEntity>> FindAllAsync();
+        Task<int> GetCountOfAllAsyns();
+
+        Task<int> GetCountOfAllAsyns(bool isDeleted);
+
+        Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize);
+
+        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize);
     }
 }
