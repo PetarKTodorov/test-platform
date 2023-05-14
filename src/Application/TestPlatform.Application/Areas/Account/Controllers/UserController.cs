@@ -1,10 +1,8 @@
 ﻿namespace TestPlatform.Application.Areas.Account.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
-    using TestPlatform.Common.Constants;
     using TestPlatform.DTOs.BindingModels.User;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -65,7 +63,7 @@
             return this.RedirectToAction(actionName: "Index", controllerName: "Home", new { area = "" });
         }
 
-        [CustomAuthorize(ApplicationRoles.DIRECTOR, ApplicationRoles.STUDENT)]
+        [CustomAuthorize]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
