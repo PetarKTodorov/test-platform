@@ -1,0 +1,64 @@
+﻿@model PageableResult<AllSubjectTagsVM>
+
+@{
+    ViewData["Title"] = "All Subject Tags";
+}
+
+<h1 class="text-center">All Subject Tags</h1>
+
+<div class="container-fluid">
+    @{
+        if (this.Model.Results.Any() == false)
+        {
+            <div class="text-center fs-3 mt-5">There is no results.</div>
+            return;
+        }
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((AllSubjectTagsVM model) => model.Name)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((AllSubjectTagsVM model) => model.IsDeleted)
+                    </th>
+                    <th class="text-nowrap">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => row.Name)
+                        </td>
+                        <td>
+                            <input type="checkbox" class="flipswitch" checked="@row.IsDeleted" disabled />
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    Details
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm">
+                                    Update
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model).Result
+</div>
