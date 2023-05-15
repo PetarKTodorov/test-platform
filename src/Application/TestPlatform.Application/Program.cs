@@ -25,6 +25,8 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Database.Test;
+    using TestPlatform.Services.Database.Subjects.Interfaces;
+    using TestPlatform.Services.Database.Subjects;
 
     public class Program
     {
@@ -130,6 +132,8 @@
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRoleMapService, UserRoleMapService>();
+
+            services.AddTransient<ISubjectTagService, SubjectTagService>();
 
             services.AddTransient<ITestService, TestService>();
         }

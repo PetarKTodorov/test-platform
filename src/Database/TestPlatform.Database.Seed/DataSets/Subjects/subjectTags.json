@@ -1,0 +1,17 @@
+[
+    {
+        "Id": "2EE73BF7-FE5D-4096-AE3A-8E35400FD350",
+        "Name": "Math",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "2EE73BF7-FE5D-4096-CE3A-8E35400FD352",
+        "Name": "Biology",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "2EE73BF7-FE5D-4096-DE3A-8E35400FD353",
+        "Name": "Chemistry",
+        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    }
+]

@@ -7,5 +7,7 @@
         public const string USERS_JSON_FILE_NAME = "users";
 
         public const string USERS_ROLES_MAP_JSON_FILE_NAME = "usersRolesMap";
+
+        public const string SUBJECT_TAGS_JSON_FILE_NAME = "subjectTags";
     }
 }
