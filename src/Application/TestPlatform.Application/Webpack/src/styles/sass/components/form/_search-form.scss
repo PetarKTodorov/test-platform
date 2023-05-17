@@ -1,0 +1,39 @@
+@use "../../abstracts/__index.scss" as *;
+
+.search-form {
+    &__row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__label-wrapper {
+        min-width: 9rem;
+    }
+
+    &__options-wrapper {
+        min-width: 12rem;
+    }
+
+    &__input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        min-width: 14rem;
+    }
+}
+
+@include respond(768) {
+    .search-form {
+        &__row {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &__input-wrapper {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}
