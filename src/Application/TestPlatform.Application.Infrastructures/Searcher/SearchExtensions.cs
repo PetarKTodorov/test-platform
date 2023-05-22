@@ -1,6 +1,8 @@
 ﻿namespace TestPlatform.Application.Infrastructures.Searcher
 {
     using System.Linq.Expressions;
+    using System.Reflection;
+    using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Application.Infrastructures.Searcher.Types.DateTime;
     using TestPlatform.Application.Infrastructures.Searcher.Types.Enums;
@@ -23,7 +25,9 @@
         public static ICollection<AbstractSearch> GetDefaultSearchCriteria(this Type type)
         {
             var properties = type.GetProperties()
-                .Where(p => p.CanRead && p.CanWrite)
+                .Where(p => p.CanRead
+                    && p.CanWrite
+                    && p.GetCustomAttributes<CustomSearchFieldAttribute>().Any())
                 .OrderBy(p => p.PropertyType.IsCollectionType())
                 .ThenBy(p => p.Name);
 

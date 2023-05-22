@@ -6,6 +6,7 @@
 
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Application.Infrastructures.Searcher;
+    using TestPlatform.Application.Infrastructures.Filtres;
 
     public class TestController : BaseController
     {
@@ -62,6 +63,7 @@
 
     public class Person
     {
+        [CustomSearchField]
         public string Name { get; set; }
 
         public int? Age { get; set; }
@@ -72,6 +74,7 @@
 
         public SomeNestedClass NestedClass { get; set; }
 
+        [CustomSearchField]
         public ICollection<string> CollectionString { get; set; }
 
         public ICollection<SomeNestedClass> CollectionSomeNestedClass { get; set; }
