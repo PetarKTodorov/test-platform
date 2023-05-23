@@ -7,6 +7,8 @@
                 var indexOfLastPageLinkAfterEllipsisDisappears = Model.PagesCount - Model.BoundaryCount - Model.CurrentPage - Model.SiblingCount - 1;
 
                 var paginatorSequence = Model.BoundaryCount + Model.SiblingCount + 1 + Model.SiblingCount;
+
+                var queryString = Context.Request.QueryString.Value;
             }
 
             @* Previous button *@
@@ -15,6 +17,7 @@
                 NewPage = Model.CurrentPage - 1, 
                 PageToCheck = 1, 
                 ButtonType = "Previous",
+                QueryString = queryString,
             }).Result
             @* --Previous button *@
 
@@ -23,6 +26,7 @@
                 StartingBoundaryIndex = 1,
                 EndingBoundaryIndex = Model.BoundaryCount,
                 CurrentPage = Model.CurrentPage,
+                QueryString = queryString,
             }).Result
             @* --Page links from front boundary *@
 
@@ -71,6 +75,7 @@
                 StartingBoundaryIndex = startingIndexAfterBoundary,
                 EndingBoundaryIndex = endingIndexBeforeBoundary,
                 CurrentPage = Model.CurrentPage,
+                QueryString = queryString,
             }).Result
             @* --Page links with siblings around *@
 
@@ -88,6 +93,7 @@
                     StartingBoundaryIndex = Model.PagesCount - Model.BoundaryCount + 1,
                     EndingBoundaryIndex = Model.PagesCount,
                     CurrentPage = Model.CurrentPage,
+                    QueryString = queryString,
                 }).Result
             }
             @* --Page links from back boundary *@
@@ -98,6 +104,7 @@
                 NewPage = Model.CurrentPage + 1, 
                 PageToCheck = Model.PagesCount, 
                 ButtonType = "Next",
+                QueryString = queryString,
             }).Result
             @* --Next button *@
         </ul>
