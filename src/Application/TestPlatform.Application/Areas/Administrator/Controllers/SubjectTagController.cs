@@ -1,7 +1,10 @@
 ﻿namespace TestPlatform.Application.Areas.Administrator.Controllers
 {
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
 
+    using TestPlatform.Application.Infrastructures.Searcher;
+    using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.DTOs.ViewModels.Common;
     using TestPlatform.DTOs.ViewModels.SubjectTags;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -16,22 +19,39 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListAll(int? page = 1)
+        public async Task<IActionResult> ListAll(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
             if (page != null && page < 1)
             {
                 page = 1;
             }
 
+            if (searchCriteria == null || searchCriteria.Count == 0)
+            {
+                searchCriteria = typeof(AllSubjectTagsVM).GetDefaultSearchCriteria();
+            }
+
             var result = new PageableResult<AllSubjectTagsVM>();
-            var subjectTags = await this.subjectTagService.FindAllAsync<AllSubjectTagsVM>(page.Value, result.PageSize);
+
+            var subjectTags = this.subjectTagService
+                .FindAllAsQueryable<AllSubjectTagsVM>()
+                .ApplySearchCriteria(searchCriteria)
+                .Skip(result.PageSize * (page.Value - 1))
+                .Take(result.PageSize)
+                .ToArray();
             var subjectTagsCount = await this.subjectTagService.GetCountOfAllAsyns();
 
             result.Results = subjectTags;
             result.AllResultsCount = subjectTagsCount;
             result.CurrentPage = page.Value;
 
-            return this.View(result);
+            var viewModel = new SearchFilterVM<AllSubjectTagsVM>()
+            {
+                Data = result,
+                SearchCriteria = searchCriteria
+            };
+
+            return this.View(viewModel);
         }
 
         [HttpGet]

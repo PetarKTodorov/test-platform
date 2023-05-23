@@ -8,7 +8,6 @@
     using TestPlatform.Application.Infrastructures.Searcher;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.DTOs.ViewModels.Common;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
 
     public class TestController : BaseController
     {
@@ -38,7 +37,7 @@
             result.PageSize = 1;
             result.CurrentPage = page;
 
-            var model = new SearchViewModel()
+            var model = new SearchFilterVM<Person>()
             {
                 Data = result,
                 SearchCriteria = searchCriteria
@@ -46,13 +45,6 @@
 
             return this.View(model);
         }
-    }
-
-    public class SearchViewModel
-    {
-        public IEnumerable<AbstractSearch> SearchCriteria { get; set; } = new List<AbstractSearch>();
-
-        public PageableResult<Person> Data { get; set; }
     }
 
     public class Person

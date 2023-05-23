@@ -1,4 +1,4 @@
-﻿@model PageableResult<AllSubjectTagsVM>
+﻿@model SearchFilterVM<AllSubjectTagsVM>
 
 @{
     ViewData["Title"] = "All Subject Tags";
@@ -6,16 +6,25 @@
 
 <h1 class="text-center">All Subject Tags</h1>
 
-<div class="container-fluid">
+<div class="container-fluid px-5">
+    <form method="get" class="search-form">
+        @Html.EditorFor(m => m.SearchCriteria)
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+
+    </form>
+
     @{
-        if (this.Model.Results.Any() == false)
+        if (this.Model.Data.Results.Any() == false)
         {
-            <div class="text-center fs-3 mt-5">There is no results.</div>
+            <div class="text-center fs-3 mt-5">There are no results found.</div>
             return;
         }
     }
 
-    <div class="table-responsive">
+    <div class="table-responsive mt-3">
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -31,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var row in Model.Results)
+                @foreach (var row in Model.Data.Results)
                 {
                     <tr>
                         <td>
@@ -60,5 +69,5 @@
         </table>
     </div>
 
-    @Html.PartialAsync("Pagination/_Pagination", Model).Result
+    @Html.PartialAsync("Pagination/_Pagination", Model.Data).Result
 </div>

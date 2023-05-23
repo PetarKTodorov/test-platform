@@ -51,6 +51,14 @@
             return entityToReturn;
         }
 
+        public virtual IQueryable<T> FindAllAsQueryable<T>()
+        {
+            var colection = this.BaseRepository.GetAllAsQueryable()
+                .To<T>();
+
+            return colection;
+        }
+
         public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize)
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
