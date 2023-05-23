@@ -2,6 +2,7 @@ $(() => {
     const select = $(".js-search-select");
 
     select.on("change", onChangeSearchSelect);
+    onStartSearchSelect();
 
     function onChangeSearchSelect() {
         const select = $(this);
@@ -15,5 +16,12 @@ $(() => {
         if (selectedOption == rangeOption) {
             otherSearchTermInput.removeClass(toggleClassName);
         }
+    }
+
+    function onStartSearchSelect() {
+        $(".js-search-select").each(function () {
+            const select = $(this);
+            select.trigger("change");
+        });
     }
 });
