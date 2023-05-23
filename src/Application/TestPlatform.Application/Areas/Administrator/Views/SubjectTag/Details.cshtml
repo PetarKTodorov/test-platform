@@ -73,7 +73,11 @@
                         @Html.DisplayFor(model => model.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.Users)
+                        @{
+                            var userEmauls = Model.Users.Select(u => u.UserEmail).ToArray();
+                        }
+
+                        @string.Join(", ", userEmauls)
                     </td>
                 </tr>
             </tbody>
