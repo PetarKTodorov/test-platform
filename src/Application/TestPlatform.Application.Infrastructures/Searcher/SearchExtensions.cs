@@ -4,6 +4,7 @@
     using System.Reflection;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
+    using TestPlatform.Application.Infrastructures.Searcher.Types.Boolean;
     using TestPlatform.Application.Infrastructures.Searcher.Types.DateTime;
     using TestPlatform.Application.Infrastructures.Searcher.Types.Enums;
     using TestPlatform.Application.Infrastructures.Searcher.Types.Numeric;
@@ -67,7 +68,7 @@
             {
                 result = new TextSearch();
             }
-            else if (propertyType.Equals(typeof(int)) || propertyType.Equals(typeof(int?)))
+            else if (IsNumericType(propertyType))
             {
                 result = new NumericSearch();
             }
@@ -80,6 +81,10 @@
                 result = new EnumSearch();
                 var enumSearch = (EnumSearch)result;
                 enumSearch.EnumTypeName = propertyType.AssemblyQualifiedName;
+            }
+            else if (propertyType.Equals(typeof(bool)))
+            {
+                result = new BooleanSearch();
             }
 
             if (result != null)
@@ -153,6 +158,16 @@
             string propertyPath = property.Substring(property.IndexOf('.') + 1);
 
             return propertyPath;
+        }
+
+        private static bool IsNumericType(Type propertyType)
+        {
+            bool isNumericType = propertyType.Equals(typeof(int)) || propertyType.Equals(typeof(int?))
+                || propertyType.Equals(typeof(float)) || propertyType.Equals(typeof(float?))
+                || propertyType.Equals(typeof(double)) || propertyType.Equals(typeof(double?))
+                || propertyType.Equals(typeof(decimal)) || propertyType.Equals(typeof(decimal?));
+
+            return isNumericType;
         }
     }
 }

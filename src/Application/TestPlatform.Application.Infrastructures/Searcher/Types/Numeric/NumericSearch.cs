@@ -7,9 +7,9 @@
     {
         private const string INVALID_COMPARABLE_OPTION_ERROR_MESSAGE = "Comparable option is not supported.";
 
-        public int? SearchTerm { get; set; }
+        public decimal? SearchTerm { get; set; }
 
-        public int? OtherSearchTerm { get; set; }
+        public decimal? OtherSearchTerm { get; set; }
 
         public NumericComparableOptions ComparableOption { get; set; }
 
@@ -28,55 +28,66 @@
         private Expression CreateFilterExpression(Expression property)
         {
             Expression expression = null;
-            var constantExpression = Expression.Constant(this.SearchTerm);
 
-            switch (this.ComparableOption)
+            try
             {
-                case NumericComparableOptions.Less:
-                    expression = Expression.LessThan(property, constantExpression);
-                    break;
-                case NumericComparableOptions.LessOrEqual:
-                    expression = Expression.LessThanOrEqual(property, constantExpression);
-                    break;
-                case NumericComparableOptions.Equal:
-                    expression = Expression.Equal(property, constantExpression);
-                    break;
-                case NumericComparableOptions.GreaterOrEqual:
-                    expression = Expression.GreaterThanOrEqual(property, constantExpression);
-                    break;
-                case NumericComparableOptions.Greater:
-                    expression = Expression.GreaterThan(property, constantExpression);
-                    break;
-                case NumericComparableOptions.InRange:
-                    Expression searchExpression1 = null;
-                    Expression searchExpression2 = null;
+                var covertedSearchTerm = Convert.ChangeType(this.SearchTerm, property.Type);
 
-                    if (this.SearchTerm.HasValue)
-                    {
-                        searchExpression1 = Expression.GreaterThanOrEqual(property, constantExpression);
-                    }
+                var constantExpression = Expression.Constant(covertedSearchTerm);
 
-                    if (this.OtherSearchTerm.HasValue)
-                    {
-                        var constantExpression2 = Expression.Constant(this.OtherSearchTerm);
-                        searchExpression2 = Expression.LessThanOrEqual(property, constantExpression2);
-                    }
+                switch (this.ComparableOption)
+                {
+                    case NumericComparableOptions.Less:
+                        expression = Expression.LessThan(property, constantExpression);
+                        break;
+                    case NumericComparableOptions.LessOrEqual:
+                        expression = Expression.LessThanOrEqual(property, constantExpression);
+                        break;
+                    case NumericComparableOptions.Equal:
+                        expression = Expression.Equal(property, constantExpression);
+                        break;
+                    case NumericComparableOptions.GreaterOrEqual:
+                        expression = Expression.GreaterThanOrEqual(property, constantExpression);
+                        break;
+                    case NumericComparableOptions.Greater:
+                        expression = Expression.GreaterThan(property, constantExpression);
+                        break;
+                    case NumericComparableOptions.InRange:
+                        Expression searchExpression1 = null;
+                        Expression searchExpression2 = null;
 
-                    if (searchExpression1 != null && searchExpression2 != null)
-                    {
-                        expression = Expression.AndAlso(searchExpression1, searchExpression2);
-                    }
-                    else if (searchExpression1 != null)
-                    {
-                        expression = searchExpression1;
-                    }
-                    else if (searchExpression2 != null)
-                    {
-                        expression = searchExpression2;
-                    }
-                    break;
-                default:
-                    throw new InvalidOperationException(INVALID_COMPARABLE_OPTION_ERROR_MESSAGE);
+                        if (this.SearchTerm.HasValue)
+                        {
+                            searchExpression1 = Expression.GreaterThanOrEqual(property, constantExpression);
+                        }
+
+                        if (this.OtherSearchTerm.HasValue)
+                        {
+                            var covertedSearchTerm2 = Convert.ChangeType(this.OtherSearchTerm, property.Type);
+                            var constantExpression2 = Expression.Constant(covertedSearchTerm2);
+
+                            searchExpression2 = Expression.LessThanOrEqual(property, constantExpression2);
+                        }
+
+                        if (searchExpression1 != null && searchExpression2 != null)
+                        {
+                            expression = Expression.AndAlso(searchExpression1, searchExpression2);
+                        }
+                        else if (searchExpression1 != null)
+                        {
+                            expression = searchExpression1;
+                        }
+                        else if (searchExpression2 != null)
+                        {
+                            expression = searchExpression2;
+                        }
+                        break;
+                    default:
+                        throw new InvalidOperationException(INVALID_COMPARABLE_OPTION_ERROR_MESSAGE);
+                }
+            }
+            catch (Exception)
+            {
             }
 
             return expression;
