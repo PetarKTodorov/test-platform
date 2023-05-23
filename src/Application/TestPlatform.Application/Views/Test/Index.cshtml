@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <form method="post" class="search-form">
+    <form method="get" class="search-form">
         @Html.EditorFor(m => m.SearchCriteria)
 
         <div class="d-flex">
@@ -13,4 +13,51 @@
         </div>
 
     </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((Person model) => model.Name)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((Person model) => model.Age)
+                    </th>
+                    <th class="text-nowrap">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Data.Results)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => row.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => row.Age)
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    Details
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm">
+                                    Update
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model.Data).Result
 </div>

@@ -7,10 +7,13 @@
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Application.Infrastructures.Searcher;
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.DTOs.ViewModels.Common;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
 
     public class TestController : BaseController
     {
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(ICollection<AbstractSearch> searchCriteria, int page = 1)
         {
             var data = new Person[]
             {
@@ -20,33 +23,24 @@
                 new Person() { isDeleted = false, Name = "Kiro", Age = 40, Date = new DateTime(2023, 4, 15), TestEnum = TestEnum.Third, CollectionString = new List<string>() { "gggg", "hh", "t" }, NestedClass = new SomeNestedClass() { NestedAge = 40, NestedText = "Test4" }, CollectionSomeNestedClass = new List<SomeNestedClass>() { new SomeNestedClass() { NestedAge = 1, NestedText = "Collection111" }, new SomeNestedClass() { NestedAge = 24, NestedText = "Collection24" } }  },
             };
 
-            var model = new SearchViewModel()
+            if (searchCriteria == null || searchCriteria.Count == 0)
             {
-                Data = data,
-                SearchCriteria = typeof(Person).GetDefaultSearchCriteria()
+                searchCriteria = typeof(Person).GetDefaultSearchCriteria()
                     .AddCustomSearchCriterion<Person>(p => p.NestedClass.NestedText)
-                    .AddCustomSearchCriterion<Person>(s => s.CollectionSomeNestedClass.Select(c => c.NestedText))
-            };
+                    .AddCustomSearchCriterion<Person>(s => s.CollectionSomeNestedClass.Select(c => c.NestedText));
+            }
 
-            return this.View(model);
-        }
+            var filteredData = data.AsQueryable().ApplySearchCriteria(searchCriteria).ToArray();
 
-        [HttpPost]
-        public ActionResult Index(ICollection<AbstractSearch> searchCriteria)
-        {
-            var data = new Person[]
-            {
-                new Person() { isDeleted = true, Name = "Pesho", Age = 10, Date = new DateTime(2023, 1, 15), TestEnum = TestEnum.First, CollectionString = new List<string>() { "aaa", "bbbb", "ba" }, NestedClass = new SomeNestedClass() { NestedAge = 10, NestedText = "Test1" }, CollectionSomeNestedClass = new List<SomeNestedClass>() { new SomeNestedClass() { NestedAge = 1, NestedText = "Collection1" }, new SomeNestedClass() { NestedAge = 2, NestedText = "Collection2" } } },
-                new Person() { isDeleted = false, Name = "PeGosho", Age = 20, Date = new DateTime(2023, 2, 15), TestEnum = TestEnum.First, CollectionString = new List<string>() { "cccc", "dddd", "bd" }, NestedClass = new SomeNestedClass() { NestedAge = 20, NestedText = "Test2" }, CollectionSomeNestedClass = new List<SomeNestedClass>() { new SomeNestedClass() { NestedAge = 3, NestedText = "Collection3" }, new SomeNestedClass() { NestedAge = 22, NestedText = "Collection22" } }  },
-                new Person() { isDeleted = false, Name = "Ivan", Age = 30, Date = new DateTime(2023, 3, 15), TestEnum = TestEnum.Second, CollectionString = new List<string>() { "a", "basa", "bk" }, NestedClass = new SomeNestedClass() { NestedAge = 30, NestedText = "Test3" }, CollectionSomeNestedClass = new List<SomeNestedClass>() { new SomeNestedClass() { NestedAge = 4, NestedText = "Collection4" }, new SomeNestedClass() { NestedAge = 23, NestedText = "Collection23" } }  },
-                new Person() { isDeleted = false, Name = "Kiro", Age = 40, Date = new DateTime(2023, 4, 15), TestEnum = TestEnum.Third, CollectionString = new List<string>() { "gggg", "hh", "t" }, NestedClass = new SomeNestedClass() { NestedAge = 40, NestedText = "Test4" }, CollectionSomeNestedClass = new List<SomeNestedClass>() { new SomeNestedClass() { NestedAge = 1, NestedText = "Collection111" }, new SomeNestedClass() { NestedAge = 24, NestedText = "Collection24" } }  },
-            };
-
-            data = data.AsQueryable().ApplySearchCriteria(searchCriteria).ToArray();
+            var result = new PageableResult<Person>();
+            result.Results = filteredData.Skip(1 * (page - 1)).Take(1);
+            result.AllResultsCount = filteredData.Count();
+            result.PageSize = 1;
+            result.CurrentPage = page;
 
             var model = new SearchViewModel()
             {
-                Data = data,
+                Data = result,
                 SearchCriteria = searchCriteria
             };
 
@@ -56,9 +50,9 @@
 
     public class SearchViewModel
     {
-        public IEnumerable<Person> Data { get; set; } = new List<Person>();
-
         public IEnumerable<AbstractSearch> SearchCriteria { get; set; } = new List<AbstractSearch>();
+
+        public PageableResult<Person> Data { get; set; }
     }
 
     public class Person
