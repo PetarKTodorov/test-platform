@@ -5,6 +5,7 @@
 
     using TestPlatform.Application.Infrastructures.Searcher;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
+    using TestPlatform.Common.Exceptions;
     using TestPlatform.DTOs.ViewModels.Common;
     using TestPlatform.DTOs.ViewModels.SubjectTags;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -67,9 +68,18 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(Guid id)
         {
-            return this.View();
+            try
+            {
+                var subjectTag = await this.subjectTagService.FindByIdAsync<DetailsSubjectTagVM>(id);
+
+                return this.View(subjectTag);
+            }
+            catch (NotFoundException exception)
+            {
+                return new NotFoundResult();
+            }
         }
 
         [HttpGet]

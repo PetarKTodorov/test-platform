@@ -51,9 +51,9 @@
                         </td>
                         <td>
                             <div class="d-flex gap-1">
-                                <button type="button" class="btn btn-info btn-sm">
+                                <a type="button" class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id">
                                     Details
-                                </button>
+                                </a>
                                 <button type="button" class="btn btn-warning btn-sm">
                                     Update
                                 </button>
