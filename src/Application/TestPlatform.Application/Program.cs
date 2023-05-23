@@ -139,6 +139,7 @@
             services.AddTransient<IUserRoleMapService, UserRoleMapService>();
 
             services.AddTransient<ISubjectTagService, SubjectTagService>();
+            services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
 
             services.AddTransient<ITestService, TestService>();
         }

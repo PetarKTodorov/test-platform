@@ -24,6 +24,7 @@
                     new UserSeeder(serviceProvider, logger, Constants.USERS_JSON_FILE_NAME),
                     new UserRoleMapSeeder(serviceProvider, logger, Constants.USERS_ROLES_MAP_JSON_FILE_NAME),
                     new SubjectTagSeeder(serviceProvider, logger, Constants.SUBJECT_TAGS_JSON_FILE_NAME),
+                    new UserSubjectTagMapSeeder(serviceProvider, logger, Constants.USER_SUBJECT_TAG_MAP_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)
