@@ -22,6 +22,8 @@
 
         TEntity Update(TEntity entity);
 
+        TEntity HardDelete(TEntity entity);
+
         TEntity Delete(TEntity entity);
 
         TEntity Restore(TEntity entity);

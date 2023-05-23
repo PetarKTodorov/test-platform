@@ -39,6 +39,18 @@
             return entityToReturn;
         }
 
+        public virtual async Task<T> HardDeleteAsync<T>(Guid id)
+        {
+            TEntity entity = await this.FindByIdAsync<TEntity>(id);
+
+            TEntity deletedEntity = this.BaseRepository.HardDelete(entity);
+            await this.BaseRepository.SaveChangesAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(deletedEntity);
+
+            return entityToReturn;
+        }
+
         public virtual async Task<T> DeleteAsync<T>(Guid id)
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
@@ -49,6 +61,25 @@
             T entityToReturn = this.Mapper.Map<T>(deletedEntity);
 
             return entityToReturn;
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>()
+        {
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .To<T>()
+                .ToListAsync();
+
+            return colection;
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag)
+        {
+            var colection = await this.BaseRepository.GetAllAsQueryable()
+                .Where(x => x.IsDeleted == isDeletedFlag)
+                .To<T>()
+                .ToListAsync();
+
+            return colection;
         }
 
         public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize)
@@ -76,20 +107,20 @@
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id)
         {
-            T entity = await this.BaseRepository.GetByIdAsQueryable(id)
-                .To<T>()
-                .SingleOrDefaultAsync();
+            var entity = await this.BaseRepository.GetByIdAsync(id);
 
-            if (entity == null)
+            var mappedEntity = this.Mapper.Map<T>(entity);
+
+            if (mappedEntity == null)
             {
                 string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
                 throw new NotFoundException(message);
             }
 
-            return entity;
+            return mappedEntity;
         }
 
-        public async Task<int> GetCountOfAllAsyns()
+        public virtual async Task<int> GetCountOfAllAsyns()
         {
             var countOfAllResults = await this.BaseRepository.GetAllAsQueryable()
                 .CountAsync();
@@ -97,7 +128,7 @@
             return countOfAllResults;
         }
 
-        public async Task<int> GetCountOfAllAsyns(bool isDeleted)
+        public virtual async Task<int> GetCountOfAllAsyns(bool isDeleted)
         {
             var collection = await this.BaseRepository.GetAllAsync(isDeleted);
 

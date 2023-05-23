@@ -89,5 +89,53 @@
         {
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
+
+        public async Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles)
+        {
+            await AddRolesToUserAsync(userId, userRoles);
+            await RemoveRolesFromUserAsync(userId, userRoles);
+        }
+
+        public async Task RemoveRoleFromUserAsync(Guid userRoleMapId)
+        {
+            await this.userRoleMapService.HardDeleteAsync<CreateUserRoleMap>(userRoleMapId);
+        }
+
+        public async Task AddRoleToUserAsync(Guid userId, Guid roleId)
+        {
+            var userRoleMap = new CreateUserRoleMap()
+            {
+                UserId = userId,
+                RoleId = roleId,
+            };
+
+            await this.userRoleMapService.CreateAsync<CreateUserRoleMap, CreateUserRoleMap>(userRoleMap);
+        }
+
+        private async Task AddRolesToUserAsync(Guid userId, IEnumerable<Guid> newRoles)
+        {
+            var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
+            var oldUserRolesIds = userWithRoles.Roles.Select(r => r.RoleId);
+
+            var rolesToAdd = newRoles.Where(roleId => !oldUserRolesIds.Contains(roleId));
+            foreach (var roleId in rolesToAdd)
+            {
+                await this.AddRoleToUserAsync(userId, roleId);
+            }
+        }
+
+        private async Task RemoveRolesFromUserAsync(Guid userId, IEnumerable<Guid> userRoles)
+        {
+            var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
+            var oldUserRolesIds = userWithRoles.Roles.Select(r => r.RoleId);
+
+            var rolesToRemove = oldUserRolesIds.Where(roleId => !userRoles.Contains(roleId));
+            foreach (var roleId in rolesToRemove)
+            {
+                var userRoleMapId = userWithRoles.Roles.First(ur => ur.RoleId == roleId);
+
+                await this.RemoveRoleFromUserAsync(userRoleMapId.Id);
+            }
+        }
     }
 }

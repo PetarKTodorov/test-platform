@@ -2,10 +2,11 @@
 {
     using System;
     using System.ComponentModel;
+    using AutoMapper;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Services.Mapper.Interfaces;
 
-    public class UserInformationViewModel : IMapFrom<User>
+    public class UserInformationVM : IMapFrom<User>
     {
         public string Id { get; set; }
 
@@ -22,5 +23,7 @@
 
         [DisplayName("Deleted On")]
         public DateTime DeletedOn { get; set; }
+
+        public IEnumerable<UserRoleMapVM> Roles { get; set; }
     }
 }

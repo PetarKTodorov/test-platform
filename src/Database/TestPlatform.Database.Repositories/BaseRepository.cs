@@ -79,14 +79,28 @@
             return entry.Entity;
         }
 
+        public virtual TEntity HardDelete(TEntity entity)
+        {
+            var entry = this.DbContext.Remove(entity);
+
+            return entry.Entity;
+        }
+
         public virtual TEntity Delete(TEntity entity)
         {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = true;
-            entry.Entity.DeletedDate = DateTime.UtcNow;
+            entity.IsDeleted = true;
+            entity.DeletedDate = DateTime.UtcNow;
 
-            // Set deletedByUserID
-            return entry.Entity;
+            return this.Update(entity);
+        }
+
+        public TEntity Restore(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            entity.DeletedDate = null;
+            entity.DeletedBy = null;
+
+            return this.Update(entity);
         }
 
         public Task<int> SaveChangesAsync()
@@ -106,16 +120,6 @@
             {
                 this.DbContext?.Dispose();
             }
-        }
-
-        public TEntity Restore(TEntity entity)
-        {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = false;
-            entry.Entity.DeletedDate = null;
-
-            // Remove deletedByUserID
-            return entry.Entity;
         }
     }
 }
