@@ -29,5 +29,7 @@
         TEntity Restore(TEntity entity);
 
         Task<int> SaveChangesAsync();
+
+        void DetachLocal(TEntity t, Guid entryId);
     }
 }

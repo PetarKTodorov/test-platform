@@ -46,6 +46,8 @@
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
+            this.BaseRepository.DetachLocal(entity, entity.Id);
+
             TEntity deletedEntity = this.BaseRepository.HardDelete(entity);
             await this.BaseRepository.SaveChangesAsync();
 

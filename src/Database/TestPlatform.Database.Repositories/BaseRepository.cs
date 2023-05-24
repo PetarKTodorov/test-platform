@@ -114,6 +114,18 @@
             GC.SuppressFinalize(this);
         }
 
+        public void DetachLocal(TEntity entity, Guid entryId)
+        {
+            var local = this.DbSet
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(entryId));
+            if (local != null)
+            {
+                this.DbContext.Entry(local).State = EntityState.Detached;
+            }
+            this.DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
