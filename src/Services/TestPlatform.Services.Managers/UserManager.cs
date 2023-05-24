@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.VisualBasic;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
