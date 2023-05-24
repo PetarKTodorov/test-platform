@@ -162,7 +162,10 @@
 
         private static bool IsNumericType(Type propertyType)
         {
-            bool isNumericType = propertyType.Equals(typeof(int)) || propertyType.Equals(typeof(int?))
+            bool isNumericType = propertyType.Equals(typeof(byte)) || propertyType.Equals(typeof(byte?))
+                || propertyType.Equals(typeof(short)) || propertyType.Equals(typeof(short?))
+                || propertyType.Equals(typeof(int)) || propertyType.Equals(typeof(int?))
+                || propertyType.Equals(typeof(long)) || propertyType.Equals(typeof(long?))
                 || propertyType.Equals(typeof(float)) || propertyType.Equals(typeof(float?))
                 || propertyType.Equals(typeof(double)) || propertyType.Equals(typeof(double?))
                 || propertyType.Equals(typeof(decimal)) || propertyType.Equals(typeof(decimal?));
