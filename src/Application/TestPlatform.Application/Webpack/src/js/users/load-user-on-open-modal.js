@@ -1,27 +1,26 @@
 (() => {
-    const modifyUserRolesButtons = document.querySelectorAll(".delete-user-button");
+    const deleteUserButtons = document.querySelectorAll(".delete-user-button");
+    const restoreUserButtons = document.querySelectorAll(".restore-user-button");
 
-    modifyUserRolesButtons.forEach(button => {
-        button.addEventListener("click", function (e) {
-            const rolesMultiSelect = $(".js-select2-modal.roles");
-            rolesMultiSelect.empty();
+    deleteUserButtons.forEach(button => button.addEventListener("click", (e) => clickUserButton(e, '#deleteUserModal')))
+    restoreUserButtons.forEach(button => button.addEventListener("click", (e) => clickUserButton(e, '#restoreUserModal')))
 
-            const url = this.dataset.url;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const userIdInput = document.querySelector('.delete-user-id');
-                    const fullNameInput = document.querySelector('.full-name');
-                    const emailInput = document.querySelector('.email');
-                    const createdDateInput = document.querySelector('.created-date');
+    function clickUserButton (e, modalSelector) {
+        const url = e.currentTarget.dataset.url;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const userModal = document.querySelector(modalSelector);
 
-                    userIdInput.value = data.id;
-                    fullNameInput.value = data.fullName;
-                    emailInput.value = data.email;
-                    createdDateInput.value = data.createdDate;
+                const userIdInput = userModal.querySelector('.user-id');
+                const fullNameInput = userModal.querySelector('.full-name');
+                const emailInput = userModal.querySelector('.email');
+                const createdDateInput = userModal.querySelector('.created-date');
 
-                    console.log(data);
-                })
-        })
-    })
+                userIdInput.value = data.id;
+                fullNameInput.value = data.fullName;
+                emailInput.value = data.email;
+                createdDateInput.value = data.createdDate;
+            });
+    }
 })();

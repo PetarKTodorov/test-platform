@@ -7,6 +7,8 @@
     {
         Task<T> FindByIdAsync<T>(Guid id);
 
+        Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag);
+
         Task<T> CreateAsync<T, TBindingModel>(TBindingModel model);
 
         Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model);
@@ -14,6 +16,8 @@
         Task<T> HardDeleteAsync<T>(Guid id);
 
         Task<T> DeleteAsync<T>(Guid id);
+
+        Task<T> RestoryAsync<T>(Guid id);
 
         Task<int> GetCountOfAllAsyns();
 

@@ -78,5 +78,22 @@
 
             return this.RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Restore(Guid userId)
+        {
+            var user = await this.userService.FindByIdAsync<UserInformationVM>(userId, isDeletedFlag: true);
+
+            return this.Json(user);
+        }
+
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RestoreConfirmed(Guid userId)
+        {
+            await this.userService.RestoryAsync<User>(userId);
+
+            return this.RedirectToAction("Index");
+        }
     }
 }

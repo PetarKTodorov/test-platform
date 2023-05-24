@@ -66,14 +66,21 @@
                         @{
                             var modifuUserRolesUrl = Url.Action("ModifyUserRoles", new { userId = user.Id });
                             var deleteUrl = Url.Action("Delete", new { userId = user.Id });
+                            var restoreUrl = Url.Action("Restore", new { userId = user.Id });
                         }
 
                         @if (!user.IsDeleted)
                         {
                             <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-url="@modifuUserRolesUrl" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
-                                Modify roles
+                                <span class="icon-font icon-font--user"></span>
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm delete-user-button" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUser">
+                            <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                <span class="icon-font icon-font--trash"></span>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
                                 <span class="icon-font icon-font--trash"></span>
                             </button>
                         }
@@ -87,7 +94,18 @@
 </div>
 
 @Html.PartialAsync("_ModifyUserRolesModal").Result
-@Html.PartialAsync("_DeleteUserModal").Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "deleteUserModal",
+    Action = "Delete",
+    Title = "Delete user",
+    ConfirmText = "Confirm deletion",
+}).Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "restoreUserModal",
+    Action = "Restore",
+    Title = "Restore user",
+    ConfirmText = "Confirm Restoration",
+}).Result
 
 @section Scripts {
     <script asp-src-include="~/js/users*.js" defer></script>

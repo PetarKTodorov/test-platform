@@ -63,6 +63,18 @@
             return entityToReturn;
         }
 
+        public virtual async Task<T> RestoryAsync<T>(Guid id)
+        {
+            TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
+
+            TEntity restoredEntity = this.BaseRepository.Restore(entity);
+            await this.BaseRepository.SaveChangesAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(restoredEntity);
+
+            return entityToReturn;
+        }
+
         public virtual async Task<IEnumerable<T>> FindAllAsync<T>()
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
@@ -108,6 +120,21 @@
         public virtual async Task<T> FindByIdAsync<T>(Guid id)
         {
             var entity = await this.BaseRepository.GetByIdAsync(id);
+
+            var mappedEntity = this.Mapper.Map<T>(entity);
+
+            if (mappedEntity == null)
+            {
+                string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
+                throw new NotFoundException(message);
+            }
+
+            return mappedEntity;
+        }
+
+        public virtual async Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag)
+        {
+            var entity = await this.BaseRepository.GetByIdAsync(id, isDeletedFlag);
 
             var mappedEntity = this.Mapper.Map<T>(entity);
 
