@@ -6,21 +6,7 @@
 <h1 class="text-center my-5">Login</h1>
 
 <div class="container">
-    @{
-        if (ViewBag.LoginError != null)
-        {
-            <div class="mb-3">
-                <div class="toast align-items-center bg-danger text-white w-100 show" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            @ViewBag.LoginError
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        }
-    }
+    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.LoginError }).Result
 
     <form asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Login" method="post">
         @Html.AntiForgeryToken()

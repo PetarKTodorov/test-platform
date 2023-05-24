@@ -7,4 +7,5 @@
 ================================================================================
 */
 
-@use "./global/__index.scss";
+@use "./global/__index.scss" as global;
+@use "./form/__index.scss" as form;

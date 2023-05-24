@@ -1,0 +1,86 @@
+﻿@model DetailsSubjectTagVM
+
+@{
+    ViewData["Title"] = "Subject Tag Details";
+}
+
+<h1 class="text-center">Subject Tag Details</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.ModifiedDate)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.DeletedBy)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.DeletedDate)
+                    </th>
+                    <th class="text-nowrap">
+                        <input type="checkbox" class="flipswitch" checked="@Model.IsDeleted" disabled />
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameFor(model => model.Users)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ModifiedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ModifiedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.DeletedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.DeletedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.IsDeleted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                    <td>
+                        @{
+                            var userEmauls = Model.Users.Select(u => u.UserEmail).ToArray();
+                        }
+
+                        @string.Join(", ", userEmauls)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -4,6 +4,7 @@
 
     public class HomeController : BaseController
     {
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return this.View();
