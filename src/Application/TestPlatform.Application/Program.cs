@@ -147,6 +147,7 @@
         private static void RegisterManagers(IServiceCollection services)
         {
             services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
         }
     }
 }

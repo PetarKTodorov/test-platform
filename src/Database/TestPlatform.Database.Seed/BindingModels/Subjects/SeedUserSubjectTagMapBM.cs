@@ -15,8 +15,5 @@
 
         [Required]
         public Guid SubjectTagId { get; set; }
-
-        [Required]
-        public Guid CreatedBy { get; set; }
     }
 }

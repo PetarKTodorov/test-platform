@@ -5,7 +5,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Seed.BindingModels.Subjects;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -25,7 +25,8 @@
 
             foreach (var dto in dtoObjects)
             {
-                await subjectTagService.CreateAsync<SubjectTag, SeedCreateSubjectTagBM>(dto);
+                var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                await subjectTagService.CreateAsync<SubjectTag, SeedCreateSubjectTagBM>(dto, administratorId);
             }
         }
     }

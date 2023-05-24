@@ -12,10 +12,10 @@
 
         Task Logout(HttpContext httpContext);
 
-        Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles);
+        Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles, Guid currentUserId);
 
         Task RemoveRoleFromUserAsync(Guid userRoleMapId);
 
-        Task AddRoleToUserAsync(Guid userId, Guid roleId);
+        Task AddRoleToUserAsync(Guid userId, Guid roleId, Guid currentUserId);
     }
 }

@@ -15,8 +15,5 @@
 
         [Required]
         public Guid RoleId { get; set; }
-
-        [Required]
-        public Guid CreatedBy { get; set; }
     }
 }

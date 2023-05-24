@@ -53,6 +53,12 @@
                         {
                             configuration.CreateMap(map.Source, map.Destination);
                         }
+
+                        // GetEntityTypesToBaseEntity
+                        foreach (var map in GetEntityTypesToBaseEntity(types))
+                        {
+                            configuration.CreateMap(map.Source, map.Destination);
+                        }
                     });
 
             MapperInstance = new Mapper(new MapperConfiguration(config));
@@ -60,11 +66,26 @@
 
         private static IEnumerable<TypesMap> GetEntityTypes(IEnumerable<Type> types)
         {
-            IEnumerable<TypesMap> entityTypes = types.Where(t =>
+            IEnumerable<TypesMap> entityTypes = GetTypesWithBaseTypeBaseEntity(types)
+                .Select(t => new TypesMap() { Source = t, Destination = t });
+
+            return entityTypes;
+        }
+
+        private static IEnumerable<TypesMap> GetEntityTypesToBaseEntity(IEnumerable<Type> types)
+        {
+            IEnumerable<TypesMap> entityTypes = GetTypesWithBaseTypeBaseEntity(types)
+                .Select(t => new TypesMap() { Source = t, Destination = typeof(BaseEntity) });
+
+            return entityTypes;
+        }
+
+        private static IEnumerable<Type> GetTypesWithBaseTypeBaseEntity(IEnumerable<Type> types)
+        {
+            IEnumerable<Type> entityTypes = types.Where(t =>
                                     t.GetTypeInfo().BaseType == typeof(BaseEntity)
                                     && t.GetTypeInfo().IsAbstract == false
-                                    && t.GetTypeInfo().IsInterface == false)
-                .Select(t => new TypesMap() { Source = t, Destination = t });
+                                    && t.GetTypeInfo().IsInterface == false);
 
             return entityTypes;
         }

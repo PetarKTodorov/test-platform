@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.VisualBasic;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
@@ -65,7 +66,8 @@
                 return false;
             }
 
-            var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
+            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+            var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model, administratorId);
 
             var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
 
@@ -80,7 +82,7 @@
                 RoleId = role.Id
             };
 
-            await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap);
+            await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap, administratorId);
 
             return true;
         }
@@ -90,10 +92,10 @@
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        public async Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles)
+        public async Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles, Guid currentUserId)
         {
-            await AddRolesToUserAsync(userId, userRoles);
-            await RemoveRolesFromUserAsync(userId, userRoles);
+            await this.AddRolesToUserAsync(userId, userRoles, currentUserId);
+            await this.RemoveRolesFromUserAsync(userId, userRoles);
         }
 
         public async Task RemoveRoleFromUserAsync(Guid userRoleMapId)
@@ -101,7 +103,7 @@
             await this.userRoleMapService.HardDeleteAsync<CreateUserRoleMap>(userRoleMapId);
         }
 
-        public async Task AddRoleToUserAsync(Guid userId, Guid roleId)
+        public async Task AddRoleToUserAsync(Guid userId, Guid roleId, Guid currentUserId)
         {
             var userRoleMap = new CreateUserRoleMap()
             {
@@ -109,10 +111,10 @@
                 RoleId = roleId,
             };
 
-            await this.userRoleMapService.CreateAsync<CreateUserRoleMap, CreateUserRoleMap>(userRoleMap);
+            await this.userRoleMapService.CreateAsync<CreateUserRoleMap, CreateUserRoleMap>(userRoleMap, currentUserId);
         }
 
-        private async Task AddRolesToUserAsync(Guid userId, IEnumerable<Guid> newRoles)
+        private async Task AddRolesToUserAsync(Guid userId, IEnumerable<Guid> newRoles, Guid currentUserId)
         {
             var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
             var oldUserRolesIds = userWithRoles.Roles.Select(r => r.RoleId);
@@ -120,7 +122,7 @@
             var rolesToAdd = newRoles.Where(roleId => !oldUserRolesIds.Contains(roleId));
             foreach (var roleId in rolesToAdd)
             {
-                await this.AddRoleToUserAsync(userId, roleId);
+                await this.AddRoleToUserAsync(userId, roleId, currentUserId);
             }
         }
 

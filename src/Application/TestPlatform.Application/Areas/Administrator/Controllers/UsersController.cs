@@ -1,6 +1,8 @@
 ﻿namespace TestPlatform.Application.Areas.Administrator.Controllers
 {
+    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.ViewModels.Common;
     using TestPlatform.DTOs.ViewModels.Roles;
@@ -13,26 +15,26 @@
         private readonly IUserService userService;
         private readonly IRoleService roleService;
         private readonly IUserManager userManager;
+        private readonly ISearchPageableMananager searchPageableMananager;
 
         public UsersController(IUserService userService,
             IRoleService roleService,
-            IUserManager userManager)
+            IUserManager userManager,
+            ISearchPageableMananager searchPageableMananager)
         {
             this.userService = userService;
             this.roleService = roleService;
             this.userManager = userManager;
+            this.searchPageableMananager = searchPageableMananager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int? page = 1)
         {
-            var usersCount = await this.userService.GetCountOfAllAsyns();
-            var paging = new Paging(page.Value, 1, usersCount);
+            var dataQuery = this.userService.FindAllAsQueryable<UserInformationVM>();
+            var model = this.searchPageableMananager.CreatePageableResult(dataQuery, page.Value);
 
-            var users = await this.userService.FindAllAsync<UserInformationVM>(paging.CurrentPage, paging.PageSize);
-            var result = new PageableResult<UserInformationVM>(users, paging);
-
-            return this.View(result);
+            return this.View(model);
         }
 
         [HttpGet]
@@ -50,7 +52,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyUserRoles(Guid userId, IEnumerable<Guid> userRoles)
         {
-            await this.userManager.UpdateUserRolesAsync(userId, userRoles);
+            var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.userManager.UpdateUserRolesAsync(userId, userRoles, currentUserId);
 
             return this.RedirectToAction("Index");
         }
@@ -67,7 +70,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid userId)
         {
-            await this.userService.DeleteAsync<User>(userId);
+            var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.userService.DeleteAsync<User>(userId, currentUserId);
 
             return this.RedirectToAction("Index");
         }
@@ -84,7 +88,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RestoreConfirmed(Guid userId)
         {
-            await this.userService.RestoryAsync<User>(userId);
+            var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.userService.RestoryAsync<User>(userId, currentUserId);
 
             return this.RedirectToAction("Index");
         }

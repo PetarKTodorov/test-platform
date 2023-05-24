@@ -1,18 +1,18 @@
 ﻿namespace TestPlatform.DTOs.ViewModels.Common
 {
     using System;
+    using TestPlatform.Common.Constants;
 
     public class Paging
     {
         private const int DEFAULT_PAGE = 1;
-        private const int DEFAULT_PAGE_SIZE = 10;
         private int currentPage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Paging"/> class.
         /// </summary>
         public Paging()
-            : this(DEFAULT_PAGE, DEFAULT_PAGE_SIZE, default)
+            : this(DEFAULT_PAGE, GlobalConstants.DEFAULT_PAGE_SIZE, default)
         {
         }
 
@@ -22,7 +22,7 @@
         /// <param name="currentPage">Current page.</param>
         /// <param name="totalNumberOfItems">The number of all items.</param>
         public Paging(int currentPage, int totalNumberOfItems)
-            : this(currentPage, DEFAULT_PAGE_SIZE, totalNumberOfItems)
+            : this(currentPage, GlobalConstants.DEFAULT_PAGE_SIZE, totalNumberOfItems)
         {
         }
 
@@ -76,5 +76,7 @@
         public int SiblingCount { get; set; }
 
         public int TotalNumberOfItems { get; set; }
+
+        public int SkipCount => this.PageSize * (this.CurrentPage - 1);
     }
 }

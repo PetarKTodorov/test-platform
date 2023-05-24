@@ -5,8 +5,7 @@
         "FirstName": "Administrator",
         "MiddleName": "Administrator",
         "LastName": "Administrator",
-        "Password": "12msHZ&!srd",
-        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+        "Password": "12msHZ&!srd"
     },
     {
         "Id": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
@@ -14,8 +13,7 @@
         "FirstName": "Teacher",
         "MiddleName": "Teacher",
         "LastName": "Teacher",
-        "Password": "12msHZ&!srd",
-        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+        "Password": "12msHZ&!srd"
     },
     {
         "Id": "4EE73BF7-FE5D-4096-BE3A-8E35400FD350",
@@ -23,7 +21,6 @@
         "FirstName": "Student",
         "MiddleName": "Student",
         "LastName": "Student",
-        "Password": "12msHZ&!srd",
-        "CreatedBy": "1EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+        "Password": "12msHZ&!srd"
     }
 ]
