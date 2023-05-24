@@ -17,7 +17,7 @@
     </form>
 
     @{
-        if (this.Model.Data.Results.Any() == false)
+        if (this.Model.Data.Items.Any() == false)
         {
             <div class="text-center fs-3 mt-5">There are no results found.</div>
             return;
@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var row in Model.Data.Results)
+                @foreach (var row in Model.Data.Items)
                 {
                     <tr>
                         <td>
@@ -69,5 +69,5 @@
         </table>
     </div>
 
-    @Html.PartialAsync("Pagination/_Pagination", Model.Data).Result
+    @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
 </div>

@@ -29,17 +29,19 @@
                     .AddCustomSearchCriterion<Person>(s => s.CollectionSomeNestedClass.Select(c => c.NestedText));
             }
 
-            var filteredData = data.AsQueryable().ApplySearchCriteria(searchCriteria).ToArray();
+            var filteredDataQuery = data.AsQueryable().ApplySearchCriteria(searchCriteria);
+            var paging = new Paging(page, filteredDataQuery.Count());
 
-            var result = new PageableResult<Person>();
-            result.Results = filteredData.Skip(1 * (page - 1)).Take(1);
-            result.AllResultsCount = filteredData.Count();
-            result.PageSize = 1;
-            result.CurrentPage = page;
+            var filteredData = filteredDataQuery
+                .Skip(paging.PageSize * (paging.CurrentPage - 1))
+                .Take(paging.PageSize)
+                .ToArray();
+
+            var pageableData = new PageableResult<Person>(filteredData, paging);
 
             var model = new SearchFilterVM<Person>()
             {
-                Data = result,
+                Data = pageableData,
                 SearchCriteria = searchCriteria
             };
 

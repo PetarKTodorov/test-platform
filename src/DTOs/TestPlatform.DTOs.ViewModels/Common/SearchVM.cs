@@ -6,7 +6,12 @@
 
     public class SearchFilterVM<T>
     {
-        public IEnumerable<AbstractSearch> SearchCriteria { get; set; } = new List<AbstractSearch>();
+        public SearchFilterVM()
+        {
+            this.SearchCriteria = new List<AbstractSearch>();
+        }
+
+        public IEnumerable<AbstractSearch> SearchCriteria { get; set; }
 
         public PageableResult<T> Data { get; set; }
     }
