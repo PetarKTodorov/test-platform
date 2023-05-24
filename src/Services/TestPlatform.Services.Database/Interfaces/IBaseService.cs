@@ -28,7 +28,7 @@
         Task<IEnumerable<T>> FindAllAsync<T>();
 
         Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag);
-        
+
         Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize);
 
         Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize);

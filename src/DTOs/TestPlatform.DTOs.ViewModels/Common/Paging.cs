@@ -51,7 +51,7 @@
                 {
                     value = 1;
                 }
-                else if (value > this.CountOfPages)
+                else if (value > this.CountOfPages && this.CountOfPages != 0)
                 {
                     value = this.CountOfPages;
                 }

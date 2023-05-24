@@ -93,7 +93,7 @@
 
             return colection;
         }
-        
+
         public virtual IQueryable<T> FindAllAsQueryable<T>()
         {
             var colection = this.BaseRepository.GetAllAsQueryable()
