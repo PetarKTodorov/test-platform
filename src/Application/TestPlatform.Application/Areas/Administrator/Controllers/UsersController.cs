@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.DTOs.ViewModels.Common;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -50,6 +49,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ModifyUserRoles(Guid userId, IEnumerable<Guid> userRoles)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
