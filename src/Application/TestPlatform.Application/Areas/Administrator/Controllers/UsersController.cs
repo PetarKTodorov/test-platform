@@ -1,6 +1,7 @@
 ﻿namespace TestPlatform.Application.Areas.Administrator.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.ViewModels.Common;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Users;
@@ -57,6 +58,23 @@
         public async Task<IActionResult> ModifyUserRoles(Guid userId, IEnumerable<Guid> userRoles)
         {
             await this.userManager.UpdateUserRolesAsync(userId, userRoles);
+
+            return this.RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            var user = await this.userService.FindByIdAsync<UserInformationVM>(userId);
+
+            return this.Json(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid userId)
+        {
+            await this.userService.DeleteAsync<User>(userId);
 
             return this.RedirectToAction("Index");
         }

@@ -17,7 +17,7 @@
                     @Html.DisplayNameForInnerType((UserInformationVM model) => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedOn)
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedDate)
                 </th>
                 <th>
                     @Html.DisplayNameForInnerType((UserInformationVM model) => model.Roles)
@@ -26,7 +26,7 @@
                     @Html.DisplayNameForInnerType((UserInformationVM model) => model.IsDeleted)
                 </th>
                 <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedOn)
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedDate)
                 </th>
                 <th>
                     Actions
@@ -44,7 +44,7 @@
                         @Html.DisplayFor(modelItem => user.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => user.CreatedOn)
+                        @Html.DisplayFor(modelItem => user.CreatedDate)
                     </td>
                     <td>
                         @string.Join(", ", user.Roles.Select(r => r.RoleName))
@@ -55,7 +55,7 @@
                     <td>
                         @if (user.IsDeleted)
                         {
-                            @Html.DisplayFor(modelItem => user.DeletedOn)
+                            @Html.DisplayFor(modelItem => user.DeletedDate)
                         }
                         else
                         {
@@ -63,15 +63,20 @@
                         }
                     </td>
                     <td>
+                        @{
+                            var modifuUserRolesUrl = Url.Action("ModifyUserRoles", new { userId = user.Id });
+                            var deleteUrl = Url.Action("Delete", new { userId = user.Id });
+                        }
+
                         @if (!user.IsDeleted)
                         {
-                            <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
+                            <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-url="@modifuUserRolesUrl" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
                                 Modify roles
                             </button>
+                            <button type="button" class="btn btn-danger btn-sm delete-user-button" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUser">
+                                <span class="icon-font icon-font--trash"></span>
+                            </button>
                         }
-                        <button type="button" class="btn btn-danger btn-sm">
-                            <span class="icon-font icon-font--trash"></span>
-                        </button>
                     </td>
                 </tr>
             }
@@ -82,6 +87,7 @@
 </div>
 
 @Html.PartialAsync("_ModifyUserRolesModal").Result
+@Html.PartialAsync("_DeleteUserModal").Result
 
 @section Scripts {
     <script asp-src-include="~/js/users*.js" defer></script>

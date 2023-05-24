@@ -12,7 +12,8 @@
             rolesMultiSelect.empty();
 
             const userId = this.dataset.userId;
-            fetch(`https://localhost:44361/Administrator/Users/ModifyUserRoles?userId=${userId}`)
+            const url = this.dataset.url;
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const userIdInput = document.querySelector('.user-id');

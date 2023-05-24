@@ -15,14 +15,14 @@
 
         public string Email { get; set; }
 
-        [DisplayName("Created On")]
-        public DateTime CreatedOn { get; set; }
+        [DisplayName("Created date")]
+        public DateTime CreatedDate { get; set; }
 
         [DisplayName("Is Deleted")]
         public bool IsDeleted { get; set; }
 
-        [DisplayName("Deleted On")]
-        public DateTime DeletedOn { get; set; }
+        [DisplayName("Deleted date")]
+        public DateTime DeletedDate { get; set; }
 
         public IEnumerable<UserRoleMapVM> Roles { get; set; }
     }
