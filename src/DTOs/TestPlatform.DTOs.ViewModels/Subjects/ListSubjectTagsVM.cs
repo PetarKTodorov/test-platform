@@ -1,4 +1,4 @@
-﻿namespace TestPlatform.DTOs.ViewModels.SubjectTags
+﻿namespace TestPlatform.DTOs.ViewModels.Subjects
 {
     using System.ComponentModel;
 
@@ -6,7 +6,7 @@
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Services.Mapper.Interfaces;
 
-    public class AllSubjectTagsVM : IMapFrom<SubjectTag>
+    public class ListSubjectTagsVM : IMapFrom<SubjectTag>
     {
         public Guid Id { get; set; }
 

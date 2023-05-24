@@ -1,4 +1,4 @@
-﻿namespace TestPlatform.DTOs.ViewModels.SubjectTags
+﻿namespace TestPlatform.DTOs.ViewModels.Subjects
 {
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Services.Mapper.Interfaces;

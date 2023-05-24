@@ -1,0 +1,89 @@
+﻿@model SearchFilterVM<ListSubjectTagsVM>
+
+@{
+    ViewData["Title"] = "List Subject Tags";
+}
+
+<h1 class="text-center">List Subject Tags</h1>
+
+<div class="container-fluid px-5">
+    <form method="get" class="search-form">
+        @Html.EditorFor(m => m.SearchCriteria)
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+
+    </form>
+
+    @{
+        if (this.Model.Data.Items.Any() == false)
+        {
+            <div class="text-center fs-3 mt-5">There are no results found.</div>
+            return;
+        }
+    }
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.Name)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.IsDeleted)
+                    </th>
+                    <th class="text-nowrap">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Data.Items)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => row.Name)
+                        </td>
+                        <td>
+                            @if (row.IsDeleted)
+                            {
+                                <span>True</span>
+                            }
+                            else
+                            {
+                                <span>False</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
+                                    Details
+                                </a>
+                                @if (row.IsDeleted)
+                                {
+                                    <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Restore" asp-route-id="@row.Id">
+                                        Restore
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-warning btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@row.Id">
+                                        Delete
+                                    </a>
+                                }
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
+</div>
