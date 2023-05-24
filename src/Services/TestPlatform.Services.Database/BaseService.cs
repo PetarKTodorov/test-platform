@@ -127,32 +127,32 @@
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id)
         {
-            var entity = await this.BaseRepository.GetByIdAsync(id);
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id)
+                .To<T>()
+                .SingleOrDefaultAsync();
 
-            var mappedEntity = this.Mapper.Map<T>(entity);
-
-            if (mappedEntity == null)
+            if (entity == null)
             {
                 string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
                 throw new NotFoundException(message);
             }
 
-            return mappedEntity;
+            return entity;
         }
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag)
         {
-            var entity = await this.BaseRepository.GetByIdAsync(id, isDeletedFlag);
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id, isDeletedFlag)
+                .To<T>()
+                .SingleOrDefaultAsync();
 
-            var mappedEntity = this.Mapper.Map<T>(entity);
-
-            if (mappedEntity == null)
+            if (entity == null)
             {
                 string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
                 throw new NotFoundException(message);
             }
 
-            return mappedEntity;
+            return entity;
         }
 
         public virtual async Task<int> GetCountOfAllAsyns()
