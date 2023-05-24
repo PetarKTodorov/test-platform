@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model.Results)
+            @foreach (var user in Model.Items)
             {
                 <tr>
                     <td>
@@ -90,7 +90,7 @@
         </tbody>
     </table>
 
-    @Html.PartialAsync("Pagination/_Pagination", Model).Result
+    @Html.PartialAsync("Pagination/_Pagination", Model.Paging).Result
 </div>
 
 @Html.PartialAsync("_ModifyUserRolesModal").Result

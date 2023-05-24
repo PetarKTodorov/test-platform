@@ -26,18 +26,11 @@
         [HttpGet]
         public async Task<IActionResult> Index(int? page = 1)
         {
-            if (page != null && page < 1)
-            {
-                page = 1;
-            }
-
-            var result = new PageableResult<UserInformationVM>();
-            var users = await this.userService.FindAllAsync<UserInformationVM>(page.Value, result.PageSize);
             var usersCount = await this.userService.GetCountOfAllAsyns();
+            var paging = new Paging(page.Value, 1, usersCount);
 
-            result.Results = users;
-            result.AllResultsCount = usersCount;
-            result.CurrentPage = page.Value;
+            var users = await this.userService.FindAllAsync<UserInformationVM>(paging.CurrentPage, paging.PageSize);
+            var result = new PageableResult<UserInformationVM>(users, paging);
 
             return this.View(result);
         }
