@@ -49,7 +49,7 @@
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.subjectTagService.CreateAsync<SubjectTag, CreateSubjectTagBM>(model, currentUserId);
 
-            return this.RedirectToAction("List");
+            return this.RedirectToAction(nameof(List));
         }
 
         [HttpGet]
@@ -75,7 +75,7 @@
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, currentUserId);
 
-            return this.RedirectToAction("Details", new { id = model.Id });
+            return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
 
         [HttpGet]
@@ -93,7 +93,7 @@
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.subjectTagService.DeleteAsync<UpdateSubjectTagBM>(model.Id, currentUserId);
 
-            return this.RedirectToAction("Details", new { id = model.Id, isDeleted = true });
+            return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
         }
 
         [HttpGet]
@@ -102,7 +102,7 @@
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var subjectTag = await this.subjectTagService.RestoryAsync<DetailsSubjectTagVM>(id, currentUserId);
 
-            return this.RedirectToAction("Details", new { id = subjectTag.Id });
+            return this.RedirectToAction(nameof(Details), new { id = subjectTag.Id });
         }
     }
 }

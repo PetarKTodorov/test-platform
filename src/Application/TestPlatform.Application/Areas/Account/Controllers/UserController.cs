@@ -36,7 +36,7 @@
                 return this.View(model);
             }
 
-            return this.RedirectToAction("Login");
+            return this.RedirectToAction(nameof(Login));
         }
 
         [CustomAllowAnonymous]

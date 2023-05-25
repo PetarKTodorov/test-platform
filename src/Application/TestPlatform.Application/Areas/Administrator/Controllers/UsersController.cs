@@ -29,7 +29,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? page = 1)
+        public async Task<IActionResult> List(int? page = 1)
         {
             var dataQuery = this.userService.FindAllAsQueryable<UserInformationVM>();
             var model = this.searchPageableMananager.CreatePageableResult(dataQuery, page.Value);
@@ -55,7 +55,7 @@
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.userManager.UpdateUserRolesAsync(userId, userRoles, currentUserId);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(nameof(List));
         }
 
         [HttpGet]
@@ -72,7 +72,7 @@
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.userService.DeleteAsync<User>(userId, currentUserId);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(nameof(List));
         }
 
         [HttpGet]
@@ -89,7 +89,7 @@
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
             await this.userService.RestoryAsync<User>(userId, currentUserId);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(nameof(List));
         }
     }
 }

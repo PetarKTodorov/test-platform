@@ -22,7 +22,9 @@
                                 Test
                             </div>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a>
+                                </li>
                             </ul>
                         </li>
                     }
@@ -33,7 +35,9 @@
                                 Users
                             </div>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="Index">All</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="List">List</a>
+                                </li>
                             </ul>
                         </li>
 
