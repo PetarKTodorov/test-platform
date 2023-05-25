@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -49,7 +50,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ModifyUserRoles(Guid userId, IEnumerable<Guid> userRoles)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
@@ -67,7 +67,6 @@
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid userId)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
@@ -85,7 +84,6 @@
         }
 
         [HttpPost, ActionName("Restore")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RestoreConfirmed(Guid userId)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
