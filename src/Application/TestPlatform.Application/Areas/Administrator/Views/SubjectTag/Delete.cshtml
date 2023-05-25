@@ -1,0 +1,21 @@
+﻿@model UpdateSubjectTagBM
+@{
+    ViewData["Title"] = "Delete Subject Tags";
+    bool isDisabled = true;
+}
+
+<h1 class="text-center">Delete Subject Tags</h1>
+
+<div class="container-fluid px-5">
+    <form class="js-delete-form" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.FormGroupFor(model => model.Id, isDisabled)
+
+        @Html.FormGroupFor(model => model.Name, isDisabled)
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>

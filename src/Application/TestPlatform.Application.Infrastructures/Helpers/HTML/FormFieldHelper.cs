@@ -9,15 +9,26 @@
     public static class FormFieldHelper
     {
         public static IHtmlContent FormGroupFor<TModel, TResult>
-            (this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TResult>> expression)
+            (this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TResult>> expression, bool isDisabled = false)
         {
             using var writer = new StringWriter();
 
             IHtmlContent label =
                 htmlHelper.LabelFor(expression, new { @class = "form-label" });
 
+            object inputAdditionalViewData = null;
+
+            if (isDisabled)
+            {
+                inputAdditionalViewData = new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } };
+            }
+            else
+            {
+                inputAdditionalViewData = new { htmlAttributes = new { @class = "form-control" } };
+            }
+
             IHtmlContent input =
-                htmlHelper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control" } });
+                htmlHelper.EditorFor(expression, inputAdditionalViewData);
 
             IHtmlContent validationMessage =
                 htmlHelper.ValidationMessageFor(expression, null, new { @class = "text-danger" });

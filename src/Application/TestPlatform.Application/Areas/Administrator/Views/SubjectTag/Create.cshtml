@@ -1,0 +1,18 @@
+﻿@model CreateSubjectTagBM
+@{
+    ViewData["Title"] = "Create Subject Tags";
+}
+
+<h1 class="text-center">Create Subject Tags</h1>
+
+<div class="container-fluid px-5">
+    <form asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.FormGroupFor(model => model.Name)
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>

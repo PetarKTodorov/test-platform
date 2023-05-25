@@ -3,6 +3,12 @@
     using System.Reflection;
 
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.CookiePolicy;
+    using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.ExtensionMethods;
     using TestPlatform.Database;
@@ -16,13 +22,6 @@
     using TestPlatform.Database.Seed.BindingModels;
     using TestPlatform.Services.Managers.Interfaces;
     using TestPlatform.Services.Managers;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.CookiePolicy;
-    using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Database.Test;
     using TestPlatform.Services.Database.Subjects.Interfaces;
