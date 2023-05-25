@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Application.Infrastructures.Searcher.Types
 {
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Linq.Expressions;
@@ -26,8 +27,13 @@
 
                 if (propertyInfo != null)
                 {
-                    var displayAttribute = propertyInfo.GetCustomAttribute<DisplayAttribute>();
+                    var displayNameAttribute = propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
+                    if (displayNameAttribute != null)
+                    {
+                        return displayNameAttribute.DisplayName;
+                    }
 
+                    var displayAttribute = propertyInfo.GetCustomAttribute<DisplayAttribute>();
                     if (displayAttribute != null)
                     {
                         return displayAttribute.GetName();
