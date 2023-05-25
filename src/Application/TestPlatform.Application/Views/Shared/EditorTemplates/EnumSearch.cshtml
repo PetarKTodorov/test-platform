@@ -29,6 +29,6 @@
         <input asp-for="@Model.TargetTypeName" type="hidden" />
         <input asp-for="@Model.EnumTypeName" type="hidden" />
         <input asp-for="@Model.TargetTypeName" type="hidden" />
-        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().AssemblyQualifiedName" />
+        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().Name" />
     </div>
 </div>
