@@ -4,10 +4,8 @@
 name: Build solution and run test project
 
 on:
-  push:
-    branches: [ "TP-5_add_dotnet_workflow" ]
   pull_request:
-    branches: [ "TP-5_add_dotnet_workflow" ]
+    types: [opened, reopened]
 
 jobs:
   build:
