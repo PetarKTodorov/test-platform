@@ -1,5 +1,7 @@
 # Test Platform
 
+https://github.com/PetarKTodorov/test-platform/actions/workflows/dotnet.yml/badge.svg
+
 ## Requirements
 
 |  Name                      | version       | Details                              |
