@@ -1,14 +1,14 @@
 ﻿@model PageableResult<UserInformationVM>
 
 @{
-    ViewData["Title"] = "List all users";
+    ViewData["Title"] = "List All Users";
 }
 
-<h1 class="text-center">List all users</h1>
+<h1 class="text-center">List All Users</h1>
 
-<div class="container-fluid">
+<div class="container-fluid table-responsive mt-3 px-5">
     <table id="users-table" class="table table-bordered table-striped">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th>
                     @Html.DisplayNameForInnerType((UserInformationVM model) => model.FullName)
@@ -50,7 +50,14 @@
                         @string.Join(", ", user.Roles.Select(r => r.RoleName))
                     </td>
                     <td>
-                        <input type="checkbox" class="flipswitch" checked="@user.IsDeleted" disabled />
+                        @if (user.IsDeleted)
+                        {
+                            <span>True</span>
+                        }
+                        else
+                        {
+                            <span>False</span>
+                        }
                     </td>
                     <td>
                         @if (user.IsDeleted)
