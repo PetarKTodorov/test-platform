@@ -4,7 +4,7 @@
 name: Build solution and run test project
 
 on:
-  push
+  push:
   pull_request:
     types: [opened, reopened]
 
