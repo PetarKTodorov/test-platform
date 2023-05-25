@@ -3,6 +3,7 @@
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
+    using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Roles;
@@ -29,10 +30,10 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(int? page = 1)
+        public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
             var dataQuery = this.userService.FindAllAsQueryable<UserInformationVM>();
-            var model = this.searchPageableMananager.CreatePageableResult(dataQuery, page.Value);
+            var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
         }
