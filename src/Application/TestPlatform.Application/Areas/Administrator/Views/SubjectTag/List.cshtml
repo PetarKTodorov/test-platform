@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "List Subject Tags";
+    var restoreModalId = "restore-modal";
 }
 
 <h1 class="text-center">List Subject Tags</h1>
@@ -63,7 +64,7 @@
                                 </a>
                                 @if (row.IsDeleted)
                                 {
-                                    <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Restore" asp-route-id="@row.Id">
+                                    <a class="btn btn-info btn-sm js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
                                         Restore
                                     </a>
                                 }
@@ -87,3 +88,7 @@
 
     @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
 </div>
+
+@Html.PartialAsync("Modals/_ConfirmRestoreModal", new {
+    ModalId = restoreModalId,
+}).Result
