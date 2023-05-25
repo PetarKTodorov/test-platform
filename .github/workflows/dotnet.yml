@@ -5,8 +5,9 @@ name: Build solution and run tests
 
 on:
   push:
+    branches: [develop, staging, main]
   pull_request:
-    types: [opened, reopened]
+    types: [synchronize]
 
 jobs:
   build:
