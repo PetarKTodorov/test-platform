@@ -4,8 +4,9 @@
 name: Build solution and run test project
 
 on:
+  push:
   pull_request:
-    types: [opened, reopened, edited]
+    types: [opened, reopened]
 
 jobs:
   build:
