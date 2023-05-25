@@ -1,6 +1,6 @@
 # Test Platform
 
-https://github.com/PetarKTodorov/test-platform/actions/workflows/dotnet.yml/badge.svg
+![Build](https://github.com/PetarKTodorov/test-platform/actions/workflows/dotnet.yml/badge.svg)
 
 ## Requirements
 
