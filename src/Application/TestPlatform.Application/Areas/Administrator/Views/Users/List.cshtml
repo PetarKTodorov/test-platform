@@ -1,0 +1,112 @@
+﻿@model PageableResult<UserInformationVM>
+
+@{
+    ViewData["Title"] = "List all users";
+}
+
+<h1 class="text-center">List all users</h1>
+
+<div class="container-fluid">
+    <table id="users-table" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.Roles)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.IsDeleted)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedDate)
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.CreatedDate)
+                    </td>
+                    <td>
+                        @string.Join(", ", user.Roles.Select(r => r.RoleName))
+                    </td>
+                    <td>
+                        <input type="checkbox" class="flipswitch" checked="@user.IsDeleted" disabled />
+                    </td>
+                    <td>
+                        @if (user.IsDeleted)
+                        {
+                            @Html.DisplayFor(modelItem => user.DeletedDate)
+                        }
+                        else
+                        {
+                            <span>Not deleted</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var modifuUserRolesUrl = Url.Action("ModifyUserRoles", new { userId = user.Id });
+                            var deleteUrl = Url.Action("Delete", new { userId = user.Id });
+                            var restoreUrl = Url.Action("Restore", new { userId = user.Id });
+                        }
+
+                        @if (!user.IsDeleted)
+                        {
+                            <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-url="@modifuUserRolesUrl" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
+                                <span class="icon-font icon-font--user"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                <span class="icon-font icon-font--trash"></span>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
+                                <span class="icon-font icon-font--trash"></span>
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model.Paging).Result
+</div>
+
+@Html.PartialAsync("_ModifyUserRolesModal").Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "deleteUserModal",
+    Action = "Delete",
+    Title = "Delete user",
+    ConfirmText = "Confirm deletion",
+}).Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "restoreUserModal",
+    Action = "Restore",
+    Title = "Restore user",
+    ConfirmText = "Confirm Restoration",
+}).Result
+
+@section Scripts {
+    <script asp-src-include="~/js/users*.js" defer></script>
+}

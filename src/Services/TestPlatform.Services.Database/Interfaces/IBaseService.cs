@@ -1,6 +1,5 @@
 ﻿namespace TestPlatform.Services.Database.Interfaces
 {
-    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities;
 
     public interface IBaseService<TEntity>
@@ -8,18 +7,22 @@
     {
         Task<T> FindByIdAsync<T>(Guid id);
 
-        Task<T> CreateAsync<T, TBindingModel>(TBindingModel model);
+        Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag);
 
-        Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model);
+        Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId);
 
-        Task<T> DeleteAsync<T>(Guid id);
+        Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId);
 
-        Task<int> GetCountOfAllAsyns();
+        Task<T> HardDeleteAsync<T>(Guid id);
 
-        Task<int> GetCountOfAllAsyns(bool isDeleted);
+        Task<T> DeleteAsync<T>(Guid id, Guid currentUserId);
 
-        Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize);
+        Task<T> RestoryAsync<T>(Guid id, Guid currentUserId);
 
-        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize);
+        IQueryable<T> FindAllAsQueryable<T>();
+
+        Task<IEnumerable<T>> FindAllAsync<T>();
+
+        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag);
     }
 }

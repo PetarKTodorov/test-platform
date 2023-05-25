@@ -1,0 +1,42 @@
+﻿@model BooleanSearch
+
+@{
+    IEnumerable<SelectListItem> items = new[]
+    {
+        new SelectListItem()
+        {
+            Text = "Please select",
+            Value = string.Empty
+        },
+        new SelectListItem()
+        {
+            Text = "True",
+            Value = true.ToString()
+        },
+        new SelectListItem()
+        {
+            Text = "False",
+            Value = false.ToString()
+        }
+    };
+}
+
+<div class="mb-3 search-form__row">
+    <div class="search-form__label-wrapper">
+        <label class="col-form-label" asp-for="@Model.SearchTerm">@Model.LabelText</label>
+    </div>
+
+    <div class="search-form__options-wrapper">
+        <select class="form-select" asp-for="@Model.ComparableOption" asp-items="Html.GetEnumSelectList(typeof(BooleanComparableOptions))"></select>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center search-form__input-wrapper">
+        <select asp-for="@Model.SearchTerm" asp-items="items" class="form-select"></select>
+    </div>
+
+    <div class="d-none">
+        <input asp-for="@Model.Property" type="hidden" />
+        <input asp-for="@Model.TargetTypeName" type="hidden" />
+        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().AssemblyQualifiedName" />
+    </div>
+</div>

@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Seed.BindingModels.Authorization;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -24,7 +24,8 @@
 
             foreach (var dto in dtoObjects)
             {
-                await userService.CreateAsync<User, SeedCreateUserBM>(dto);
+                var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                await userService.CreateAsync<User, SeedCreateUserBM>(dto, administratorId);
             }
         }
     }

@@ -11,29 +11,47 @@
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
 
                 @{
                     if (currentUser.IsInRole(ApplicationRoles.TEACHER))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Test
-                            </a>
+                            </div>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a>
+                                </li>
                             </ul>
                         </li>
                     }
                     if (currentUser.IsInRole(ApplicationRoles.ADMINISTRATOR))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Users
-                            </a>
+                            </div>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="Index">All</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="List">List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject Tags
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="List">List</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Create">Create</a>
+                                </li>
                             </ul>
                         </li>
                     }

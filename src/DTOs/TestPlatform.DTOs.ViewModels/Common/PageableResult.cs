@@ -1,40 +1,43 @@
 ﻿namespace TestPlatform.DTOs.ViewModels.Common
 {
+    using System.Collections;
     using System.Collections.Generic;
 
-    public class PageableResult<T>
+    public class PageableResult<T> : IEnumerable<T>
     {
-        private const int DEFAULT_PAGE_SIZE = 10;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageableResult&lt;T&gt;"/> class.
+        /// </summary>
         public PageableResult()
         {
-            this.Results = new List<T>();
-
-            this.CurrentPage = 1;
-            this.BoundaryCount = 1;
-            this.SiblingCount = 1;
-            this.PageSize = DEFAULT_PAGE_SIZE;
+            this.Items = new List<T>();
+            this.Paging = new Paging();
         }
 
-        public int CurrentPage { get; set; }
-
-        public int PageSize { get; set; }
-
-        public int PagesCount
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageableResult&lt;T&gt;"/> class.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        /// <param name="totalNumberOfItems">The total number of items.</param>
+        /// <param name="paging">The paging.</param>
+        public PageableResult(IEnumerable<T> items, Paging paging)
         {
-            get
-            {
-                var pagesCount = this.AllResultsCount / (double)this.PageSize;
-                return (int)Math.Ceiling(pagesCount);
-            }
+            this.Items = items;
+            this.Paging = paging;
         }
 
-        public int BoundaryCount { get; set; }
+        public IEnumerable<T> Items { get; set; }
 
-        public int SiblingCount { get; set; }
+        public Paging Paging { get; private set; }
 
-        public int AllResultsCount { get; set; }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.Items.GetEnumerator();
+        }
 
-        public IEnumerable<T> Results { get; set; }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.Items.GetEnumerator();
+        }
     }
 }

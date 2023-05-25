@@ -1,4 +1,4 @@
-namespace TestPlatform.Services.Database.Authorization
+﻿namespace TestPlatform.Services.Database.Authorization
 {
     using System;
     using System.Threading.Tasks;
@@ -7,6 +7,7 @@ namespace TestPlatform.Services.Database.Authorization
     using Microsoft.EntityFrameworkCore;
 
     using TestPlatform.Common.Helpers;
+    using TestPlatform.Database.Entities;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -20,9 +21,12 @@ namespace TestPlatform.Services.Database.Authorization
 
         }
 
-        public override async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model)
+        public override async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId)
         {
+            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
+
             User entity = this.Mapper.Map<User>(model);
+            entity.CreatedBy = currentUser.Id;
             entity.Password = PasswordHasher.HashPassword(entity.Password);
 
             entity = await this.BaseRepository.AddAsync(entity);

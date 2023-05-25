@@ -2,7 +2,9 @@
 {
     var isPageLinkSelected = boundaryIndex == Model.CurrentPage;
     var pageLinkActiveClass = isPageLinkSelected ? "active" : string.Empty;
+    var queryString = UrlHelper.SetParameters(Model.QueryString, KeyValuePair.Create("page", boundaryIndex.ToString()));
+
     <li class="page-item @pageLinkActiveClass">
-        <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-page="@boundaryIndex">@boundaryIndex</a>
+        <a class="page-link" href="@queryString">@boundaryIndex</a>
     </li>
 }

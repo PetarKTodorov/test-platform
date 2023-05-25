@@ -4,7 +4,7 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Services.Mapper.Interfaces;
 
-    public class CreateUserRoleMap : IMapTo<UserRoleMap>
+    public class CreateUserRoleMap : IMapTo<UserRoleMap>, IMapFrom<UserRoleMap>
     {
         [Required]
         public Guid UserId { get; set; }

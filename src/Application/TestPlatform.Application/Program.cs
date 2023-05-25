@@ -3,6 +3,12 @@
     using System.Reflection;
 
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.CookiePolicy;
+    using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.ExtensionMethods;
     using TestPlatform.Database;
@@ -16,15 +22,11 @@
     using TestPlatform.Database.Seed.BindingModels;
     using TestPlatform.Services.Managers.Interfaces;
     using TestPlatform.Services.Managers;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.CookiePolicy;
-    using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Database.Test;
+    using TestPlatform.Services.Database.Subjects.Interfaces;
+    using TestPlatform.Services.Database.Subjects;
+    using TestPlatform.Application.Infrastructures.Searcher.MVC;
 
     public class Program
     {
@@ -44,10 +46,14 @@
             services.AddDbContext<TestPlatformDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllersWithViews(options =>
             {
                 // To escape the global filter [IgnoreAntiforgeryToken]
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                // add custom binder to beginning of collection
+                options.ModelBinderProviders.Insert(0, new AbstractSearchModelBinderProvider());
             });
 
             services.AddDistributedMemoryCache();
@@ -131,12 +137,16 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRoleMapService, UserRoleMapService>();
 
+            services.AddTransient<ISubjectTagService, SubjectTagService>();
+            services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
+
             services.AddTransient<ITestService, TestService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
         {
             services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
         }
     }
 }

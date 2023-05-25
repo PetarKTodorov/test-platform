@@ -1,0 +1,23 @@
+﻿@model DateTimeSearch
+
+<div class="mb-3 search-form__row">
+    <div class="search-form__label-wrapper">
+        <label class="col-form-label" asp-for="@Model.SearchTerm">@Model.LabelText</label>
+    </div>
+
+    <div class="search-form__options-wrapper">
+        <select class="form-select js-search-select" data-range-option="@Html.GetEnumSelectList(typeof(DateTimeComparableOptions)).FirstOrDefault(x => int.Parse(x.Value) == (int)DateTimeComparableOptions.InRange).Value" asp-for="@Model.ComparableOption" asp-items="Html.GetEnumSelectList(typeof(DateTimeComparableOptions))"></select>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center search-form__input-wrapper">
+        <input class="form-control" asp-for="@Model.SearchTerm" />
+
+        <input class="form-control d-none js-other-search-term" asp-for="@Model.OtherSearchTerm" />
+    </div>
+
+    <div class="d-none">
+        <input asp-for="@Model.Property" type="hidden" />
+        <input asp-for="@Model.TargetTypeName" type="hidden" />
+        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().AssemblyQualifiedName" />
+    </div>
+</div>

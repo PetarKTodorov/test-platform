@@ -27,9 +27,12 @@
 
         protected virtual IBaseRepository<TEntity> BaseRepository { get; set; }
 
-        public virtual async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model)
+        public virtual async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId)
         {
+            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
+
             TEntity entity = this.Mapper.Map<TEntity>(model);
+            entity.CreatedBy = currentUser.Id;
 
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -39,9 +42,27 @@
             return entityToReturn;
         }
 
-        public virtual async Task<T> DeleteAsync<T>(Guid id)
+        public virtual async Task<T> HardDeleteAsync<T>(Guid id)
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
+
+            this.BaseRepository.DetachLocal(entity, entity.Id);
+
+            TEntity deletedEntity = this.BaseRepository.HardDelete(entity);
+            await this.BaseRepository.SaveChangesAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(deletedEntity);
+
+            return entityToReturn;
+        }
+
+        public virtual async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)
+        {
+            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
+
+            TEntity entity = await this.FindByIdAsync<TEntity>(id);
+            entity.ModifiedBy = currentUser.Id;
+            entity.DeletedBy = currentUser.Id;
 
             TEntity deletedEntity = this.BaseRepository.Delete(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -51,32 +72,76 @@
             return entityToReturn;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(int page, int pageSize)
+        public virtual async Task<T> RestoryAsync<T>(Guid id, Guid currentUserId)
+        {
+            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
+
+            TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
+            entity.ModifiedBy = currentUser.Id;
+
+            TEntity restoredEntity = this.BaseRepository.Restore(entity);
+            await this.BaseRepository.SaveChangesAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(restoredEntity);
+
+            return entityToReturn;
+        }
+
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>()
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
-                .Skip(pageSize * (page - 1))
-                .Take(pageSize)
                 .To<T>()
                 .ToListAsync();
 
             return colection;
         }
 
-        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag, int page, int pageSize)
+        public virtual async Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag)
         {
             var colection = await this.BaseRepository.GetAllAsQueryable()
                 .Where(x => x.IsDeleted == isDeletedFlag)
-                .Skip(pageSize * (page - 1))
-                .Take(pageSize)
                 .To<T>()
                 .ToListAsync();
+
+            return colection;
+        }
+
+        public virtual IQueryable<T> FindAllAsQueryable<T>()
+        {
+            var colection = this.BaseRepository.GetAllAsQueryable()
+                .To<T>();
 
             return colection;
         }
 
         public virtual async Task<T> FindByIdAsync<T>(Guid id)
         {
-            T entity = await this.BaseRepository.GetByIdAsQueryable(id)
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id)
+                .To<T>()
+                .SingleOrDefaultAsync();
+
+            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+            if (id == administratorId && entity == null)
+            {
+                var baseEntity = new BaseEntity()
+                {
+                    Id = administratorId,
+                };
+
+                entity = this.Mapper.Map<BaseEntity, T>(baseEntity);
+            }
+            else if (entity == null)
+            {
+                string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
+                throw new NotFoundException(message);
+            }
+
+            return entity;
+        }
+
+        public virtual async Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag)
+        {
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id, isDeletedFlag)
                 .To<T>()
                 .SingleOrDefaultAsync();
 
@@ -89,26 +154,14 @@
             return entity;
         }
 
-        public async Task<int> GetCountOfAllAsyns()
+        public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId)
         {
-            var countOfAllResults = await this.BaseRepository.GetAllAsQueryable()
-                .CountAsync();
+            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
 
-            return countOfAllResults;
-        }
-
-        public async Task<int> GetCountOfAllAsyns(bool isDeleted)
-        {
-            var collection = await this.BaseRepository.GetAllAsync(isDeleted);
-
-            return collection.Count();
-        }
-
-        public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model)
-        {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
             TEntity updatedEntity = this.Mapper.Map(model, entity);
+            updatedEntity.ModifiedBy = currentUser.Id;
 
             updatedEntity = this.BaseRepository.Update(updatedEntity);
             await this.BaseRepository.SaveChangesAsync();

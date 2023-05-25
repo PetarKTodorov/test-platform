@@ -4,8 +4,10 @@
         var pageLinkDisabledClass = isPageSelected ? "disabled" : string.Empty;
 
         var symbol = Model.ButtonType == "Next" ? "&raquo;" : "&laquo;";
+
+        var queryString = UrlHelper.SetParameters(Model.QueryString, KeyValuePair.Create("page", Model.NewPage.ToString()));
     }
-    <a class="page-link @pageLinkDisabledClass" asp-action="Index" asp-route-page="@Model.NewPage" aria-label="@Model.ButtonType">
+    <a class="page-link @pageLinkDisabledClass" href="@queryString" aria-label="@Model.ButtonType">
         <span aria-hidden="true">@Html.Raw(symbol)</span>
     </a>
 </li>

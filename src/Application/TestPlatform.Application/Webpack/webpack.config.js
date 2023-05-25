@@ -13,6 +13,7 @@ const webpackObject = {
         "application-styles": "./src/styles/sass/application-styles.scss",
         "libraries": "./src/js/entries/libraries.js",
         "application": "./src/js/entries/application.js",
+        "users": "./src/js/entries/users.js",
     },
     output: {
         path: WWWROOT_PATH,

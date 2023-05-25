@@ -79,14 +79,28 @@
             return entry.Entity;
         }
 
+        public virtual TEntity HardDelete(TEntity entity)
+        {
+            var entry = this.DbContext.Remove(entity);
+
+            return entry.Entity;
+        }
+
         public virtual TEntity Delete(TEntity entity)
         {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = true;
-            entry.Entity.DeletedDate = DateTime.UtcNow;
+            entity.IsDeleted = true;
+            entity.DeletedDate = DateTime.UtcNow;
 
-            // Set deletedByUserID
-            return entry.Entity;
+            return this.Update(entity);
+        }
+
+        public TEntity Restore(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            entity.DeletedDate = null;
+            entity.DeletedBy = null;
+
+            return this.Update(entity);
         }
 
         public Task<int> SaveChangesAsync()
@@ -100,22 +114,24 @@
             GC.SuppressFinalize(this);
         }
 
+        public void DetachLocal(TEntity entity, Guid entryId)
+        {
+            var local = this.DbSet
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(entryId));
+            if (local != null)
+            {
+                this.DbContext.Entry(local).State = EntityState.Detached;
+            }
+            this.DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this.DbContext?.Dispose();
             }
-        }
-
-        public TEntity Restore(TEntity entity)
-        {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = false;
-            entry.Entity.DeletedDate = null;
-
-            // Remove deletedByUserID
-            return entry.Entity;
         }
     }
 }
