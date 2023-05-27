@@ -52,5 +52,17 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" asp-route-id="@Model.Id">
+                Update
+            </a>
+            <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
+                Delete
+            </a>
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">
+                Go back
+            </a>
+        </div>
     </div>
 </div>
