@@ -1,0 +1,56 @@
+﻿@model DetailsQuestionCopyVM
+
+@{
+    ViewData["Title"] = "Question Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.OriginalQuestionTitle)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.OriginalQuestionTitle)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.HasRandomizedAnswers)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.HasRandomizedAnswers)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.QuestionTypeName)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.QuestionTypeName)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.SubjectTagName)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.SubjectTagName)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

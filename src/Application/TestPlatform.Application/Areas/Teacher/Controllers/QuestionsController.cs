@@ -74,6 +74,14 @@
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
+
+            return this.View(question);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
