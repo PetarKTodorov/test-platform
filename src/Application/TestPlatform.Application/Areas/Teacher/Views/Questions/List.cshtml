@@ -1,0 +1,34 @@
+﻿@model PageableResult<QuestionInformationVM>
+
+@{
+    ViewData["Title"] = "List All Questions";
+}
+
+<h1 class="text-center">List All Question</h1>
+
+<div class="container-fluid">
+    <table id="users-table" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameForInnerType((QuestionInformationVM model) => model.Title)
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Title)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model.Paging).Result
+</div>
