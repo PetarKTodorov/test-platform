@@ -49,7 +49,7 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateQuestionVM()
+            var model = new CreateQuestionBM()
             {
                 QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList(),
                 SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList(),
@@ -88,7 +88,7 @@
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionVM>(id);
+            var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
 
             var questionTypes = await this.questionTypeService.FindAllAsync<SelectListItem>(false);
             question.QuestionTypes = questionTypes.ToList();
@@ -101,10 +101,19 @@
 
         [ValidateModelState]
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateSubjectTagBM model)
+        public async Task<IActionResult> Update(UpdateQuestionBM model)
         {
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, currentUserId);
+
+            var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
+            var createdQuestion = question;
+            if (question.Title != model.OriginalQuestionTitle)
+            {
+                createdQuestion = await this.questionService.FindOrCreateQuestionAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
+            }
+
+            model.OriginalQuestionId = createdQuestion.Id;
+            await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }

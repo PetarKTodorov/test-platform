@@ -9,6 +9,7 @@
     {
         public Guid Id { get; set; }
 
+        public Guid OriginalQuestionId { get; set; }
 
         [DisplayName("Title")]
         public string OriginalQuestionTitle { get; set; }

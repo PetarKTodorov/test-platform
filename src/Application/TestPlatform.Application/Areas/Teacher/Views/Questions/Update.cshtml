@@ -1,4 +1,4 @@
-﻿@model UpdateQuestionVM
+﻿@model UpdateQuestionBM
 @{
     ViewData["Title"] = "Update Question";
 }
@@ -10,6 +10,8 @@
         @Html.AntiForgeryToken()
 
         <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+
+        <input name="@Html.DisplayNameFor(model => model.OriginalQuestionId)" value="@Model.OriginalQuestionId" hidden />
 
         @Html.FormGroupFor(model => model.OriginalQuestionTitle)
 

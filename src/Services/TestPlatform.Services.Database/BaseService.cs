@@ -152,6 +152,8 @@
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
+            this.BaseRepository.DetachLocal(entity, entity.Id);
+
             TEntity updatedEntity = this.Mapper.Map(model, entity);
             updatedEntity.ModifiedBy = currentUserId;
 
