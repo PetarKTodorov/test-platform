@@ -91,14 +91,7 @@
                 <tr>
                     <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
                     <td>
-                        @if (Model.IsDeleted)
-                        {
-                            <span>True</span>
-                        }
-                        else
-                        {
-                            <span>False</span>
-                        }
+                        @Html.DisplayTextFor(model => model.IsDeleted)
                     </td>
                 </tr>
                 <tr>

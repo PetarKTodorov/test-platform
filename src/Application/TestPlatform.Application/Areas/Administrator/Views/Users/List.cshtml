@@ -61,14 +61,7 @@
                             @string.Join(", ", user.Roles.Select(r => r.RoleName))
                         </td>
                         <td>
-                            @if (user.IsDeleted)
-                            {
-                                <span>True</span>
-                            }
-                            else
-                            {
-                                <span>False</span>
-                            }
+                            @Html.DisplayTextFor(model => user.IsDeleted)
                         </td>
                         <td>
                             @if (user.IsDeleted)
