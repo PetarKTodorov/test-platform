@@ -82,14 +82,14 @@
                         </td>
                         <td>
                             @{
-                                var modifuUserRolesUrl = Url.Action("ModifyUserRoles", new { userId = user.Id });
+                                var updateUserUrl = Url.Action("Update", new { userId = user.Id });
                                 var deleteUrl = Url.Action("Delete", new { userId = user.Id });
                                 var restoreUrl = Url.Action("Restore", new { userId = user.Id });
                             }
 
                             @if (!user.IsDeleted)
                             {
-                                <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-url="@modifuUserRolesUrl" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
+                                <button type="button" class="btn btn-primary btn-sm js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
                                     <span class="icon-font icon-font--user"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
@@ -112,7 +112,7 @@
     </div>
 </div>
 
-@Html.PartialAsync("_ModifyUserRolesModal").Result
+@Html.PartialAsync("_UpdateUserModal").Result
 @Html.PartialAsync("_UserModal", new {
     ModalId = "deleteUserModal",
     Action = "Delete",

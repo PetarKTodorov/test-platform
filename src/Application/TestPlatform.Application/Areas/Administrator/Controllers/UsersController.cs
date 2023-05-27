@@ -7,24 +7,35 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Roles;
+    using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
+    using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
 
     public class UsersController : BaseAdministratorController
     {
         private readonly IUserService userService;
         private readonly IRoleService roleService;
+        private readonly IUserRoleMapService userRoleMapService;
+        private readonly ISubjectTagService subjectTagService;
+        private readonly IUserSubjectTagMapService userSubjectTagMapService;
         private readonly IUserManager userManager;
         private readonly ISearchPageableMananager searchPageableMananager;
 
         public UsersController(IUserService userService,
             IRoleService roleService,
+            IUserRoleMapService userRoleMapService,
+            ISubjectTagService subjectTagService,
+            IUserSubjectTagMapService userSubjectTagMapService,
             IUserManager userManager,
             ISearchPageableMananager searchPageableMananager)
         {
             this.userService = userService;
             this.roleService = roleService;
+            this.userRoleMapService = userRoleMapService;
+            this.subjectTagService = subjectTagService;
+            this.userSubjectTagMapService = userSubjectTagMapService;
             this.userManager = userManager;
             this.searchPageableMananager = searchPageableMananager;
         }
@@ -39,22 +50,23 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> ModifyUserRoles(Guid userId)
+        public async Task<IActionResult> Update(Guid userId)
         {
-            var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
-
-            var result = new ModifyUserRolesVM();
+            var result = new UpdateUserVM();
             result.AllRoles = await this.roleService.FindAllAsync<RoleVM>(false);
-            result.UserRoles = userWithRoles.Roles;
+            result.UserRoles = await this.userRoleMapService.FindUserRolesAsync<UserRoleMapVM>(userId);
+            result.AllSubjectTags = await this.subjectTagService.FindAllAsync<SubjectTagVm>(false);
+            result.UserSubjectTags = await this.userSubjectTagMapService.FindUserSubjectTagsAsync<UpdateUserSubjectTagMapVM>(userId);
 
             return this.Json(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ModifyUserRoles(Guid userId, IEnumerable<Guid> userRoles)
+        public async Task<IActionResult> Update(Guid userId, IEnumerable<Guid> userRoles, IEnumerable<Guid> userSubjectTags)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.userManager.UpdateUserRolesAsync(userId, userRoles, currentUserId);
+            await this.userRoleMapService.UpdateUserRolesAsync(userId, userRoles, currentUserId);
+            await this.userSubjectTagMapService.UpdateUserSubjectTagsAsync(userId, userSubjectTags, currentUserId);
 
             return this.RedirectToAction(nameof(List));
         }

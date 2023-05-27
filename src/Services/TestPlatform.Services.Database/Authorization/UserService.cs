@@ -9,15 +9,30 @@
     using TestPlatform.Common.Helpers;
     using TestPlatform.Database.Entities;
     using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
-    using TestPlatform.Services.Mapper;
+    using TestPlatform.Services.Database.Subjects.Interfaces;
 
     public class UserService : BaseService<User>, IUserService
     {
-        public UserService(IBaseRepository<User> userRepository, IMapper mapper)
+        private readonly IUserSubjectTagMapService userSubjectTagMapService;
+
+        public UserService(IBaseRepository<User> userRepository,
+            IMapper mapper,
+            IUserSubjectTagMapService userSubjectTagMapService)
             : base(userRepository, mapper)
         {
+            this.userSubjectTagMapService = userSubjectTagMapService;
+        }
+
+        public override async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)
+        {
+            var resultFromDelete = await base.DeleteAsync<T>(id, currentUserId);
+
+            await this.HardDeleteUserSubjectTagsMapAsync(id);
+
+            return resultFromDelete;
 
         }
 
@@ -69,14 +84,14 @@
             return entityToReturn;
         }
 
-        public async Task<T> FindUserRolesAsync<T>(Guid userId)
+        private async Task HardDeleteUserSubjectTagsMapAsync(Guid userId)
         {
-            var user = await this.BaseRepository
-                .GetByIdAsQueryable(userId)
-                .To<T>()
-                .SingleOrDefaultAsync();
+            var userSubjectTags = await this.userSubjectTagMapService.FindUserSubjectTagsAsync<UserSubjectTagMap>(userId);
 
-            return user;
+            foreach (var userSubjectTag in userSubjectTags)
+            {
+                await this.userSubjectTagMapService.HardDeleteAsync<UserSubjectTagMap>(userSubjectTag.Id);
+            }
         }
     }
 }
