@@ -1,0 +1,18 @@
+﻿@model CreateQuestionBM
+@{
+    ViewData["Title"] = "Create Question";
+}
+
+<h1 class="text-center">Create Question</h1>
+
+<div class="container-fluid px-5">
+    <form class="w-50 mx-auto" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.FormGroupFor(model => model.Title)
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>

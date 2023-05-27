@@ -1,6 +1,11 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
+    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
+    using TestPlatform.Application.Infrastructures.ApplicationUser;
+    using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
@@ -23,6 +28,22 @@
             var model = this.searchPageableMananager.CreatePageableResult(dataQuery, page.Value);
 
             return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return this.View();
+        }
+
+        [ValidateModelState]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateQuestionBM model)
+        {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.questionService.CreateAsync<Question, CreateQuestionBM>(model, currentUserId);
+
+            return this.RedirectToAction(nameof(List));
         }
     }
 }
