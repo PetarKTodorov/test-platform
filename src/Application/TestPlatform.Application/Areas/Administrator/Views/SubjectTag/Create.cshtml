@@ -3,7 +3,7 @@
     ViewData["Title"] = "Create Subject Tags";
 }
 
-<h1 class="text-center">Create Subject Tags</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
     <form asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Create" method="post">
