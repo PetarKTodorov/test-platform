@@ -1,0 +1,45 @@
+﻿@model UpdateQuestionVM
+@{
+    ViewData["Title"] = "Update Question";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form class="w-50 mx-auto" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" method="post">
+        @Html.AntiForgeryToken()
+
+        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+
+        @Html.FormGroupFor(model => model.OriginalQuestionTitle)
+
+        <div class="form-group mb-3">
+            <span>
+                @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
+            </span>
+
+            @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
+        </div>
+
+        <div class="form-group mb-3">
+            <span>
+                @Html.DisplayNameFor(model => model.QuestionTypes)
+            </span>
+
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
+        </div>
+        
+        <div class="form-group mb-3">
+            @Html.DisplayNameFor(model => model.SubjectTags)
+
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
+        </div>
+
+        <div class="d-flex justify-content-end gap-1">
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">
+                Go back
+            </a>
+            <button type="submit" class="btn btn-warning">Update</button>
+        </div>
+    </form>
+</div>

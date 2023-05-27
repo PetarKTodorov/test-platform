@@ -2,12 +2,15 @@
 {
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Subjects;
+    using TestPlatform.DTOs.ViewModels;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.Services.Database.Questions.Interfaces;
@@ -83,6 +86,30 @@
         }
 
         [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionVM>(id);
+
+            var questionTypes = await this.questionTypeService.FindAllAsync<SelectListItem>(false);
+            question.QuestionTypes = questionTypes.ToList();
+
+            var subjectTags = await this.subjectTagService.FindAllAsync<SelectListItem>();
+            question.SubjectTags = subjectTags.ToList();
+
+            return this.View(question);
+        }
+
+        [ValidateModelState]
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateSubjectTagBM model)
+        {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, currentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = model.Id });
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
@@ -90,7 +117,6 @@
             return this.View(question);
         }
 
-        [ValidateModelState]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
