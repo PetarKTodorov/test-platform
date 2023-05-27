@@ -87,20 +87,23 @@
                                 var restoreUrl = Url.Action("Restore", new { userId = user.Id });
                             }
 
-                            @if (!user.IsDeleted)
+                            @if (!this.User.FindFirst(UserClaimTypes.ID).Value.ToUpper().Equals(user.Id.ToUpper()))
                             {
-                                <button type="button" class="btn btn-primary btn-sm js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
-                                    <span class="icon-font icon-font--user"></span>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                    <span class="icon-font icon-font--trash"></span>
-                                </button>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
-                                    <span class="icon-font icon-font--trash"></span>
-                                </button>
+                                if (!user.IsDeleted)
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
+                                        <span class="icon-font icon-font--user"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                        <span class="icon-font icon-font--trash"></span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
+                                        <span class="icon-font icon-font--trash"></span>
+                                    </button>
+                                }
                             }
                         </td>
                     </tr>
