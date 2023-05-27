@@ -6,6 +6,7 @@
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.DTOs.BindingModels.Questions;
+    using TestPlatform.DTOs.BindingModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.Services.Database.Questions.Interfaces;
@@ -68,6 +69,23 @@
                 QuestionTypeId = model.QuestionType,
             };
             await this.questionCopyService.CreateAsync<QuestionCopy, CreateQuestionCopyBM>(questionCopy, currentUserId);
+
+            return this.RedirectToAction(nameof(List));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
+
+            return this.View(question);
+        }
+
+        [ValidateModelState]
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirm(Guid id)
+        {
+            await this.questionCopyService.HardDeleteAsync<QuestionCopy>(id);
 
             return this.RedirectToAction(nameof(List));
         }

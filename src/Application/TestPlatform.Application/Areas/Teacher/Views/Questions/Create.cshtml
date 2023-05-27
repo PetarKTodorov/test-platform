@@ -3,7 +3,7 @@
     ViewData["Title"] = "Create Question";
 }
 
-<h1 class="text-center">Create Question</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
     <form class="w-50 mx-auto" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Create" method="post">

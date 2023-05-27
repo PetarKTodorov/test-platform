@@ -1,20 +1,21 @@
 ﻿namespace TestPlatform.DTOs.ViewModels.Questions
 {
-    using TestPlatform.Services.Mapper.Interfaces;
+    using System;
+    using System.ComponentModel.DataAnnotations;
     using TestPlatform.Database.Entities.Questions;
-    using System.ComponentModel;
+    using TestPlatform.Services.Mapper.Interfaces;
 
-    public class QuestionInformationVM : IMapFrom<QuestionCopy>
+    public class DetailsQuestionCopyVM : IMapFrom<QuestionCopy>
     {
         public Guid Id { get; set; }
 
-        [DisplayName("Title")]
         public string OriginalQuestionTitle { get; set; }
 
-        [DisplayName("Question Type")]
+        public bool HasRandomizedAnswers { get; set; }
+
         public string QuestionTypeName { get; set; }
 
-        [DisplayName("Subject Tag")]
+        [Required]
         public string SubjectTagName { get; set; }
     }
 }

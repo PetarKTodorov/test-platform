@@ -4,7 +4,7 @@
     ViewData["Title"] = "List All Questions";
 }
 
-<h1 class="text-center">List All Question</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
     <table id="users-table" class="table table-bordered table-striped">
@@ -25,19 +25,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model.Items)
+            @foreach (var row in Model.Items)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => user.OriginalQuestionTitle)
+                        @Html.DisplayFor(modelItem => row.OriginalQuestionTitle)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => user.QuestionTypeName)
+                        @Html.DisplayFor(modelItem => row.QuestionTypeName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => user.SubjectTagName)
+                        @Html.DisplayFor(modelItem => row.SubjectTagName)
                     </td>
                     <td>
+                        <a href=""></a>
+                        <a class="btn btn-danger btn-sm" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" asp-route-id="@row.Id">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             }

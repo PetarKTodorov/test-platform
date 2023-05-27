@@ -1,0 +1,28 @@
+﻿@model DetailsQuestionCopyVM
+@{
+    ViewData["Title"] = "Delete Question";
+    bool isDisabled = true;
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form class="js-delete-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+
+        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+
+        @Html.FormGroupFor(model => model.OriginalQuestionTitle, isDisabled)
+
+        @Html.FormGroupFor(model => model.QuestionTypeName, isDisabled)
+
+        @Html.FormGroupFor(model => model.SubjectTagName, isDisabled)
+
+        <div class="d-flex justify-content-end gap-1">
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">
+                Go back
+            </a>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>
