@@ -43,8 +43,8 @@
                 new Claim(UserClaimTypes.FULL_NAME, user.FullName),
             };
 
-            var userRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(user.Id);
-            userRoles.Roles
+            var userRoles = await this.userRoleMapService.FindUserRolesAsync<UserRoleMapVM>(user.Id);
+            userRoles
                 .ToList()
                 .ForEach(role => claims.Add(new Claim(UserClaimTypes.ROLE, role.RoleName)));
 
@@ -89,54 +89,6 @@
         public async Task Logout(HttpContext httpContext)
         {
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        }
-
-        public async Task UpdateUserRolesAsync(Guid userId, IEnumerable<Guid> userRoles, Guid currentUserId)
-        {
-            await this.AddRolesToUserAsync(userId, userRoles, currentUserId);
-            await this.RemoveRolesFromUserAsync(userId, userRoles);
-        }
-
-        public async Task RemoveRoleFromUserAsync(Guid userRoleMapId)
-        {
-            await this.userRoleMapService.HardDeleteAsync<CreateUserRoleMap>(userRoleMapId);
-        }
-
-        public async Task AddRoleToUserAsync(Guid userId, Guid roleId, Guid currentUserId)
-        {
-            var userRoleMap = new CreateUserRoleMap()
-            {
-                UserId = userId,
-                RoleId = roleId,
-            };
-
-            await this.userRoleMapService.CreateAsync<CreateUserRoleMap, CreateUserRoleMap>(userRoleMap, currentUserId);
-        }
-
-        private async Task AddRolesToUserAsync(Guid userId, IEnumerable<Guid> newRoles, Guid currentUserId)
-        {
-            var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
-            var oldUserRolesIds = userWithRoles.Roles.Select(r => r.RoleId);
-
-            var rolesToAdd = newRoles.Where(roleId => !oldUserRolesIds.Contains(roleId));
-            foreach (var roleId in rolesToAdd)
-            {
-                await this.AddRoleToUserAsync(userId, roleId, currentUserId);
-            }
-        }
-
-        private async Task RemoveRolesFromUserAsync(Guid userId, IEnumerable<Guid> userRoles)
-        {
-            var userWithRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(userId);
-            var oldUserRolesIds = userWithRoles.Roles.Select(r => r.RoleId);
-
-            var rolesToRemove = oldUserRolesIds.Where(roleId => !userRoles.Contains(roleId));
-            foreach (var roleId in rolesToRemove)
-            {
-                var userRoleMapId = userWithRoles.Roles.First(ur => ur.RoleId == roleId);
-
-                await this.RemoveRoleFromUserAsync(userRoleMapId.Id);
-            }
         }
     }
 }

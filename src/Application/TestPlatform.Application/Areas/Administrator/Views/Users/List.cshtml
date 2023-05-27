@@ -1,99 +1,121 @@
-﻿@model PageableResult<UserInformationVM>
+﻿@model SearchFilterVM<UserInformationVM>
 
 @{
-    ViewData["Title"] = "List all users";
+    ViewData["Title"] = "List All Users";
 }
 
-<h1 class="text-center">List all users</h1>
+<h1 class="text-center">List All Users</h1>
 
-<div class="container-fluid">
-    <table id="users-table" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.Roles)
-                </th>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.IsDeleted)
-                </th>
-                <th>
-                    @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedDate)
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model.Items)
-            {
+<div class="container-fluid px-5">
+    <form method="get" class="search-form">
+        @Html.EditorFor(m => m.SearchCriteria)
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+
+    </form>
+
+
+    <div class="table-responsive mt-3">
+        <table id="users-table" class="table table-bordered table-striped">
+            <thead class="table-dark">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => user.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => user.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => user.CreatedDate)
-                    </td>
-                    <td>
-                        @string.Join(", ", user.Roles.Select(r => r.RoleName))
-                    </td>
-                    <td>
-                        <input type="checkbox" class="flipswitch" checked="@user.IsDeleted" disabled />
-                    </td>
-                    <td>
-                        @if (user.IsDeleted)
-                        {
-                            @Html.DisplayFor(modelItem => user.DeletedDate)
-                        }
-                        else
-                        {
-                            <span>Not deleted</span>
-                        }
-                    </td>
-                    <td>
-                        @{
-                            var modifuUserRolesUrl = Url.Action("ModifyUserRoles", new { userId = user.Id });
-                            var deleteUrl = Url.Action("Delete", new { userId = user.Id });
-                            var restoreUrl = Url.Action("Restore", new { userId = user.Id });
-                        }
-
-                        @if (!user.IsDeleted)
-                        {
-                            <button type="button" class="btn btn-primary btn-sm modify-user-roles-button" data-user-id="@user.Id" data-url="@modifuUserRolesUrl" data-bs-toggle="modal" data-bs-target="#modifyUserRolesModal">
-                                <span class="icon-font icon-font--user"></span>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                <span class="icon-font icon-font--trash"></span>
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
-                                <span class="icon-font icon-font--trash"></span>
-                            </button>
-                        }
-                    </td>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.Roles)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.IsDeleted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedDate)
+                    </th>
+                    <th>
+                        Actions
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Data.Items)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.CreatedDate)
+                        </td>
+                        <td>
+                            @string.Join(", ", user.Roles.Select(r => r.RoleName))
+                        </td>
+                        <td>
+                            @if (user.IsDeleted)
+                            {
+                                <span>True</span>
+                            }
+                            else
+                            {
+                                <span>False</span>
+                            }
+                        </td>
+                        <td>
+                            @if (user.IsDeleted)
+                            {
+                                @Html.DisplayFor(modelItem => user.DeletedDate)
+                            }
+                            else
+                            {
+                                <span>Not deleted</span>
+                            }
+                        </td>
+                        <td>
+                            @{
+                                var updateUserUrl = Url.Action("Update", new { userId = user.Id });
+                                var deleteUrl = Url.Action("Delete", new { userId = user.Id });
+                                var restoreUrl = Url.Action("Restore", new { userId = user.Id });
+                            }
 
-    @Html.PartialAsync("Pagination/_Pagination", Model.Paging).Result
+                            @if (!this.User.FindFirst(UserClaimTypes.ID).Value.ToUpper().Equals(user.Id.ToUpper()))
+                            {
+                                if (!user.IsDeleted)
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
+                                        <span class="icon-font icon-font--user"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                        <span class="icon-font icon-font--trash"></span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
+                                        <span class="icon-font icon-font--trash"></span>
+                                    </button>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
+    </div>
 </div>
 
-@Html.PartialAsync("_ModifyUserRolesModal").Result
+@Html.PartialAsync("_UpdateUserModal").Result
 @Html.PartialAsync("_UserModal", new {
     ModalId = "deleteUserModal",
     Action = "Delete",

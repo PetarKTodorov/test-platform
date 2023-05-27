@@ -7,6 +7,7 @@
     <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database.Entities\TestPlatform.Database.Entities.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj" />
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj" />
     <ProjectReference Include="..\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj" />
   </ItemGroup>
 </Project>

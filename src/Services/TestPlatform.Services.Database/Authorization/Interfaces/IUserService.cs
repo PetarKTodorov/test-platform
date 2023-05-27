@@ -8,7 +8,5 @@
         Task<T> FindByEmailAndPasswordAsync<T>(string email, string password);
 
         Task<T> FindByEmailAsync<T>(string email);
-
-        Task<T> FindUserRolesAsync<T>(Guid userId);
     }
 }

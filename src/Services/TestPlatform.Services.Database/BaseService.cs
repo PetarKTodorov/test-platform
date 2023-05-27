@@ -29,10 +29,8 @@
 
         public virtual async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId)
         {
-            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
-
             TEntity entity = this.Mapper.Map<TEntity>(model);
-            entity.CreatedBy = currentUser.Id;
+            entity.CreatedBy = currentUserId;
 
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -58,11 +56,9 @@
 
         public virtual async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)
         {
-            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
-
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
-            entity.ModifiedBy = currentUser.Id;
-            entity.DeletedBy = currentUser.Id;
+            entity.ModifiedBy = currentUserId;
+            entity.DeletedBy = currentUserId;
 
             TEntity deletedEntity = this.BaseRepository.Delete(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -74,10 +70,8 @@
 
         public virtual async Task<T> RestoryAsync<T>(Guid id, Guid currentUserId)
         {
-            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
-
             TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
-            entity.ModifiedBy = currentUser.Id;
+            entity.ModifiedBy = currentUserId;
 
             TEntity restoredEntity = this.BaseRepository.Restore(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -156,12 +150,10 @@
 
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId)
         {
-            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
-
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
             TEntity updatedEntity = this.Mapper.Map(model, entity);
-            updatedEntity.ModifiedBy = currentUser.Id;
+            updatedEntity.ModifiedBy = currentUserId;
 
             updatedEntity = this.BaseRepository.Update(updatedEntity);
             await this.BaseRepository.SaveChangesAsync();
