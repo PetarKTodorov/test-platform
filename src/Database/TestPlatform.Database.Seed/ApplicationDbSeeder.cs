@@ -5,6 +5,7 @@
     using TestPlatform.Database.Seed.DataSets;
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.Database.Seed.Seeders.Authorization;
+    using TestPlatform.Database.Seed.Seeders.Questions;
     using TestPlatform.Database.Seed.Seeders.Subjects;
 
     public static class ApplicationDbSeeder
@@ -25,6 +26,7 @@
                     new UserRoleMapSeeder(serviceProvider, logger, Constants.USERS_ROLES_MAP_JSON_FILE_NAME),
                     new SubjectTagSeeder(serviceProvider, logger, Constants.SUBJECT_TAGS_JSON_FILE_NAME),
                     new UserSubjectTagMapSeeder(serviceProvider, logger, Constants.USER_SUBJECT_TAG_MAP_JSON_FILE_NAME),
+                    new QuestionTypeSeeder(serviceProvider, logger, Constants.QUESTION_TYPE_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)

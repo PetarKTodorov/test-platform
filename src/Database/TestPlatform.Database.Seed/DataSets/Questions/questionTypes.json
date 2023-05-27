@@ -1,0 +1,18 @@
+﻿[
+    {
+        "Id": "00F1EA00-27B4-4894-8AFE-877C36B9E41D",
+        "Name": "Single Choice"
+    },
+    {
+        "Id": "AE825D9C-EF76-45E9-A31C-561976E6387E",
+        "Name": "Multiple Choice"
+    },
+    {
+        "Id": "75015800-94DE-4A32-B4DA-F9E34C2B8A0B",
+        "Name": "True/False"
+    },
+    {
+        "Id": "4A1856B3-CDA0-4A21-847A-1C953F9528E6",
+        "Name": "Text"
+    }
+]

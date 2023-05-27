@@ -10,5 +10,12 @@
         [Required]
         [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string Title { get; set; }
+
+        [Required]
+        public bool HasRandomizedAnswers { get; set; }
+
+        public Guid QuestionType { get; set; }
+
+        public Guid SubjectTag { get; set; }
     }
 }

@@ -11,5 +11,7 @@
         public const string SUBJECT_TAGS_JSON_FILE_NAME = "subjectTags";
 
         public const string USER_SUBJECT_TAG_MAP_JSON_FILE_NAME = "userSubjectTagMap";
+
+        public const string QUESTION_TYPE_JSON_FILE_NAME = "questionTypes";
     }
 }

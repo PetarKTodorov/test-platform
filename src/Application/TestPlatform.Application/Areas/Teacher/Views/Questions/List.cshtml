@@ -11,7 +11,13 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameForInnerType((QuestionInformationVM model) => model.Title)
+                    @Html.DisplayNameForInnerType((QuestionInformationVM model) => model.OriginalQuestionTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((QuestionInformationVM model) => model.QuestionTypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((QuestionInformationVM model) => model.SubjectTagName)
                 </th>
                 <th>
                     Actions
@@ -23,7 +29,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => user.Title)
+                        @Html.DisplayFor(modelItem => user.OriginalQuestionTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.QuestionTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.SubjectTagName)
                     </td>
                     <td>
                     </td>
