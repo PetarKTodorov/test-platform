@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Subjects;
@@ -34,10 +35,10 @@
             this.searchPageableMananager = searchPageableMananager;
         }
 
-        public async Task<IActionResult> List(int? page = 1)
+        public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
             var dataQuery = this.questionCopyService.FindAllAsQueryable<QuestionInformationVM>();
-            var model = this.searchPageableMananager.CreatePageableResult(dataQuery, page.Value);
+            var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
         }
