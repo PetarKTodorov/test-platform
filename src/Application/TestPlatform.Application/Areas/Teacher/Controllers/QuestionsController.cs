@@ -51,8 +51,8 @@
         {
             var model = new CreateQuestionVM()
             {
-                QuestionTypes = await this.questionTypeService.FindAllAsync<QuestionTypeVM>(false),
-                SubjectTags = await this.subjectTagService.FindAllAsync<SubjectTagVm>(),
+                QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList(),
+                SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList(),
             };
 
             return this.View(model);
@@ -69,8 +69,8 @@
             {
                 OriginalQuestionId = createdQuestion.Id,
                 HasRandomizedAnswers = model.HasRandomizedAnswers,
-                SubjectTagId = model.SubjectTag,
-                QuestionTypeId = model.QuestionType,
+                SubjectTagId = model.SubjectTagId,
+                QuestionTypeId = model.QuestionTypeId,
             };
             await this.questionCopyService.CreateAsync<QuestionCopy, CreateQuestionCopyBM>(questionCopy, currentUserId);
 

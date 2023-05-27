@@ -12,35 +12,21 @@
         @Html.FormGroupFor(model => model.Title)
         
         <div class="form-group mb-3">
-            <span>
-                @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
-            </span>
+            @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
 
             @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
         </div>
         
         <div class="form-group mb-3">
-            <span>
-                @Html.DisplayNameFor(model => model.QuestionTypes)
-            </span>
+            @Html.DisplayNameFor(model => model.QuestionTypes)
 
-            <select class="js-select2 form-control" name="questionType">
-                @foreach (var questionType in Model.QuestionTypes)
-                {
-                    <option value="@questionType.Id">@questionType.Name</option>
-                }
-            </select>
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
         </div>
 
         <div class="form-group mb-3">
             @Html.DisplayNameFor(model => model.SubjectTags)
 
-            <select class="js-select2 form-control" name="subjectTag">
-                @foreach (var subjectTag in Model.SubjectTags)
-                {
-                    <option value="@subjectTag.Id">@subjectTag.Name</option>
-                }
-            </select>
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
         </div>
 
         <div class="d-flex justify-content-end">

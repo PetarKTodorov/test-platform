@@ -14,8 +14,8 @@
         [Required]
         public bool HasRandomizedAnswers { get; set; }
 
-        public Guid QuestionType { get; set; }
+        public Guid QuestionTypeId { get; set; }
 
-        public Guid SubjectTag { get; set; }
+        public Guid SubjectTagId { get; set; }
     }
 }
