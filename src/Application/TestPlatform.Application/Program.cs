@@ -27,6 +27,8 @@
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Subjects;
     using TestPlatform.Application.Infrastructures.Searcher.MVC;
+    using TestPlatform.Services.Database.Questions.Interfaces;
+    using TestPlatform.Services.Database.Questions;
 
     public class Program
     {
@@ -141,6 +143,8 @@
             services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
 
             services.AddTransient<ITestService, TestService>();
+
+            services.AddTransient<IQuestionService, QuestionService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
