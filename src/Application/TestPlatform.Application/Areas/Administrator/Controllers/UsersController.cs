@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
