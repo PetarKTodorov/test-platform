@@ -77,6 +77,7 @@
         {
             User entity = await this.BaseRepository
                 .GetAllAsQueryable()
+                .Where(u => u.IsDeleted == false)
                 .SingleOrDefaultAsync(u => u.Email == email);
 
             T entityToReturn = this.Mapper.Map<T>(entity);
