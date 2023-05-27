@@ -38,10 +38,8 @@
 
         public override async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId)
         {
-            BaseEntity currentUser = await this.FindByIdAsync<BaseEntity>(currentUserId);
-
             User entity = this.Mapper.Map<User>(model);
-            entity.CreatedBy = currentUser.Id;
+            entity.CreatedBy = currentUserId;
             entity.Password = PasswordHasher.HashPassword(entity.Password);
 
             entity = await this.BaseRepository.AddAsync(entity);
