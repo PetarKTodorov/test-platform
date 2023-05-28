@@ -25,16 +25,23 @@
 
         <div class="form-group mb-3">
             <span>
-                @Html.DisplayNameFor(model => model.QuestionTypes)
+                @Html.DisplayNameFor(model => model.QuestionTypeId)
             </span>
 
             <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.QuestionTypeId)
+            </span>
         </div>
         
         <div class="form-group mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTags)
+            @Html.DisplayNameFor(model => model.SubjectTagId)
 
             <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
+        </div>
         </div>
 
         <div class="d-flex justify-content-end gap-1">

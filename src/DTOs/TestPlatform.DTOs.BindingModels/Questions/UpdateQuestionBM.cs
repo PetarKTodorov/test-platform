@@ -26,14 +26,14 @@
         [DisplayName("Has Randomized Answers")]
         public bool HasRandomizedAnswers { get; set; }
 
+        [DisplayName("Question Type")]
         public Guid QuestionTypeId { get; set; }
 
+        [DisplayName("Subject Tag")]
         public Guid SubjectTagId { get; set; }
 
-        [DisplayName("Question Type")]
         public List<SelectListItem> QuestionTypes { get; set; }
 
-        [DisplayName("Subject Tag")]
         public List<SelectListItem> SubjectTags { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

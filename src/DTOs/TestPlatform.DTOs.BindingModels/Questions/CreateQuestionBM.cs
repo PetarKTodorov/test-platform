@@ -14,18 +14,19 @@
         public string Title { get; set; }
 
         [Required]
-
         [DisplayName("Has Randomized Answers")]
         public bool HasRandomizedAnswers { get; set; }
 
-        public Guid QuestionTypeId { get; set; }
-
+        [Required]
         [DisplayName("Question Type")]
+        public Guid? QuestionTypeId { get; set; }
+
         public List<SelectListItem> QuestionTypes { get; set; }
 
-        public Guid SubjectTagId { get; set; }
+        [Required]
+        [DisplayName("Subject Tag")]
+        public Guid? SubjectTagId { get; set; }
 
-        [DisplayName("Subject Tags")]
         public List<SelectListItem> SubjectTags { get; set; }
     }
 }

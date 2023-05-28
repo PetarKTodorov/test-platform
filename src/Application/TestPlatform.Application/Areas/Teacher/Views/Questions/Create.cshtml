@@ -10,23 +10,33 @@
         @Html.AntiForgeryToken()
 
         @Html.FormGroupFor(model => model.Title)
-        
+
         <div class="form-group mb-3">
             @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
 
             @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
         </div>
-        
-        <div class="form-group mb-3">
-            @Html.DisplayNameFor(model => model.QuestionTypes)
 
-            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
+        <div class="form-group mb-3">
+            @Html.DisplayNameFor(model => model.QuestionTypeId)
+
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes">
+                <option selected disabled>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.QuestionTypeId)
+            </span>
         </div>
 
         <div class="form-group mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTags)
+            @Html.DisplayNameFor(model => model.SubjectTagId)
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags">
+                <option selected disabled>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
         </div>
 
         <div class="d-flex justify-content-end">

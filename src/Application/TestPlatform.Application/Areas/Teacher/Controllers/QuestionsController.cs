@@ -58,10 +58,17 @@
             return this.View(model);
         }
 
-        [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Create(CreateQuestionBM model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
+                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+
+                return this.View(model);
+            }
+
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
             var createdQuestion = await this.questionService.FindOrCreateQuestionAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
@@ -69,8 +76,8 @@
             {
                 OriginalQuestionId = createdQuestion.Id,
                 HasRandomizedAnswers = model.HasRandomizedAnswers,
-                SubjectTagId = model.SubjectTagId,
-                QuestionTypeId = model.QuestionTypeId,
+                SubjectTagId = model.SubjectTagId.Value,
+                QuestionTypeId = model.QuestionTypeId.Value,
             };
             await this.questionCopyService.CreateAsync<QuestionCopy, CreateQuestionCopyBM>(questionCopy, currentUserId);
 
@@ -90,19 +97,23 @@
         {
             var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
 
-            var questionTypes = await this.questionTypeService.FindAllAsync<SelectListItem>(false);
-            question.QuestionTypes = questionTypes.ToList();
-
-            var subjectTags = await this.subjectTagService.FindAllAsync<SelectListItem>();
-            question.SubjectTags = subjectTags.ToList();
+            question.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
+            question.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
             return this.View(question);
         }
 
-        [ValidateModelState]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateQuestionBM model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
+                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+
+                return this.View(model);
+            }
+
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
             var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
