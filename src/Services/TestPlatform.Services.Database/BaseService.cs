@@ -32,6 +32,7 @@
             TEntity entity = this.Mapper.Map<TEntity>(model);
             entity.CreatedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity, entity.Id);
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
 
