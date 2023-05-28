@@ -20,12 +20,17 @@
             this.Rooms = new HashSet<Room>();
         }
 
+        [Required]
+        [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
+        public string Title { get; set; }
+
         [StringLength(maximumLength: Validations.TWO_POWER_SIXTEEN, MinimumLength = Validations.ONE)]
         public string Instructions { get; set; }
 
         [Required]
         public bool IsApproved { get; set; }
 
+        [Required]
         public Guid StatusId { get; set; }
         public virtual Status Status { get; set; }
 
