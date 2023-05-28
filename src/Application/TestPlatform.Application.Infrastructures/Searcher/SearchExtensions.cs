@@ -90,7 +90,7 @@
             if (result != null)
             {
                 result.Property = propertyName;
-                result.TargetTypeName = classType.AssemblyQualifiedName;
+                result.TargetTypeName = classType.Name;
             }
 
             return result;
