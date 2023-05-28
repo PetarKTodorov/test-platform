@@ -37,6 +37,15 @@
                         @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.IsDeleted)
                     </th>
                     <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.QuestionsCount)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.TestsCount)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.UsersCount)
+                    </th>
+                    <th class="text-nowrap">
                         Actions
                     </th>
                 </tr>
@@ -52,6 +61,15 @@
                             @Html.DisplayTextFor(modelItem => row.IsDeleted)
                         </td>
                         <td>
+                            @Html.DisplayTextFor(modelItem => row.QuestionsCount)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => row.TestsCount)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => row.UsersCount)
+                        </td>
+                        <td>
                             <div class="d-flex gap-1">
                                 <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
                                     Details
@@ -62,7 +80,7 @@
                                         Restore
                                     </a>
                                 }
-                                else
+                                else if (row.QuestionsCount == 0 && row.TestsCount == 0 && row.UsersCount == 0)
                                 {
                                     <a class="btn btn-warning btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
                                         Update
