@@ -32,7 +32,7 @@
             TEntity entity = this.Mapper.Map<TEntity>(model);
             entity.CreatedBy = currentUserId;
 
-            this.BaseRepository.DetachLocal(entity, entity.Id);
+            this.BaseRepository.DetachLocal(entity);
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
 
@@ -45,7 +45,7 @@
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
-            this.BaseRepository.DetachLocal(entity, entity.Id);
+            this.BaseRepository.DetachLocal(entity);
 
             TEntity deletedEntity = this.BaseRepository.HardDelete(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -153,7 +153,7 @@
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
-            this.BaseRepository.DetachLocal(entity, entity.Id);
+            this.BaseRepository.DetachLocal(entity);
 
             TEntity updatedEntity = this.Mapper.Map(model, entity);
             updatedEntity.ModifiedBy = currentUserId;

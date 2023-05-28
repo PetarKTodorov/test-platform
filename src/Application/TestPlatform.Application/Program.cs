@@ -29,6 +29,7 @@
     using TestPlatform.Application.Infrastructures.Searcher.MVC;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Questions;
+    using TestPlatform.Database.Entities.Questions;
 
     public class Program
     {
@@ -70,8 +71,7 @@
 
             services.AddSingleton(configuration);
 
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
+            RegisterRepositories(services);
             RegisterAutoMapper(services);
             RegisterDatabaseServices(services);
             RegisterManagers(services);
@@ -116,6 +116,12 @@
 
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+        }
+
+        private static void RegisterRepositories(IServiceCollection services)
+        {
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IQuestionAnswerMapRepository), typeof(QuestionAnswerMapRepository));
         }
 
         private static void RegisterAutoMapper(IServiceCollection services)

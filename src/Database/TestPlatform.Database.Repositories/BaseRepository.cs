@@ -79,14 +79,14 @@
             return entry.Entity;
         }
 
-        public virtual TEntity HardDelete(TEntity entity)
+        public TEntity HardDelete(TEntity entity)
         {
             var entry = this.DbContext.Remove(entity);
 
             return entry.Entity;
         }
 
-        public virtual TEntity Delete(TEntity entity)
+        public TEntity Delete(TEntity entity)
         {
             entity.IsDeleted = true;
             entity.DeletedDate = DateTime.UtcNow;
@@ -114,11 +114,11 @@
             GC.SuppressFinalize(this);
         }
 
-        public void DetachLocal(TEntity entity, Guid entryId)
+        public virtual void DetachLocal(TEntity entity)
         {
             var local = this.DbSet
                 .Local
-                .FirstOrDefault(entry => entry.Id.Equals(entryId));
+                .FirstOrDefault(entry => entry.Id.Equals(entity.Id));
             if (local != null)
             {
                 this.DbContext.Entry(local).State = EntityState.Detached;

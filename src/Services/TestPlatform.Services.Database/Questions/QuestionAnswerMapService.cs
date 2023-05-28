@@ -7,8 +7,8 @@
 
     public class QuestionAnswerMapService : BaseService<QuestionAnswerMap>, IQuestionAnswerMapService
     {
-        public QuestionAnswerMapService(IBaseRepository<QuestionAnswerMap> baseRepository, IMapper mapper)
-            : base(baseRepository, mapper)
+        public QuestionAnswerMapService(IQuestionAnswerMapRepository questionAnswerMapRepository, IMapper mapper)
+            : base(questionAnswerMapRepository, mapper)
         {
         }
     }
