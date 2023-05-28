@@ -3,9 +3,11 @@
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
@@ -118,24 +120,25 @@
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
             var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
-            var createdQuestion = question;
             if (question.Title != model.OriginalQuestionTitle)
             {
-                createdQuestion = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
+                question = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
             }
+            model.OriginalQuestionId = question.Id;
 
-            model.OriginalQuestionId = createdQuestion.Id;
             var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
 
-            foreach (var answer in model.AnswersContent)
+            await this.questionAnswerMapService.HardDeleteAnswers(questionCopy.Id);
+
+            foreach (var answer in model.Answers)
             {
-                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer, currentUserId);
+                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer.AnswerContent, currentUserId);
 
                 var questionAnswerMap = new QuestionAnswerMap()
                 {
                     QuestionId = questionCopy.Id,
                     AnswerId = createdAnswer.Id,
-                    IsCorrect = false,
+                    IsCorrect = answer.IsCorrect,
                 };
                 await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
             }

@@ -13,7 +13,7 @@
     {
         public UpdateQuestionBM()
         {
-            this.AnswersContent = new HashSet<string>();
+            this.Answers = new HashSet<UpdateQuestionAnswerBM>();
         }
 
         [Required]
@@ -41,16 +41,15 @@
 
         public List<SelectListItem> SubjectTags { get; set; }
 
-        [DisplayName("Answers")]
-        public IEnumerable<string> AnswersContent { get; set; }
+        public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<UpdateQuestionBM, Question>()
                 .ForMember(q => q.Title, mo => mo.MapFrom(uqbm => uqbm.OriginalQuestionTitle));
 
-            configuration.CreateMap<QuestionCopy, UpdateQuestionBM>()
-                .ForMember(uqbm => uqbm.AnswersContent, mo => mo.MapFrom(qc => qc.Answers.Select(a => a.Answer.Content)));
+            configuration.CreateMap<UpdateQuestionBM, QuestionCopy>()
+                .ForMember(uqbm => uqbm.Answers, mo => mo.Ignore());
         }
     }
 }

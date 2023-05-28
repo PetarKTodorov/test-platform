@@ -42,19 +42,31 @@
                 @Html.ValidationMessageFor(model => model.QuestionTypeId)
             </span>
         </div>
-        
-        <div class="">
-            @Html.DisplayNameFor(model => model.AnswersContent)
 
-            @if (Model.AnswersContent.Any())
+        <div class="mb-3">
+            @Html.DisplayNameFor(model => model.Answers)
+
+            @foreach (var (answer, index) in Model.Answers.Select((answer, index) => (answer, index)))
             {
-                foreach (var answer in Model.AnswersContent)
-                {
-                    <input class="form-control mb-3" type="text" name="AnswersContent" value="@answer" />
-                }
-            } 
-            
-            <input class="form-control mb-3" type="text" name="AnswersContent" />
+                var idNameAttribute = $"Answers[{index}].Id";
+                var answerIdNameAttribute = $"Answers[{index}].AnswerId";
+                var isCorrectNameAttribute = $"Answers[{index}].IsCorrect";
+                var answerContentNameAttribute = $"Answers[{index}].AnswerContent";
+
+                <div class="my-2 js-answer-container">
+                    <input hidden type="text" name="@idNameAttribute" value="@answer.Id" />
+                    <input hidden type="text" name="@answerIdNameAttribute" value="@answer.AnswerId" />
+                    <div class="d-flex gap-2">
+                        @Html.CheckBox(isCorrectNameAttribute, answer.IsCorrect)
+                        <input class="form-control" type="text" name="@answerContentNameAttribute" value="@answer.AnswerContent" />
+                    </div>
+                </div>
+            }
+
+            <div class="d-flex justify-content-end gap-1">
+                <button type="button" class="btn btn-success js-add-answer">Add new answer</button>
+                <button type="button" class="btn btn-danger js-remove-answer">Remove the last one</button>
+            </div>
         </div>
 
         <div class="d-flex justify-content-end gap-1">
@@ -65,3 +77,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script asp-src-include="~/js/answers*.js" defer></script>
+}
