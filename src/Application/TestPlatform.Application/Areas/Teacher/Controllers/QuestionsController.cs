@@ -4,15 +4,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
-    using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Questions;
-    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.DTOs.BindingModels.Questions;
-    using TestPlatform.DTOs.BindingModels.Subjects;
-    using TestPlatform.DTOs.ViewModels;
     using TestPlatform.DTOs.ViewModels.Questions;
-    using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
@@ -22,18 +17,24 @@
         private readonly IQuestionService questionService;
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTypeService questionTypeService;
+        private readonly IAnswerService answerService;
+        private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
         private readonly ISearchPageableMananager searchPageableMananager;
 
         public QuestionsController(IQuestionService questionService,
             IQuestionCopyService questionCopyService,
             IQuestionTypeService questionTypeService,
+            IAnswerService answerService,
+            IQuestionAnswerMapService questionAnswerMapService,
             ISubjectTagService subjectTagService,
             ISearchPageableMananager searchPageableMananager)
         {
             this.questionService = questionService;
             this.questionCopyService = questionCopyService;
             this.questionTypeService = questionTypeService;
+            this.answerService = answerService;
+            this.questionAnswerMapService = questionAnswerMapService;
             this.subjectTagService = subjectTagService;
             this.searchPageableMananager = searchPageableMananager;
         }
@@ -71,7 +72,7 @@
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
-            var createdQuestion = await this.questionService.FindOrCreateQuestionAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
+            var createdQuestion = await this.questionService.FindOrCreateAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
             var questionCopy = new CreateQuestionCopyBM()
             {
                 OriginalQuestionId = createdQuestion.Id,
@@ -120,11 +121,24 @@
             var createdQuestion = question;
             if (question.Title != model.OriginalQuestionTitle)
             {
-                createdQuestion = await this.questionService.FindOrCreateQuestionAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
+                createdQuestion = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
             }
 
             model.OriginalQuestionId = createdQuestion.Id;
-            await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
+            var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
+
+            foreach (var answer in model.AnswersContent)
+            {
+                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer, currentUserId);
+
+                var questionAnswerMap = new QuestionAnswerMap()
+                {
+                    QuestionId = questionCopy.Id,
+                    AnswerId = createdAnswer.Id,
+                    IsCorrect = false,
+                };
+                await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
+            }
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }

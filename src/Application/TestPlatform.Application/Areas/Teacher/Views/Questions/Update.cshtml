@@ -15,7 +15,16 @@
 
         @Html.FormGroupFor(model => model.OriginalQuestionTitle)
 
-        <div class="form-group mb-3">
+        <div class="mb-3">
+            @Html.DisplayNameFor(model => model.SubjectTagId)
+
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
+        </div>
+
+        <div class="mb-3">
             <span>
                 @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
             </span>
@@ -23,7 +32,7 @@
             @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
         </div>
 
-        <div class="form-group mb-3">
+        <div class="mb-3">
             <span>
                 @Html.DisplayNameFor(model => model.QuestionTypeId)
             </span>
@@ -34,14 +43,18 @@
             </span>
         </div>
         
-        <div class="form-group mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTagId)
+        <div class="">
+            @Html.DisplayNameFor(model => model.AnswersContent)
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
-            <span class="text-danger">
-                @Html.ValidationMessageFor(model => model.SubjectTagId)
-            </span>
-        </div>
+            @if (Model.AnswersContent.Any())
+            {
+                foreach (var answer in Model.AnswersContent)
+                {
+                    <input class="form-control mb-3" type="text" name="AnswersContent" value="@answer" />
+                }
+            } 
+            
+            <input class="form-control mb-3" type="text" name="AnswersContent" />
         </div>
 
         <div class="d-flex justify-content-end gap-1">

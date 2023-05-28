@@ -6,7 +6,7 @@
 
     public interface IQuestionService : IBaseService<Question>
     {
-        Task<T> FindOrCreateQuestionAsync<T, TModel>(TModel model, string title, Guid currentUserId);
+        Task<T> FindOrCreateAsync<T, TModel>(TModel model, string title, Guid currentUserId);
 
         Task<T> FindQuestionByTitleAsync<T>(string title);
     }

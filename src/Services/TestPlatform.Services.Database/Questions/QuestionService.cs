@@ -25,7 +25,7 @@
             return question;
         }
 
-        public async Task<T> FindOrCreateQuestionAsync<T, TModel>(TModel model, string title, Guid currentUserId)
+        public async Task<T> FindOrCreateAsync<T, TModel>(TModel model, string title, Guid currentUserId)
         {
             var questionEntity = await this.FindQuestionByTitleAsync<T>(title);
             var createdQuestion = questionEntity;

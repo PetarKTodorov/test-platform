@@ -11,6 +11,11 @@
 
     public class UpdateQuestionBM : IMapTo<QuestionCopy>, IMapFrom<QuestionCopy>, IHaveCustomMappings
     {
+        public UpdateQuestionBM()
+        {
+            this.AnswersContent = new HashSet<string>();
+        }
+
         [Required]
         public Guid Id { get; set; }
 
@@ -36,10 +41,16 @@
 
         public List<SelectListItem> SubjectTags { get; set; }
 
+        [DisplayName("Answers")]
+        public IEnumerable<string> AnswersContent { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<UpdateQuestionBM, Question>()
                 .ForMember(q => q.Title, mo => mo.MapFrom(uqbm => uqbm.OriginalQuestionTitle));
+
+            configuration.CreateMap<QuestionCopy, UpdateQuestionBM>()
+                .ForMember(uqbm => uqbm.AnswersContent, mo => mo.MapFrom(qc => qc.Answers.Select(a => a.Answer.Content)));
         }
     }
 }

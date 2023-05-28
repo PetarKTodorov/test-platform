@@ -5,5 +5,8 @@
 
     public interface IAnswerService : IBaseService<Answer>
     {
+        Task<T> FindOrCreateAsync<T>(string answerContent, Guid currentUserId);
+
+        Task<T> FindByContentAsync<T>(string content);
     }
 }
