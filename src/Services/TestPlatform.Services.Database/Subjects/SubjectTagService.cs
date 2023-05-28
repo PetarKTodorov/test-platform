@@ -31,9 +31,7 @@
 
         private async Task HardDeleteUserSubjectTagsMapAsync(Guid subjectTagId)
         {
-            var userSubjectTags = this.userSubjectTagMapService.FindAllAsQueryable<UserSubjectTagMap>()
-                .Where(ustm => ustm.SubjectTagId == subjectTagId)
-                .ToArray();
+            var userSubjectTags = await this.userSubjectTagMapService.FindUserSubjectTagsBySubjectTagIdAsync<UserSubjectTagMap>(subjectTagId);
 
             foreach (var userSubjectTag in userSubjectTags)
             {
