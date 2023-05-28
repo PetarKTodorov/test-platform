@@ -147,6 +147,7 @@
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IQuestionCopyService, QuestionCopyService>();
             services.AddTransient<IQuestionTypeService, QuestionTypeService>();
+            services.AddTransient<IAnswerService, AnswerService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
