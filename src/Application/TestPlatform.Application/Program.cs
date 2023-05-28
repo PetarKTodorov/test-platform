@@ -148,13 +148,14 @@
             services.AddTransient<ISubjectTagService, SubjectTagService>();
             services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
 
-            services.AddTransient<ITestService, TestService>();
-
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IQuestionCopyService, QuestionCopyService>();
             services.AddTransient<IQuestionTypeService, QuestionTypeService>();
             services.AddTransient<IAnswerService, AnswerService>();
             services.AddTransient<IQuestionAnswerMapService, QuestionAnswerMapService>();
+
+            services.AddTransient<IStatusService, StatusService>();
+            services.AddTransient<ITestService, TestService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
