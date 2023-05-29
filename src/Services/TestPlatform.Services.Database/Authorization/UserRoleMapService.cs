@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Database.Authorization
 {
+    using System.Linq;
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Authorization;
@@ -53,7 +54,7 @@
             var userWithRoles = await this.FindUserRolesAsync<UserRoleMap>(userId);
             var oldUserRolesIds = userWithRoles.Select(r => r.RoleId);
 
-            var rolesToAdd = newRoles.Where(roleId => !oldUserRolesIds.Contains(roleId));
+            var rolesToAdd = newRoles.Except(oldUserRolesIds);
             foreach (var roleId in rolesToAdd)
             {
                 await this.AddRoleToUserAsync(userId, roleId, currentUserId);
@@ -65,7 +66,7 @@
             var userWithRoles = await this.FindUserRolesAsync<UserRoleMap>(userId);
             var oldUserRolesIds = userWithRoles.Select(r => r.RoleId);
 
-            var rolesToRemove = oldUserRolesIds.Where(roleId => !newRoles.Contains(roleId));
+            var rolesToRemove = oldUserRolesIds.Except(newRoles);
             foreach (var roleId in rolesToRemove)
             {
                 var userRoleMapId = userWithRoles.First(ur => ur.RoleId == roleId);

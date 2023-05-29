@@ -61,7 +61,7 @@
             var userSubjectTags = await this.FindUserSubjectTagsAsync<UserSubjectTagMap>(userId);
             var oldUserSubjectTagsIds = userSubjectTags.Select(st => st.SubjectTagId);
 
-            var subjectTagsToAdd = newSubjectTags.Where(subjectTagId => !oldUserSubjectTagsIds.Contains(subjectTagId));
+            var subjectTagsToAdd = newSubjectTags.Except(oldUserSubjectTagsIds);
             foreach (var subjectTagId in subjectTagsToAdd)
             {
                 await this.AddSubjectTagToUserAsync(userId, subjectTagId, currentUserId);
@@ -73,7 +73,7 @@
             var userSubjectTags = await this.FindUserSubjectTagsAsync<UserSubjectTagMap>(userId);
             var oldSubjectTagsIds = userSubjectTags.Select(st => st.SubjectTagId);
 
-            var subjectTagsToRemove = oldSubjectTagsIds.Where(subjectTagId => !newSubjectTags.Contains(subjectTagId));
+            var subjectTagsToRemove = oldSubjectTagsIds.Except(newSubjectTags);
             foreach (var subjectTagId in subjectTagsToRemove)
             {
                 var subjectTag = userSubjectTags.First(ust => ust.SubjectTagId == subjectTagId);
