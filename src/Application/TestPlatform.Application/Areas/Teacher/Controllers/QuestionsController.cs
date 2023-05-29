@@ -124,30 +124,6 @@
             var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
             await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
 
-            //var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
-            //if (question.Title != model.OriginalQuestionTitle)
-            //{
-            //    question = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
-            //}
-            //model.OriginalQuestionId = question.Id;
-
-            //var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
-
-            //await this.questionAnswerMapService.HardDeleteAnswers(questionCopy.Id);
-
-            //foreach (var answer in model.Answers)
-            //{
-            //    var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer.AnswerContent, currentUserId);
-
-            //    var questionAnswerMap = new QuestionAnswerMap()
-            //    {
-            //        QuestionId = questionCopy.Id,
-            //        AnswerId = createdAnswer.Id,
-            //        IsCorrect = answer.IsCorrect,
-            //    };
-            //    await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
-            //}
-
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
 
