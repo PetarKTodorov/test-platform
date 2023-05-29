@@ -23,5 +23,13 @@
         "IsApproved": "false",
         "HasRandomizeQuestions": "true",
         "StatusId": "109d17aa-04cd-4a20-8ecd-ddb450c2df8b"
+    },
+    {
+        "Id": "09bfa778-5a1b-40c6-a7bd-9529c5c64d6e",
+        "Title": "Biology VII class",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "false",
+        "HasRandomizeQuestions": "true",
+        "StatusId": "109D17AA-04CD-4A20-8ECD-DDB450C2DF8B"
     }
 ]

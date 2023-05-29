@@ -157,6 +157,7 @@
 
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
+            services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)

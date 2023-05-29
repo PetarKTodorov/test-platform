@@ -16,6 +16,7 @@
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
+    using static System.Net.Mime.MediaTypeNames;
 
     public class TestController : BaseTeacherController
     {
@@ -41,6 +42,20 @@
             var dataQuery = this.testService
                 .FindAllAsQueryable<ListTestsVM>()
                 .Where(lt => lt.CreatedBy == currentUserId);
+
+            var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListPending(ICollection<AbstractSearch> searchCriteria, int? page = 1)
+        {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var dataQuery = this.testService
+                .FindAllAsQueryable<ListPendingTestVM>()
+                .Where(lt => lt.CreatedBy != currentUserId)
+                .Where(lt => lt.StatusId == StatusType.Pending.GetUid());
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -98,6 +113,12 @@
             this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
             var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+
+            if (test.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
 
             return this.View(test);
         }
@@ -113,6 +134,11 @@
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            if (model.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
+
             await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, currentUserId);
             await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, currentUserId);
 
@@ -125,6 +151,12 @@
             this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
             var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+
+            if (test.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
 
             return this.View(test);
         }
@@ -140,6 +172,11 @@
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            if (model.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
+
             await this.testService.DeleteAsync<UpdateTestBM>(model.Id, currentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
@@ -150,6 +187,11 @@
         {
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var test = await this.testService.RestoryAsync<Test>(id, currentUserId);
+
+            if (test.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
         }
