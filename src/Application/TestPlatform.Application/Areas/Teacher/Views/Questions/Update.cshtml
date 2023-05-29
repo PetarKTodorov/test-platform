@@ -1,6 +1,9 @@
 ﻿@model UpdateQuestionBM
 @{
     ViewData["Title"] = "Update Question";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["SubjectTags"];
+    var questionTypes = (List<SelectListItem>)this.ViewData["QuestionTypes"];
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -18,7 +21,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@subjectTags"></select>
             <span class="text-danger">
                 @Html.ValidationMessageFor(model => model.SubjectTagId)
             </span>
@@ -35,7 +38,7 @@
                 @Html.LabelFor(model => model.QuestionTypeId, new { @class = "form-label"})
             </span>
 
-            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@questionTypes"></select>
             <span class="text-danger">
                 @Html.ValidationMessageFor(model => model.QuestionTypeId)
             </span>
