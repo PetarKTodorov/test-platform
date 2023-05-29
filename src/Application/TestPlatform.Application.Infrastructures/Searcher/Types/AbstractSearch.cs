@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Xml.Linq;
     using TestPlatform.Common.Extensions;
 
     public abstract class AbstractSearch
@@ -22,7 +23,7 @@
                     return null;
                 }
 
-                var arg = Expression.Parameter(Type.GetType(this.TargetTypeName), "p");
+                var arg = Expression.Parameter(this.GetViewModelFromTypeName(this.TargetTypeName), "p");
                 var propertyInfo = this.GetPropertyAccess(arg).Member as PropertyInfo;
 
                 if (propertyInfo != null)
@@ -195,6 +196,25 @@
             }
 
             return property;
+        }
+
+        private Type GetViewModelFromTypeName(string typeName)
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().
+                SingleOrDefault(assembly => assembly.GetName().Name == "TestPlatform.DTOs.ViewModels");
+            var searchClasses = assembly.GetExportedTypes()
+                .Where(t => !t.IsAbstract)
+                .ToList();
+
+            foreach (var searchClass in searchClasses)
+            {
+                if (searchClass.Name == typeName)
+                {
+                    return searchClass;
+                }
+            }
+
+            return null;
         }
     }
 }

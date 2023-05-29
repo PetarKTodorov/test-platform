@@ -37,6 +37,6 @@
     <div class="d-none">
         <input asp-for="@Model.Property" type="hidden" />
         <input asp-for="@Model.TargetTypeName" type="hidden" />
-        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().AssemblyQualifiedName" />
+        <input name="@(ViewData.TemplateInfo.HtmlFieldPrefix + ".ModelTypeName")" type="hidden" value="@Model.GetType().Name" />
     </div>
 </div>
