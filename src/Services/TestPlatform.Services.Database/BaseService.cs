@@ -61,6 +61,7 @@
             entity.ModifiedBy = currentUserId;
             entity.DeletedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity);
             TEntity deletedEntity = this.BaseRepository.Delete(entity);
             await this.BaseRepository.SaveChangesAsync();
 
@@ -74,6 +75,7 @@
             TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
             entity.ModifiedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity);
             TEntity restoredEntity = this.BaseRepository.Restore(entity);
             await this.BaseRepository.SaveChangesAsync();
 

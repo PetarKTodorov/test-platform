@@ -35,8 +35,10 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var dataQuery = this.testService
-                .FindAllAsQueryable<ListTestsVM>();
+                .FindAllAsQueryable<ListTestsVM>()
+                .Where(lt => lt.CreatedBy == currentUserId);
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -80,57 +82,74 @@
             return this.RedirectToAction(nameof(List));
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
-        //{
-        //    var subjectTag = await this.subjectTagService.FindByIdAsync<DetailsSubjectTagVM>(id, isDeleted);
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
+        {
+            var subjectTag = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
 
-        //    return this.View(subjectTag);
-        //}
+            return this.View(subjectTag);
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Update(Guid id)
-        //{
-        //    var subjectTag = await this.subjectTagService.FindByIdAsync<UpdateSubjectTagBM>(id);
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
-        //    return this.View(subjectTag);
-        //}
+            var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
 
-        //[ValidateModelState]
-        //[HttpPost]
-        //public async Task<IActionResult> Update(UpdateSubjectTagBM model)
-        //{
-        //    var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-        //    await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, currentUserId);
+            return this.View(test);
+        }
 
-        //    return this.RedirectToAction(nameof(Details), new { id = model.Id });
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateTestBM model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    var subjectTag = await this.subjectTagService.FindByIdAsync<UpdateSubjectTagBM>(id);
+                return this.View(model);
+            }
 
-        //    return this.View(subjectTag);
-        //}
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, currentUserId);
+            await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, currentUserId);
 
-        //[ValidateModelState]
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(UpdateSubjectTagBM model)
-        //{
-        //    var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-        //    await this.subjectTagService.DeleteAsync<UpdateSubjectTagBM>(model.Id, currentUserId);
+            return this.RedirectToAction(nameof(Details), new { id = model.Id });
+        }
 
-        //    return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
-        //[HttpGet]
-        //public async Task<IActionResult> Restore(Guid id)
-        //{
-        //    var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-        //    var subjectTag = await this.subjectTagService.RestoryAsync<DetailsSubjectTagVM>(id, currentUserId);
+            var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
 
-        //    return this.RedirectToAction(nameof(Details), new { id = subjectTag.Id });
-        //}
+            return this.View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UpdateTestBM model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+
+                return this.View(model);
+            }
+
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            await this.testService.DeleteAsync<UpdateTestBM>(model.Id, currentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var test = await this.testService.RestoryAsync<Test>(id, currentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
     }
 }

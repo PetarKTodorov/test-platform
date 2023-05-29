@@ -1,0 +1,42 @@
+﻿@model UpdateTestBM
+@{
+    ViewData["Title"] = "Delete Test";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["AllSubjectTags"];
+    bool isDisabled = true;
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form class="js-delete-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.FormGroupFor(model => model.Title, isDisabled)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Instructions, new { @class = "form-label"})
+
+            @Html.TextAreaFor(model => model.Instructions, new { @class = "form-control", @rows = 6, @disabled = "disabled" })
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            @Html.LabelFor(model => model.HasRandomizeQuestions, new { @class = "form-check-label" })
+
+            @Html.CheckBoxFor(model => model.HasRandomizeQuestions, new { @class = "form-check-input", @disabled = "disabled" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.SubjectTagsIds, new { @class = "form-label"})
+
+            <select disabled class="js-select2-multiple form-control" asp-for="SubjectTagsIds" asp-items="@subjectTags"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagsIds)
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>

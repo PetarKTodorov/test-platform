@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using TestPlatform.Database.Entities.Subjects;
@@ -24,11 +25,21 @@
 
         public async Task UpdateSubjectTagsAsync(Guid testId, IEnumerable<Guid> subjectTagsIds, Guid currentUserId)
         {
-            //var currentSubjectTags = (await this.testSubjectTagMapService.FindAllByTestIdAsync<TestSubjectTagMap>(testId))
-            //var subjectTagsToRemove = currentSubjectTags.Where(tsm => !subjectTagsIds.Contains(tsm.SubjectTagId));
-            //var subjectTagsToAdd = subjectTagsIds.Where(i => currentSubjectTags.Contains());
+            var currentSubjectTags = await this.testSubjectTagMapService.FindAllByTestIdAsync<TestSubjectTagMap>(testId);
+            var currentSubjectTagsIds = currentSubjectTags.Select(tsm => tsm.SubjectTagId);
 
-            foreach (var subjectTagId in subjectTagsIds)
+            var subjectTagIdsToRemove = currentSubjectTagsIds.Except(subjectTagsIds);
+            var subjectTagIdsToAdd = subjectTagsIds.Except(currentSubjectTagsIds);
+
+            foreach (var subjectTagId in subjectTagIdsToRemove)
+            {
+                var subjectTagToRemove = currentSubjectTags
+                    .SingleOrDefault(x => x.SubjectTagId == subjectTagId && x.TestId == testId);
+
+                await this.testSubjectTagMapService.HardDeleteAsync<TestSubjectTagMap>(subjectTagToRemove.Id);
+            }
+
+            foreach (var subjectTagId in subjectTagIdsToAdd)
             {
                 var newTestSubjectTagMap = new CreateTestSubjectTagMapBM()
                 {

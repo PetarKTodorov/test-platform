@@ -26,8 +26,12 @@
 
             foreach (var dto in dtoObjects)
             {
-                var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
-                await testService.CreateAsync<Test, SeedTestBM>(dto, administratorId);
+                if (dto.CreatedBy == null)
+                {
+                    dto.CreatedBy = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                }
+
+                await testService.CreateAsync<Test, SeedTestBM>(dto, dto.CreatedBy.Value);
             }
         }
     }

@@ -10,6 +10,8 @@
         [Required]
         public Guid Id { get; set; }
 
+        public Guid? CreatedBy { get; set; }
+
         [Required]
         [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string Title { get; set; }
