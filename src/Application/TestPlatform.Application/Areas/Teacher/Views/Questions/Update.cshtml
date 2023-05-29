@@ -71,6 +71,10 @@
                         }
                         <input class="form-control" type="text" name="@answerContentNameAttribute" value="@answer.AnswerContent" />
                     </div>
+
+                    <span class="text-danger">
+                        @Html.ValidationMessage(answerContentNameAttribute)
+                    </span>
                 </div>
             }
 

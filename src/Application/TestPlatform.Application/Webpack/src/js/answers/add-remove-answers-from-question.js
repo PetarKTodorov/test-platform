@@ -13,6 +13,8 @@
     addAnswerButton.on("click", addAnswer);
 
     function onChangeQuestionType() {
+        addAnswerButton.parent().removeClass("d-none");
+
         const questionTypeId = questionTypeIdSelect.val();
         if (questionTypeId.toLowerCase() == singleChoiceQuestionTypeId.toLowerCase()) {
             const answerCheckboxes = $('.js-answer-checkbox');
@@ -84,6 +86,10 @@
         const index = parentContainer
             .find(".js-answer-container")
             .length;
+
+        if (!questionTypeIdSelect.val()) {
+            return;
+        }
 
         const questionTypeId = questionTypeIdSelect.val();
         const answerHtml = generateAnswerHtml(index, questionTypeId);

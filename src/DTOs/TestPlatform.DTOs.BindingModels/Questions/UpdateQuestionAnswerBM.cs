@@ -1,6 +1,8 @@
 ﻿namespace TestPlatform.DTOs.BindingModels.Questions
 {
     using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using AutoMapper;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
@@ -11,6 +13,8 @@
 
         public Guid? AnswerId { get; set; }
 
+        [Required]
+        [DisplayName("answer")]
         public string AnswerContent { get; set; }
 
         public bool IsCorrect { get; set; }

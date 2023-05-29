@@ -9,6 +9,11 @@
 
     public class CreateQuestionBM : IMapTo<Question>
     {
+        public CreateQuestionBM()
+        {
+            this.Answers = new List<UpdateQuestionAnswerBM>();
+        }
+
         [Required]
         [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string Title { get; set; }
