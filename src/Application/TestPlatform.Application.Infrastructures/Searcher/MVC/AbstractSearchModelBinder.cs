@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+    using TestPlatform.Application.Infrastructures.Searcher.Types;
 
     public class AbstractSearchModelBinder : IModelBinder
     {
@@ -21,11 +23,11 @@
 
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            var modelTypeValue = bindingContext.ValueProvider.GetValue(ModelNames.CreatePropertyModelName(bindingContext.ModelName, "ModelTypeName"));
+            var modelTypeName = bindingContext.ValueProvider.GetValue(ModelNames.CreatePropertyModelName(bindingContext.ModelName, "ModelTypeName"));
 
-            if (modelTypeValue.FirstValue != null)
+            if (modelTypeName.FirstValue != null)
             {
-                Type modelType = Type.GetType(modelTypeValue.FirstValue)!;
+                Type modelType = this.GetSearchTypeFromTypeName(modelTypeName.FirstValue)!;
                 if (this.modelBuilderByType.TryGetValue(modelType, out var modelBinder))
                 {
                     ModelBindingContext innerModelBindingContext = DefaultModelBindingContext.CreateBindingContext(
@@ -44,6 +46,25 @@
 
             bindingContext.Result = ModelBindingResult.Failed();
             return Task.CompletedTask;
+        }
+
+        private Type GetSearchTypeFromTypeName(string typeName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var searchClasses = assembly.GetExportedTypes()
+                .Where(t => typeof(AbstractSearch).Equals(t.BaseType))
+                .Where(t => !t.IsAbstract)
+                .ToList();
+
+            foreach (var searchClass in searchClasses)
+            {
+                if (searchClass.Name == typeName)
+                {
+                    return searchClass;
+                }
+            }
+
+            return null;
         }
     }
 }
