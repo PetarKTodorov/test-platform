@@ -70,5 +70,11 @@
                 await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
             }
         }
+
+        public async Task DeleteQuestionWithAnswersAsync(Guid questionId)
+        {
+            await this.questionAnswerMapService.HardDeleteAnswers(questionId);
+            await this.questionCopyService.HardDeleteAsync<QuestionCopy>(questionId);
+        }
     }
 }

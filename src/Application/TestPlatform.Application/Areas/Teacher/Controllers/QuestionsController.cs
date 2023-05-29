@@ -131,8 +131,7 @@
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
-            await this.questionAnswerMapService.HardDeleteAnswers(id);
-            await this.questionCopyService.HardDeleteAsync<QuestionCopy>(id);
+            await this.questionAnswerMananger.DeleteQuestionWithAnswersAsync(id);
 
             return this.RedirectToAction(nameof(List));
         }

@@ -9,5 +9,7 @@
         Task<T> UpdateQuestionAsync<T>(UpdateQuestionBM model, Guid currentUserId);
 
         Task AddAnswersToQuestionAsync(IEnumerable<UpdateQuestionAnswerBM> answers, Guid questionId, Guid currentUserId);
+
+        Task DeleteQuestionWithAnswersAsync(Guid questionId);
     }
 }
