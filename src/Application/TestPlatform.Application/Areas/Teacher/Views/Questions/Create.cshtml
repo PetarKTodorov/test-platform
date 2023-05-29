@@ -12,6 +12,17 @@
         @Html.FormGroupFor(model => model.Title)
 
         <div class="mb-3">
+            @Html.DisplayNameFor(model => model.SubjectTagId)
+
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags">
+                <option selected disabled>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
+        </div>
+
+        <div class="mb-3">
             @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
 
             @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
@@ -29,14 +40,12 @@
         </div>
 
         <div class="mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTagId)
+            @Html.DisplayNameFor(model => model.Answers)
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags">
-                <option selected disabled>Please select</option>
-            </select>
-            <span class="text-danger">
-                @Html.ValidationMessageFor(model => model.SubjectTagId)
-            </span>
+            <div class="d-flex justify-content-end gap-1">
+                <button type="button" class="btn btn-success js-add-answer">Add new answer</button>
+                <button type="button" class="btn btn-danger js-remove-answer">Remove the last one</button>
+            </div>
         </div>
 
         <div class="d-flex justify-content-end">
@@ -44,3 +53,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script asp-src-include="~/js/answers*.js" defer></script>
+}

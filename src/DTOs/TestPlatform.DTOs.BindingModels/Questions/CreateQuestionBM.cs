@@ -28,5 +28,7 @@
         public Guid? SubjectTagId { get; set; }
 
         public List<SelectListItem> SubjectTags { get; set; }
+
+        public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
     }
 }

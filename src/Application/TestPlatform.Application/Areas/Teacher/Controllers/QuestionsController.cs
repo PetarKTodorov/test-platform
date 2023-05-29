@@ -76,18 +76,11 @@
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, currentUserId);
 
-            var createdQuestion = await this.questionService.FindOrCreateAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
-            var questionCopy = new CreateQuestionCopyBM()
-            {
-                OriginalQuestionId = createdQuestion.Id,
-                HasRandomizedAnswers = model.HasRandomizedAnswers,
-                SubjectTagId = model.SubjectTagId.Value,
-                QuestionTypeId = model.QuestionTypeId.Value,
-            };
-            await this.questionCopyService.CreateAsync<QuestionCopy, CreateQuestionCopyBM>(questionCopy, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, currentUserId);
 
-            return this.RedirectToAction(nameof(List));
+            return this.RedirectToAction(nameof(Details), new { id = createdQuestion.Id });
         }
 
         [HttpGet]

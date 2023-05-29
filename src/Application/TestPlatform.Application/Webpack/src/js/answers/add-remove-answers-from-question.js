@@ -17,17 +17,6 @@
 
         if (lastAnswer) {
             lastAnswer.remove();
-
-            const answers = parentContainer.find(".js-answer-container");
-            if (answers.length == 0) {
-                const index = 0;
-                const answerHtml = generateAnswerHtml(index);
-
-                const newAnswer = $(answerHtml);
-                const buttonsContainer = removeButton
-                    .parent();
-                newAnswer.insertBefore(buttonsContainer);
-            }
         }
     };
 

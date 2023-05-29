@@ -23,6 +23,22 @@
             this.questionAnswerMapService = questionAnswerMapService;
         }
 
+        public async Task<T> CreateQuestion<T>(CreateQuestionBM model, Guid currentUserId)
+        {
+            var createdQuestion = await this.questionService.FindOrCreateAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
+
+            var questionCopy = new CreateQuestionCopyBM()
+            {
+                OriginalQuestionId = createdQuestion.Id,
+                HasRandomizedAnswers = model.HasRandomizedAnswers,
+                SubjectTagId = model.SubjectTagId.Value,
+                QuestionTypeId = model.QuestionTypeId.Value,
+            };
+            var createdQuestionCopy = await this.questionCopyService.CreateAsync<T, CreateQuestionCopyBM>(questionCopy, currentUserId);
+
+            return createdQuestionCopy;
+        }
+
         public async Task<T> UpdateQuestionAsync<T>(UpdateQuestionBM model, Guid currentUserId)
         {
             var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
