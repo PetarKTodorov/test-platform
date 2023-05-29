@@ -24,15 +24,18 @@
         private readonly IStatusService statusService;
         private readonly ISubjectTagService subjectTagService;
         private readonly ISearchPageableMananager searchPageableMananager;
+        private readonly ITestApprovalMapService testApprovalMapService;
 
         public TestController(ITestService testService, IStatusService statusService,
             ISubjectTagService subjectTagService,
-            ISearchPageableMananager searchPageableMananager)
+            ISearchPageableMananager searchPageableMananager,
+            ITestApprovalMapService testApprovalMapService)
         {
             this.testService = testService;
             this.statusService = statusService;
             this.subjectTagService = subjectTagService;
             this.searchPageableMananager = searchPageableMananager;
+            this.testApprovalMapService = testApprovalMapService;
         }
 
         [HttpGet]
@@ -55,7 +58,8 @@
             var dataQuery = this.testService
                 .FindAllAsQueryable<ListPendingTestVM>()
                 .Where(lt => lt.CreatedBy != currentUserId)
-                .Where(lt => lt.StatusId == StatusType.Pending.GetUid());
+                .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
+                .Where(lt => !lt.ApproversIds.Contains(currentUserId));
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -194,6 +198,29 @@
             }
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Approve(Guid id)
+        {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+
+            var test = await this.testService.FindByIdAsync<Test>(id);
+
+            var newTestApprovalMap = new TestApprovalMap()
+            {
+                TestId = id,
+                UserId = currentUserId,
+            };
+
+            await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, currentUserId);
+
+            if (test.Approvers.Count == 3)
+            {
+                // TODO
+            }
+
+            return this.RedirectToAction(nameof(Details), new { id = id });
         }
     }
 }

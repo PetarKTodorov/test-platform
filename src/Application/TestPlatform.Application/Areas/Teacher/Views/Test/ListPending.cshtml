@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Pennding Tests";
-    var restoreModalId = "restore-modal";
+    var approveModalId = "approve-modal";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -56,7 +56,7 @@
                                 <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
                                     Details
                                 </a>
-                                <a class="btn btn-warning btn-sm js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
+                                <a class="btn btn-warning btn-sm js-approve-modal-button" data-bs-toggle="modal" data-bs-target="#@approveModalId" data-model-id="@row.Id">
                                     Approve
                                 </a>
                             </div>
@@ -71,6 +71,6 @@
     @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
 </div>
 
-@Html.PartialAsync("Modals/_ConfirmRestoreModal", new {
-    ModalId = restoreModalId,
+@Html.PartialAsync("_ApproveTestModal", new {
+    ModalId = approveModalId,
 }).Result
