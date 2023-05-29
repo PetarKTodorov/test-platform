@@ -7,6 +7,8 @@
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Common.Enums;
+    using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
@@ -63,7 +65,7 @@
                 return this.View(model);
             }
 
-            var privateStatus = await this.statusService.FindByNameAsync<Status>(GlobalConstants.PRIVATE_STATUS);
+            var privateStatus = await this.statusService.FindByIdAsync<Status>(StatusType.Private.GetUid());
 
             if (privateStatus == null)
             {
