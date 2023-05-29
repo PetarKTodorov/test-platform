@@ -5,6 +5,6 @@
 
     public interface ITestService : IBaseService<Test>
     {
-
+        public Task UpdateSubjectTagsAsync(Guid testId, IEnumerable<Guid> subjectTagsIds, Guid currentUserId);
     }
 }

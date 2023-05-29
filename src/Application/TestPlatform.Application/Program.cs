@@ -147,6 +147,7 @@
 
             services.AddTransient<ISubjectTagService, SubjectTagService>();
             services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
+            services.AddTransient<ITestSubjectTagMapService, TestSubjectTagMapService>();
 
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IQuestionCopyService, QuestionCopyService>();

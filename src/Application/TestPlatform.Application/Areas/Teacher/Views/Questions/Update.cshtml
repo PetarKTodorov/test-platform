@@ -16,7 +16,7 @@
         @Html.FormGroupFor(model => model.OriginalQuestionTitle)
 
         <div class="mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTagId)
+            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
 
             <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags"></select>
             <span class="text-danger">
@@ -24,17 +24,15 @@
             </span>
         </div>
 
-        <div class="mb-3">
-            <span>
-                @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
-            </span>
+        <div class="mb-3 form-check form-switch">
+            @Html.LabelFor(model => model.HasRandomizedAnswers, new { @class = "form-check-label"})
 
-            @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
+            @Html.CheckBoxFor(model => model.HasRandomizedAnswers, new { @class = "form-check-input"})
         </div>
 
         <div class="mb-3">
             <span>
-                @Html.DisplayNameFor(model => model.QuestionTypeId)
+                @Html.LabelFor(model => model.QuestionTypeId, new { @class = "form-label"})
             </span>
 
             <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes"></select>
@@ -44,7 +42,7 @@
         </div>
         
         <div class="">
-            @Html.DisplayNameFor(model => model.AnswersContent)
+            @Html.LabelFor(model => model.AnswersContent, new { @class = "form-label"})
 
             @if (Model.AnswersContent.Any())
             {

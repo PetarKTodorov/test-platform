@@ -5,6 +5,6 @@
 
     public interface IStatusService : IBaseService<Status>
     {
-
+        Task<T> FindByNameAsync<T>(string name);
     }
 }

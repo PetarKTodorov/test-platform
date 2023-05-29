@@ -14,7 +14,6 @@
   <ItemGroup>
     <Folder Include="DataSets\Authorization\" />
     <Folder Include="DataSets\Tests\" />
-    <Folder Include="DataSets\Subjects\" />
   </ItemGroup>
 
   <ItemGroup>

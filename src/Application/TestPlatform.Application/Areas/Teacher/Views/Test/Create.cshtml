@@ -1,36 +1,44 @@
 ﻿@model CreateTestBM
 @{
     ViewData["Title"] = "Create Test";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["AllSubjectTags"];
 }
 
 <h1 class="text-center my-5">@ViewData["Title"]</h1>
 
 <div class="container">
-    @*@{
-        if (ViewBag.LoginError != null)
-        {
-            <div class="mb-3">
-                <div class="toast align-items-center bg-danger text-white w-100 show" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            @ViewBag.LoginError
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        }
-    }*@
+    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
 
     <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create" method="post">
         @Html.AntiForgeryToken()
 
-        @*@Html.FormGroupFor(model => model.Email)
+        @Html.FormGroupFor(model => model.Title)
 
-        @Html.FormGroupFor(model => model.Password)*@
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Instructions, new { @class = "form-label"})
+
+            @Html.TextAreaFor(model => model.Instructions, new { @class = "form-control", @rows = 6 })
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            @Html.LabelFor(model => model.HasRandomizeQuestions, new { @class = "form-check-label"})
+
+            @Html.CheckBoxFor(model => model.HasRandomizeQuestions, new { @class = "form-check-input"})
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.SubjectTagsIds, new { @class = "form-label"})
+
+            <select class="js-select2-multiple form-control" asp-for="SubjectTagsIds" asp-items="@subjectTags"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagsIds)
+            </span>
+        </div>
+
 
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-success">Create</button>
         </div>
     </form>
 </div>

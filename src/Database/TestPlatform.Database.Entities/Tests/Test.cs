@@ -13,6 +13,7 @@
         public Test()
         {
             this.IsApproved = false;
+            this.HasRandomizeQuestions = false;
             this.Approvers = new HashSet<TestApprovalMap>();
             this.SubjectTags = new HashSet<TestSubjectTagMap>();
             this.Questions = new HashSet<QuestionTestMap>();
