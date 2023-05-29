@@ -45,6 +45,31 @@
         <div class="mb-3">
             @Html.DisplayNameFor(model => model.Answers)
 
+            @foreach (var (answer, index) in Model.Answers.Select((answer, index) => (answer, index)))
+            {
+                var idNameAttribute = $"Answers[{index}].Id";
+                var answerIdNameAttribute = $"Answers[{index}].AnswerId";
+                var isCorrectNameAttribute = $"Answers[{index}].IsCorrect";
+                var answerContentNameAttribute = $"Answers[{index}].AnswerContent";
+
+                <div class="my-2 js-answer-container">
+                    <input hidden type="text" name="@idNameAttribute" value="@answer.Id" />
+                    <input hidden type="text" name="@answerIdNameAttribute" value="@answer.AnswerId" />
+                    <div class="d-flex gap-2">
+
+                        @if (Model.QuestionTypeId == QuestionType.MultipleChoice.GetUid())
+                        {
+                            @Html.CheckBox(isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-checkbox" })
+                        }
+                        else if (Model.QuestionTypeId == QuestionType.SingleChoice.GetUid())
+                        {
+                            @Html.RadioButton("IsCorrect", isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-radio" })
+                        }
+                        <input class="form-control" type="text" name="@answerContentNameAttribute" value="@answer.AnswerContent" />
+                    </div>
+                </div>
+            }
+
             <div class="d-flex justify-content-end gap-1">
                 <button type="button" class="btn btn-success js-add-answer">Add new answer</button>
                 <button type="button" class="btn btn-danger js-remove-answer">Remove the last one</button>
