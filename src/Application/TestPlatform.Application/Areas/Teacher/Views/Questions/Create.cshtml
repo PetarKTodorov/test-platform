@@ -1,6 +1,9 @@
 ﻿@model CreateQuestionBM
 @{
     ViewData["Title"] = "Create Question";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["SubjectTags"];
+    var questionTypes = (List<SelectListItem>)this.ViewData["QuestionTypes"];
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -14,7 +17,7 @@
         <div class="mb-3">
             @Html.DisplayNameFor(model => model.SubjectTagId)
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags">
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@subjectTags">
                 <option selected disabled>Please select</option>
             </select>
             <span class="text-danger">
@@ -31,7 +34,7 @@
         <div class="mb-3">
             @Html.DisplayNameFor(model => model.QuestionTypeId)
 
-            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes">
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@questionTypes">
                 <option selected disabled>Please select</option>
             </select>
             <span class="text-danger">

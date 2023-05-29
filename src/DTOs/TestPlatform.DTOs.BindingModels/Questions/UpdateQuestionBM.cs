@@ -3,8 +3,9 @@
     using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
@@ -36,10 +37,6 @@
 
         [DisplayName("Subject Tag")]
         public Guid SubjectTagId { get; set; }
-
-        public List<SelectListItem> QuestionTypes { get; set; }
-
-        public List<SelectListItem> SubjectTags { get; set; }
 
         public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
 

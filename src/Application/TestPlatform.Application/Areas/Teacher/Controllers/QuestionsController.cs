@@ -46,13 +46,10 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateQuestionBM()
-            {
-                QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList(),
-                SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList(),
-            };
+            this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
-            return this.View(model);
+            return this.View();
         }
 
         [HttpPost]
@@ -60,8 +57,8 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
                 return this.View(model);
             }
@@ -87,8 +84,8 @@
         {
             var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
 
-            question.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-            question.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
             return this.View(question);
         }
@@ -98,8 +95,8 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
                 return this.View(model);
             }
