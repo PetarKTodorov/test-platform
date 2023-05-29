@@ -17,7 +17,6 @@
             var databaseContext =
                 serviceScope.ServiceProvider.GetRequiredService<TestPlatformDbContext>();
 
-            await databaseContext.Database.EnsureCreatedAsync();
             await databaseContext.Database.MigrateAsync();
         }
     }
