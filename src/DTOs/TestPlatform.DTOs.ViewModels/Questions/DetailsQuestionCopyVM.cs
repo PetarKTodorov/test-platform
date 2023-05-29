@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
 
     public class DetailsQuestionCopyVM : IMapFrom<QuestionCopy>
@@ -25,5 +26,7 @@
 
         [DisplayName("Created On")]
         public DateTime CreatedDate { get; set; }
+
+        public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
     }
 }
