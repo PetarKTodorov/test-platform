@@ -22,6 +22,7 @@
         private readonly IAnswerService answerService;
         private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
+        private readonly IQuestionAnswerMananger questionAnswerMananger;
         private readonly ISearchPageableMananager searchPageableMananager;
 
         public QuestionsController(IQuestionService questionService,
@@ -30,6 +31,7 @@
             IAnswerService answerService,
             IQuestionAnswerMapService questionAnswerMapService,
             ISubjectTagService subjectTagService,
+            IQuestionAnswerMananger questionAnswerMananger,
             ISearchPageableMananager searchPageableMananager)
         {
             this.questionService = questionService;
@@ -38,6 +40,7 @@
             this.answerService = answerService;
             this.questionAnswerMapService = questionAnswerMapService;
             this.subjectTagService = subjectTagService;
+            this.questionAnswerMananger = questionAnswerMananger;
             this.searchPageableMananager = searchPageableMananager;
         }
 
@@ -118,30 +121,32 @@
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
 
-            var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
-            if (question.Title != model.OriginalQuestionTitle)
-            {
-                question = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
-            }
-            model.OriginalQuestionId = question.Id;
+            //var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
+            //if (question.Title != model.OriginalQuestionTitle)
+            //{
+            //    question = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
+            //}
+            //model.OriginalQuestionId = question.Id;
 
-            var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
+            //var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
 
-            await this.questionAnswerMapService.HardDeleteAnswers(questionCopy.Id);
+            //await this.questionAnswerMapService.HardDeleteAnswers(questionCopy.Id);
 
-            foreach (var answer in model.Answers)
-            {
-                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer.AnswerContent, currentUserId);
+            //foreach (var answer in model.Answers)
+            //{
+            //    var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer.AnswerContent, currentUserId);
 
-                var questionAnswerMap = new QuestionAnswerMap()
-                {
-                    QuestionId = questionCopy.Id,
-                    AnswerId = createdAnswer.Id,
-                    IsCorrect = answer.IsCorrect,
-                };
-                await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
-            }
+            //    var questionAnswerMap = new QuestionAnswerMap()
+            //    {
+            //        QuestionId = questionCopy.Id,
+            //        AnswerId = createdAnswer.Id,
+            //        IsCorrect = answer.IsCorrect,
+            //    };
+            //    await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
+            //}
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }

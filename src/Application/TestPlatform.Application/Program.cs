@@ -160,6 +160,7 @@
         private static void RegisterManagers(IServiceCollection services)
         {
             services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IQuestionAnswerMananger, QuestionAnswerMananger>();
             services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
         }
     }
