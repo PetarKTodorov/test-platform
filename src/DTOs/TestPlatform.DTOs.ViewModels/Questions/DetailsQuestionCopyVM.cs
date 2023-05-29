@@ -27,6 +27,8 @@
         [DisplayName("Created On")]
         public DateTime CreatedDate { get; set; }
 
+        public int AnswersCount { get; set; }
+
         public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
     }
 }
