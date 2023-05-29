@@ -3,11 +3,9 @@
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Questions;
-    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
@@ -16,29 +14,22 @@
 
     public class QuestionsController : BaseTeacherController
     {
-        private readonly IQuestionService questionService;
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTypeService questionTypeService;
-        private readonly IAnswerService answerService;
         private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
         private readonly IQuestionAnswerMananger questionAnswerMananger;
         private readonly ISearchPageableMananager searchPageableMananager;
 
-        public QuestionsController(IQuestionService questionService,
+        public QuestionsController(
             IQuestionCopyService questionCopyService,
             IQuestionTypeService questionTypeService,
-            IAnswerService answerService,
-            IQuestionAnswerMapService questionAnswerMapService,
             ISubjectTagService subjectTagService,
             IQuestionAnswerMananger questionAnswerMananger,
             ISearchPageableMananager searchPageableMananager)
         {
-            this.questionService = questionService;
             this.questionCopyService = questionCopyService;
             this.questionTypeService = questionTypeService;
-            this.answerService = answerService;
-            this.questionAnswerMapService = questionAnswerMapService;
             this.subjectTagService = subjectTagService;
             this.questionAnswerMananger = questionAnswerMananger;
             this.searchPageableMananager = searchPageableMananager;
