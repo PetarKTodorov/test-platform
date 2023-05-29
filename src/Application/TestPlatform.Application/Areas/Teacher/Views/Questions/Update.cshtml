@@ -79,8 +79,12 @@
             }
 
             <div class="d-flex justify-content-end gap-1">
-                <button type="button" class="btn btn-success js-add-answer">Add new answer</button>
-                <button type="button" class="btn btn-danger js-remove-answer">Remove the last one</button>
+                <button type="button" class="btn btn-success js-add-answer" data-max-answers-count="@Validations.MAX_QUESTION_ANSWERS_COUNT">
+                    Add new answer
+                </button>
+                <button type="button" class="btn btn-danger js-remove-answer">
+                    Remove the last one
+                </button>
             </div>
         </div>
 

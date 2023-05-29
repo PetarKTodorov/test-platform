@@ -41,6 +41,22 @@
                 radioParent.prepend(generateInputBasedOnQuestionType(questionTypeId, radioValue, radioValue));
             });
         }
+
+        toggleButtonsIfNecessary();
+    }
+
+    function toggleButtonsIfNecessary() {
+        const answers = $('.js-answer-container');
+        const maximumAnswersCount = addAnswerButton.data("max-answers-count");
+
+        if (answers.length <= 0) {
+            removeAnswerButton.addClass("d-none");
+        } else if (answers.length >= maximumAnswersCount) {
+            addAnswerButton.addClass("d-none");
+        } else {
+            addAnswerButton.removeClass("d-none");
+            removeAnswerButton.removeClass("d-none");
+        }
     }
 
     function updateSubmitQuestionForm(event) {
@@ -74,6 +90,8 @@
         if (lastAnswer) {
             lastAnswer.remove();
         }
+
+        toggleButtonsIfNecessary();
     };
 
     function addAnswer() {
@@ -98,6 +116,8 @@
         const buttonsContainer = addButton
             .parent();
         newAnswer.insertBefore(buttonsContainer);
+
+        toggleButtonsIfNecessary();
     };
 
     function generateAnswerHtml(index, typeId) {
