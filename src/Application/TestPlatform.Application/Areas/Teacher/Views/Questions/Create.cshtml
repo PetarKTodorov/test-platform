@@ -15,7 +15,7 @@
         @Html.FormGroupFor(model => model.Title)
 
         <div class="mb-3">
-            @Html.DisplayNameFor(model => model.SubjectTagId)
+            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
 
             <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@subjectTags">
                 <option selected disabled>Please select</option>
@@ -25,14 +25,14 @@
             </span>
         </div>
 
-        <div class="mb-3">
-            @Html.DisplayNameFor(model => model.HasRandomizedAnswers)
+        <div class="mb-3 form-check form-switch">
+            @Html.LabelFor(model => model.HasRandomizedAnswers, new { @class = "form-check-label"})
 
-            @Html.CheckBoxFor(model => model.HasRandomizedAnswers)
+            @Html.CheckBoxFor(model => model.HasRandomizedAnswers, new { @class = "form-check-input"})
         </div>
 
         <div class="mb-3">
-            @Html.DisplayNameFor(model => model.QuestionTypeId)
+            @Html.LabelFor(model => model.QuestionTypeId, new { @class = "form-label"})
 
             <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@questionTypes">
                 <option selected disabled>Please select</option>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="mb-3">
-            @Html.DisplayNameFor(model => model.Answers)
+            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
 
             @if (Model != null)
             {

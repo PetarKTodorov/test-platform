@@ -3,8 +3,8 @@
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Database.Interfaces;
 
-    public interface ITestService : IBaseService<Test>
+    public interface IStatusService : IBaseService<Status>
     {
-        public Task UpdateSubjectTagsAsync(Guid testId, IEnumerable<Guid> subjectTagsIds, Guid currentUserId);
+        Task<T> FindByNameAsync<T>(string name);
     }
 }

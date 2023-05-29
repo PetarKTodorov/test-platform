@@ -3,8 +3,7 @@
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Database.Interfaces;
 
-    public interface ITestService : IBaseService<Test>
+    public interface ITestApprovalMapService : IBaseService<TestApprovalMap>
     {
-        public Task UpdateSubjectTagsAsync(Guid testId, IEnumerable<Guid> subjectTagsIds, Guid currentUserId);
     }
 }

@@ -1,0 +1,14 @@
+[
+    {
+        "Id": "63f53166-7da4-4276-a3a3-2e074983a7b8",
+        "Name": "Private"
+    },
+    {
+        "Id": "109d17aa-04cd-4a20-8ecd-ddb450c2df8b",
+        "Name": "Pending"
+    },
+    {
+        "Id": "1c15f1f7-5cec-48f6-b4b2-2475b3a5fb09",
+        "Name": "Public"
+    }
+]

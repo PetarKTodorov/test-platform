@@ -1,0 +1,35 @@
+[
+    {
+        "Id": "0a45e1db-aba7-4b1f-a9ce-e43d86f17313",
+        "Title": "Math I class",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "true",
+        "HasRandomizeQuestions": "false",
+        "StatusId": "1c15f1f7-5cec-48f6-b4b2-2475b3a5fb09"
+    },
+    {
+        "Id": "f11506ce-e545-4a64-ace3-2bead87e5dab",
+        "Title": "Math II class",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "true",
+        "HasRandomizeQuestions": "false",
+        "StatusId": "1c15f1f7-5cec-48f6-b4b2-2475b3a5fb09"
+    },
+    {
+        "Id": "cbff85ad-91bb-418a-8334-83fe54ab2cfa",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Title": "Math III class",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "false",
+        "HasRandomizeQuestions": "true",
+        "StatusId": "109d17aa-04cd-4a20-8ecd-ddb450c2df8b"
+    },
+    {
+        "Id": "09bfa778-5a1b-40c6-a7bd-9529c5c64d6e",
+        "Title": "Biology VII class",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "false",
+        "HasRandomizeQuestions": "true",
+        "StatusId": "109D17AA-04CD-4A20-8ECD-DDB450C2DF8B"
+    }
+]

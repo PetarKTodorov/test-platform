@@ -12,6 +12,12 @@
 
         public const string USER_SUBJECT_TAG_MAP_JSON_FILE_NAME = "userSubjectTagMap";
 
+        public const string TEST_SUBJECT_TAG_MAP_JSON_FILE_NAME = "testSubjectTagMap";
+
         public const string QUESTION_TYPE_JSON_FILE_NAME = "questionTypes";
+
+        public const string STATUS_JSON_FILE_NAME = "status";
+
+        public const string TEST_JSON_FILE_NAME = "test";
     }
 }
