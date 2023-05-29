@@ -1,6 +1,9 @@
 ﻿@model CreateQuestionBM
 @{
     ViewData["Title"] = "Create Question";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["SubjectTags"];
+    var questionTypes = (List<SelectListItem>)this.ViewData["QuestionTypes"];
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -11,6 +14,17 @@
 
         @Html.FormGroupFor(model => model.Title)
 
+        <div class="mb-3">
+            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
+
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@subjectTags">
+                <option selected disabled>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
+        </div>
+
         <div class="mb-3 form-check form-switch">
             @Html.LabelFor(model => model.HasRandomizedAnswers, new { @class = "form-check-label"})
 
@@ -20,7 +34,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.QuestionTypeId, new { @class = "form-label"})
 
-            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@Model.QuestionTypes">
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@questionTypes">
                 <option selected disabled>Please select</option>
             </select>
             <span class="text-danger">
@@ -31,12 +45,10 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
 
-            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@Model.SubjectTags">
-                <option selected disabled>Please select</option>
-            </select>
-            <span class="text-danger">
-                @Html.ValidationMessageFor(model => model.SubjectTagId)
-            </span>
+            <div class="d-flex justify-content-end gap-1">
+                <button type="button" class="btn btn-success js-add-answer">Add new answer</button>
+                <button type="button" class="btn btn-danger js-remove-answer">Remove the last one</button>
+            </div>
         </div>
 
         <div class="d-flex justify-content-end">
@@ -44,3 +56,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script asp-src-include="~/js/answers*.js" defer></script>
+}

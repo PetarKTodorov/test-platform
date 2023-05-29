@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
@@ -21,12 +21,10 @@
         [DisplayName("Question Type")]
         public Guid? QuestionTypeId { get; set; }
 
-        public List<SelectListItem> QuestionTypes { get; set; }
-
         [Required]
         [DisplayName("Subject Tag")]
         public Guid? SubjectTagId { get; set; }
 
-        public List<SelectListItem> SubjectTags { get; set; }
+        public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
     }
 }

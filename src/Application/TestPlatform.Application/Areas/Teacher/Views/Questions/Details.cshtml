@@ -50,6 +50,41 @@
                         @Html.DisplayFor(model => model.CreatedDate)
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Answers)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.AnswersCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered table-striped">
+                            <thead class="">
+                                <tr>
+                                    <th class="text-nowrap" scope="col">
+                                        @Html.DisplayNameForInnerType((UpdateQuestionAnswerBM model) => model.AnswerContent)
+                                    </th>
+                                    <th class="text-nowrap" scope="col">
+                                        @Html.DisplayNameForInnerType((UpdateQuestionAnswerBM model) => model.IsCorrect)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var answer in Model.Answers)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => answer.AnswerContent)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayTextFor(model => answer.IsCorrect)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
             </tbody>
         </table>
 

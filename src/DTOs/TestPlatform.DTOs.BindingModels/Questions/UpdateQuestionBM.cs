@@ -3,8 +3,9 @@
     using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
@@ -13,7 +14,7 @@
     {
         public UpdateQuestionBM()
         {
-            this.AnswersContent = new HashSet<string>();
+            this.Answers = new HashSet<UpdateQuestionAnswerBM>();
         }
 
         [Required]
@@ -37,20 +38,15 @@
         [DisplayName("Subject Tag")]
         public Guid SubjectTagId { get; set; }
 
-        public List<SelectListItem> QuestionTypes { get; set; }
-
-        public List<SelectListItem> SubjectTags { get; set; }
-
-        [DisplayName("Answers")]
-        public IEnumerable<string> AnswersContent { get; set; }
+        public IEnumerable<UpdateQuestionAnswerBM> Answers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<UpdateQuestionBM, Question>()
                 .ForMember(q => q.Title, mo => mo.MapFrom(uqbm => uqbm.OriginalQuestionTitle));
 
-            configuration.CreateMap<QuestionCopy, UpdateQuestionBM>()
-                .ForMember(uqbm => uqbm.AnswersContent, mo => mo.MapFrom(qc => qc.Answers.Select(a => a.Answer.Content)));
+            configuration.CreateMap<UpdateQuestionBM, QuestionCopy>()
+                .ForMember(uqbm => uqbm.Answers, mo => mo.Ignore());
         }
     }
 }

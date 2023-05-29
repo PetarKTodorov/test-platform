@@ -16,7 +16,8 @@
         {
             var local = this.DbSet
                 .Local
-                .FirstOrDefault(entry => entry.AnswerId.Equals(entry.AnswerId));
+                .FirstOrDefault(entry => entry.AnswerId.Equals(entity.AnswerId) 
+                    && entry.QuestionId.Equals(entity.QuestionId));
             if (local != null)
             {
                 this.DbContext.Entry(local).State = EntityState.Detached;

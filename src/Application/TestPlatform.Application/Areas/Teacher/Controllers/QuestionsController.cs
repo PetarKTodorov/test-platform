@@ -14,28 +14,24 @@
 
     public class QuestionsController : BaseTeacherController
     {
-        private readonly IQuestionService questionService;
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTypeService questionTypeService;
-        private readonly IAnswerService answerService;
         private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
+        private readonly IQuestionAnswerMananger questionAnswerMananger;
         private readonly ISearchPageableMananager searchPageableMananager;
 
-        public QuestionsController(IQuestionService questionService,
+        public QuestionsController(
             IQuestionCopyService questionCopyService,
             IQuestionTypeService questionTypeService,
-            IAnswerService answerService,
-            IQuestionAnswerMapService questionAnswerMapService,
             ISubjectTagService subjectTagService,
+            IQuestionAnswerMananger questionAnswerMananger,
             ISearchPageableMananager searchPageableMananager)
         {
-            this.questionService = questionService;
             this.questionCopyService = questionCopyService;
             this.questionTypeService = questionTypeService;
-            this.answerService = answerService;
-            this.questionAnswerMapService = questionAnswerMapService;
             this.subjectTagService = subjectTagService;
+            this.questionAnswerMananger = questionAnswerMananger;
             this.searchPageableMananager = searchPageableMananager;
         }
 
@@ -50,13 +46,10 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateQuestionBM()
-            {
-                QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList(),
-                SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList(),
-            };
+            this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
-            return this.View(model);
+            return this.View();
         }
 
         [HttpPost]
@@ -64,25 +57,18 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
                 return this.View(model);
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, currentUserId);
 
-            var createdQuestion = await this.questionService.FindOrCreateAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
-            var questionCopy = new CreateQuestionCopyBM()
-            {
-                OriginalQuestionId = createdQuestion.Id,
-                HasRandomizedAnswers = model.HasRandomizedAnswers,
-                SubjectTagId = model.SubjectTagId.Value,
-                QuestionTypeId = model.QuestionTypeId.Value,
-            };
-            await this.questionCopyService.CreateAsync<QuestionCopy, CreateQuestionCopyBM>(questionCopy, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, currentUserId);
 
-            return this.RedirectToAction(nameof(List));
+            return this.RedirectToAction(nameof(Details), new { id = createdQuestion.Id });
         }
 
         [HttpGet]
@@ -98,8 +84,8 @@
         {
             var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
 
-            question.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-            question.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+            this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
             return this.View(question);
         }
@@ -109,36 +95,15 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.QuestionTypes = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
-                model.SubjectTags = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
+                this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
 
                 return this.View(model);
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-
-            var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
-            var createdQuestion = question;
-            if (question.Title != model.OriginalQuestionTitle)
-            {
-                createdQuestion = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
-            }
-
-            model.OriginalQuestionId = createdQuestion.Id;
-            var questionCopy = await this.questionCopyService.UpdateAsync<QuestionCopy, UpdateQuestionBM>(model.Id, model, currentUserId);
-
-            foreach (var answer in model.AnswersContent)
-            {
-                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer, currentUserId);
-
-                var questionAnswerMap = new QuestionAnswerMap()
-                {
-                    QuestionId = questionCopy.Id,
-                    AnswerId = createdAnswer.Id,
-                    IsCorrect = false,
-                };
-                await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
-            }
+            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
@@ -154,7 +119,7 @@
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
-            await this.questionCopyService.HardDeleteAsync<QuestionCopy>(id);
+            await this.questionAnswerMananger.DeleteQuestionWithAnswersAsync(id);
 
             return this.RedirectToAction(nameof(List));
         }
