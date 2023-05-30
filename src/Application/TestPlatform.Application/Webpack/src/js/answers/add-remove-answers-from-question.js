@@ -12,6 +12,12 @@
     removeAnswerButton.on("click", removeAnswer);
     addAnswerButton.on("click", addAnswer);
 
+    if (questionTypeIdSelect.val()) {
+        addAnswerButton.parent().removeClass("d-none");
+    }
+
+    toggleButtonsIfNecessary();
+
     function onChangeQuestionType() {
         addAnswerButton.parent().removeClass("d-none");
 
@@ -88,6 +94,10 @@
             .last();
 
         if (lastAnswer) {
+            const trueCheckboxAnswerName = lastAnswer.find(`.js-answer-checkbox`).attr("name");
+            const falseCheckboxAnswer = questionForm.find(`input[name="${trueCheckboxAnswerName}"][value=false]`);
+
+            falseCheckboxAnswer.remove();
             lastAnswer.remove();
         }
 
