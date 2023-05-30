@@ -83,21 +83,36 @@
 
                             @if (!this.User.FindFirst(UserClaimTypes.ID).Value.ToUpper().Equals(user.Id.ToUpper()))
                             {
-                                if (!user.IsDeleted)
-                                {
-                                    <button type="button" class="btn btn-primary btn-sm js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
-                                        <span class="icon-font icon-font--user"></span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                        <span class="icon-font icon-font--trash"></span>
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button type="button" class="btn btn-success btn-sm restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
-                                        <span class="icon-font icon-font--trash"></span>
-                                    </button>
-                                }
+                                    <ul class="dropdown-menu">
+                                        @if (!user.IsDeleted)
+                                        {
+                                            <li>
+                                                <button type="button" class="dropdown-item js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button type="button" class="dropdown-item delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <button type="button" class="dropdown-item restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
+                                                    Restore
+                                                </button>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+
+
                             }
                         </td>
                     </tr>

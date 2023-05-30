@@ -8,6 +8,10 @@
         "Name": "Pending"
     },
     {
+        "Id": "1622f3f8-2fc9-4b79-9a80-3575d464e972",
+        "Name": "Ready"
+    },
+    {
         "Id": "1c15f1f7-5cec-48f6-b4b2-2475b3a5fb09",
         "Name": "Public"
     }

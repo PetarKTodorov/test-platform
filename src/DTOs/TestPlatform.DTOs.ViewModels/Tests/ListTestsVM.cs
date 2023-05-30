@@ -22,6 +22,8 @@
         [DisplayName("Is Approved")]
         public bool IsApproved { get; set; }
 
+        public Guid StatusId { get; set; }
+
         [CustomSearchField]
         [DisplayName("Status")]
         public string StatusName { get; set; }

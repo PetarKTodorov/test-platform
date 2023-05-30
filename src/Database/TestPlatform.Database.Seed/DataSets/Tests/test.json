@@ -1,11 +1,12 @@
 [
     {
         "Id": "0a45e1db-aba7-4b1f-a9ce-e43d86f17313",
+        "CreatedBy": "2cbc256b-ce27-49a9-be45-3f47b3bcf517",
         "Title": "Math I class",
         "Instructions": "Please read the conditions of the questions very well.",
-        "IsApproved": "true",
+        "IsApproved": "false",
         "HasRandomizeQuestions": "false",
-        "StatusId": "1c15f1f7-5cec-48f6-b4b2-2475b3a5fb09"
+        "StatusId": "109D17AA-04CD-4A20-8ECD-DDB450C2DF8B"
     },
     {
         "Id": "f11506ce-e545-4a64-ace3-2bead87e5dab",
@@ -20,9 +21,18 @@
         "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
         "Title": "Math III class",
         "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "true",
+        "HasRandomizeQuestions": "true",
+        "StatusId": "1622f3f8-2fc9-4b79-9a80-3575d464e972"
+    },
+    {
+        "Id": "f6f367bc-77d1-426e-9a42-e963e2f6f40f",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Title": "Math IV class",
+        "Instructions": "Please read the conditions of the questions very well.",
         "IsApproved": "false",
         "HasRandomizeQuestions": "true",
-        "StatusId": "109d17aa-04cd-4a20-8ecd-ddb450c2df8b"
+        "StatusId": "63F53166-7DA4-4276-A3A3-2E074983A7B8"
     },
     {
         "Id": "09bfa778-5a1b-40c6-a7bd-9529c5c64d6e",

@@ -12,6 +12,8 @@
     <form class="js-delete-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" method="post">
         @Html.AntiForgeryToken()
 
+        @Html.HiddenFor(model => model.CreatedBy)
+
         @Html.FormGroupFor(model => model.Title, isDisabled)
 
         <div class="mb-3">

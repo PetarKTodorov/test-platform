@@ -13,6 +13,8 @@
     <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" method="post">
         @Html.AntiForgeryToken()
 
+        @Html.HiddenFor(model => model.CreatedBy)
+
         @Html.FormGroupFor(model => model.Title)
 
         <div class="mb-3">

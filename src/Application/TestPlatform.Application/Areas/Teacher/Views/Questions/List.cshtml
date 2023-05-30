@@ -57,16 +57,27 @@
                             @Html.DisplayFor(modelItem => row.SubjectTagName)
                         </td>
                         <td>
-                            <div class="d-flex gap-1">
-                                <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Details" asp-route-id="@row.Id">
-                                    Details
-                                </a>
-                                <a class="btn btn-warning btn-sm" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" asp-route-id="@row.Id">
-                                    Update
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" asp-route-id="@row.Id">
-                                    Delete
-                                </a>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Details" asp-route-id="@row.Id">
+                                            Details
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" asp-route-id="@row.Id">
+                                            Update
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" asp-route-id="@row.Id">
+                                            Delete
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                     </tr>

@@ -1,22 +1,18 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
-    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using TestPlatform.Application.Infrastructures.ApplicationUser;
-    using TestPlatform.Application.Infrastructures.Filtres;
+
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Tests;
-    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
-    using static System.Net.Mime.MediaTypeNames;
 
     public class TestController : BaseTeacherController
     {
@@ -195,8 +191,6 @@
         [HttpGet]
         public async Task<IActionResult> Approve(Guid id)
         {
-            var test = await this.testService.FindByIdAsync<Test>(id);
-
             var newTestApprovalMap = new TestApprovalMap()
             {
                 TestId = id,
@@ -205,12 +199,32 @@
 
             await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, this.CurrentUserId);
 
-            if (test.Approvers.Count == 3)
+            var test = await this.testService.FindByIdAsync<Test>(id);
+
+            if (test.Approvers.Count == GlobalConstants.DEFAULT_TEST_APPROVELS_COUNT)
             {
-                // TODO
+                test.IsApproved = true;
+                test.StatusId = StatusType.Ready.GetUid();
+                await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
             }
 
             return this.RedirectToAction(nameof(Details), new { id = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakePublic(Guid id)
+        {
+            var test = await this.testService.FindByIdAsync<Test>(id);
+
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            test.StatusId = StatusType.Public.GetUid();
+            await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = test.Id });
         }
     }
 }
