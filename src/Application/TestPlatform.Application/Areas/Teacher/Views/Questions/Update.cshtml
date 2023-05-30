@@ -10,6 +10,8 @@
 
 <div class="container-fluid px-5">
     <form class="w-50 mx-auto js-question-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" method="post">
+        @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
         @Html.AntiForgeryToken()
 
         <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />

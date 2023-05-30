@@ -9,9 +9,9 @@
 <h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
-    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
-
     <form class="w-50 mx-auto js-question-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Create" method="post">
+        @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
         @Html.AntiForgeryToken()
 
         @Html.FormGroupFor(model => model.Title)
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
+            @Html.LabelFor(model => model.Answers, new { @class = "form-label"})
 
             @if (Model != null)
             {

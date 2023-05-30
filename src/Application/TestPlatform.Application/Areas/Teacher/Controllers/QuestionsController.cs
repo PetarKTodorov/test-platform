@@ -5,6 +5,9 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
+    using TestPlatform.Common.Constants;
+    using TestPlatform.Common.Enums;
+    using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
@@ -55,7 +58,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateQuestionBM model)
         {
-            if (!this.ModelState.IsValid)
+            if (!this.ValidateQuestionModel(model.QuestionTypeId, model.Answers))
             {
                 this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
                 this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
@@ -93,7 +96,7 @@
         [HttpPost]
         public async Task<IActionResult> Update(UpdateQuestionBM model)
         {
-            if (!this.ModelState.IsValid)
+            if (!this.ValidateQuestionModel(model.QuestionTypeId, model.Answers))
             {
                 this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
                 this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
@@ -122,6 +125,38 @@
             await this.questionAnswerMananger.DeleteQuestionWithAnswersAsync(id);
 
             return this.RedirectToAction(nameof(List));
+        }
+
+        private bool ValidateQuestionModel(Guid? questionTypeId, IEnumerable<UpdateQuestionAnswerBM> answers)
+        {
+            var isModelStateValid = true;
+
+            if (!this.ModelState.IsValid)
+            {
+                isModelStateValid = false;
+            }
+            else if (!answers.Any() || answers.Count() < 2)
+            {
+                isModelStateValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.ENTER_AT_LEAST_TWO_ANSWERS_ERROR_MESSAGE;
+            }
+            else if (questionTypeId.Value == QuestionTypes.SingleChoice.GetUid()
+                && answers.Count(a => a.IsCorrect) != 1)
+            {
+                isModelStateValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.SELECT_ONE_CORRECT_ANSWER_ERROR_MESSAGE;
+            }
+            else if (questionTypeId.Value == QuestionTypes.MultipleChoice.GetUid()
+                && answers.Count(a => a.IsCorrect) < 2)
+            {
+                isModelStateValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.SELECT_AT_LEAST_TWO_CORRECT_ANSWERS_ERROR_MESSAGE;
+            }
+
+            return isModelStateValid;
         }
     }
 }
