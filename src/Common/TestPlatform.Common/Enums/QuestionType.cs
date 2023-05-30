@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using TestPlatform.Common.Attributes;
 
-    public enum QuestionType
+    public enum QuestionTypes
     {
         [Display(Name = "Multiple Choice")]
         [Uid("AE825D9C-EF76-45E9-A31C-561976E6387E")]

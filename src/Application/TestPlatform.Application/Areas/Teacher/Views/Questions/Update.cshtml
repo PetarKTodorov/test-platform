@@ -59,11 +59,11 @@
                     <input hidden type="text" name="@answerIdNameAttribute" value="@answer.AnswerId" />
                     <div class="d-flex gap-2">
 
-                        @if (Model.QuestionTypeId == QuestionType.MultipleChoice.GetUid())
+                        @if (Model.QuestionTypeId == QuestionTypes.MultipleChoice.GetUid())
                         {
                             @Html.CheckBox(isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-checkbox" })
                         }
-                        else if (Model.QuestionTypeId == QuestionType.SingleChoice.GetUid())
+                        else if (Model.QuestionTypeId == QuestionTypes.SingleChoice.GetUid())
                         {
                             @Html.RadioButton("IsCorrect", isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-radio" })
                         }
