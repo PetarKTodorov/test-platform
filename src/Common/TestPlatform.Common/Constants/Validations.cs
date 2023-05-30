@@ -18,6 +18,12 @@
 
         public const int MAX_QUESTION_ANSWERS_COUNT = 5;
 
+        public const int REQUIRED_CORRECT_ANSWERS_FOR_MULTIPLE_CHOICE = 2;
+
+        public const int REQUIRED_CORRECT_ANSWERS_FOR_SIGNLE_CHOICES = 1;
+
+        public const int REQUIRRED_NUMBER_OF_ANSWERS_FOR_QUESTION = 2;
+
         public const string EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
         // Have at least 10 characters, including at least two uppercase letters, two lowercase letters, two numbers, and two special characters

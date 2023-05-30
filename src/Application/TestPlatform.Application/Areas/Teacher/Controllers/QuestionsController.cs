@@ -135,21 +135,21 @@
             {
                 isModelStateValid = false;
             }
-            else if (!answers.Any() || answers.Count() < 2)
+            else if (!answers.Any() || answers.Count() < Validations.REQUIRRED_NUMBER_OF_ANSWERS_FOR_QUESTION)
             {
                 isModelStateValid = false;
 
                 this.ViewBag.StatusError = ErrorMessages.ENTER_AT_LEAST_TWO_ANSWERS_ERROR_MESSAGE;
             }
             else if (questionTypeId.Value == QuestionTypes.SingleChoice.GetUid()
-                && answers.Count(a => a.IsCorrect) != 1)
+                && answers.Count(a => a.IsCorrect) != Validations.REQUIRED_CORRECT_ANSWERS_FOR_SIGNLE_CHOICES)
             {
                 isModelStateValid = false;
 
                 this.ViewBag.StatusError = ErrorMessages.SELECT_ONE_CORRECT_ANSWER_ERROR_MESSAGE;
             }
             else if (questionTypeId.Value == QuestionTypes.MultipleChoice.GetUid()
-                && answers.Count(a => a.IsCorrect) < 2)
+                && answers.Count(a => a.IsCorrect) < Validations.REQUIRED_CORRECT_ANSWERS_FOR_MULTIPLE_CHOICE)
             {
                 isModelStateValid = false;
 
