@@ -19,5 +19,13 @@
         public const string STATUS_JSON_FILE_NAME = "status";
 
         public const string TEST_JSON_FILE_NAME = "test";
+
+        public const string ANSWERS_JSON_FILE_NAME = "answers";
+
+        public const string QUESTIONS_JSON_FILE_NAME = "questions";
+
+        public const string QUESTIONS_COPY_JSON_FILE_NAME = "questionsCopy";
+
+        public const string QUESTION_ANSWERS_MAP_JSON_FILE_NAME = "questionsAnswersMap";
     }
 }

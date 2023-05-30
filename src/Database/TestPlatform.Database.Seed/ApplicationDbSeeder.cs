@@ -32,6 +32,10 @@
                     new StatusSeeder(serviceProvider, logger, Constants.STATUS_JSON_FILE_NAME),
                     new TestSeeder(serviceProvider, logger, Constants.TEST_JSON_FILE_NAME),
                     new TestSubjectTagMapSeeder(serviceProvider, logger, Constants.TEST_SUBJECT_TAG_MAP_JSON_FILE_NAME),
+                    new AnswersSeeder(serviceProvider, logger, Constants.ANSWERS_JSON_FILE_NAME),
+                    new QuestionsSeeder(serviceProvider, logger, Constants.QUESTIONS_JSON_FILE_NAME),
+                    new QuestionsCopySeeder(serviceProvider, logger, Constants.QUESTIONS_COPY_JSON_FILE_NAME),
+                    new QuestionsAnswersMapSeeeder(serviceProvider, logger, Constants.QUESTION_ANSWERS_MAP_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)

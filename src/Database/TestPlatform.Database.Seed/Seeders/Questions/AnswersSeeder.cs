@@ -2,30 +2,32 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Seed.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
 
-    internal class QuestionTypeSeeder : BaseSeeder
+    internal class AnswersSeeder : BaseSeeder
     {
-        public QuestionTypeSeeder(IServiceProvider serviceProvider, ILogger logger, string jsonFileName)
+        public AnswersSeeder(IServiceProvider serviceProvider, ILogger logger, string jsonFileName)
             : base(serviceProvider, logger, jsonFileName)
         {
         }
 
         public override async Task SeedAsync()
         {
-            var questionTypeService = this.ServiceProvider.GetRequiredService<IQuestionTypeService>();
+            var service = this.ServiceProvider.GetRequiredService<IAnswerService>();
 
-            var dtoObjects = await Deserializer.DeserializeAsync<SeedQuestionTypeBM>(this.JsonFileName, this.Logger);
+            var dtoObjects = await Deserializer.DeserializeAsync<SeedAnswerBM>(this.JsonFileName, this.Logger);
 
             var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
             foreach (var dto in dtoObjects)
             {
-                await questionTypeService.CreateAsync<QuestionType, SeedQuestionTypeBM>(dto, administratorId);
+                await service.CreateAsync<Answer, SeedAnswerBM>(dto, administratorId);
             }
         }
     }
