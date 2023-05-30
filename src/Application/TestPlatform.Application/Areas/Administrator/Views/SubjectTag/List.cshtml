@@ -70,27 +70,39 @@
                             @Html.DisplayTextFor(modelItem => row.UsersCount)
                         </td>
                         <td>
-                            <div class="d-flex gap-1">
-                                <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
-                                    Details
-                                </a>
-                                @if (row.IsDeleted)
-                                {
-                                    <a class="btn btn-info btn-sm js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
-                                        Restore
-                                    </a>
-                                }
-                                else if (row.QuestionsCount == 0 && row.TestsCount == 0 && row.UsersCount == 0)
-                                {
-                                    <a class="btn btn-warning btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
-                                        Update
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@row.Id">
-                                        Delete
-                                    </a>
-                                }
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
+                                            Details
+                                        </a>
+                                    </li>
+                                    @if (row.IsDeleted)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
+                                                Restore
+                                            </a>
+                                        </li>
+                                    }
+                                    else if (row.QuestionsCount == 0 && row.TestsCount == 0 && row.UsersCount == 0)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
+                                                Update
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@row.Id">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
-
                         </td>
                     </tr>
                 }

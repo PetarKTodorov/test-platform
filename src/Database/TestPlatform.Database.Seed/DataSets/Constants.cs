@@ -19,5 +19,7 @@
         public const string STATUS_JSON_FILE_NAME = "status";
 
         public const string TEST_JSON_FILE_NAME = "test";
+
+        public const string TEST_APPROVAL_MAP_FILE_NAME = "testApprovalMap";
     }
 }

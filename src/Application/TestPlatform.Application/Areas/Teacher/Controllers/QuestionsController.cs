@@ -63,10 +63,9 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, currentUserId);
+            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, this.CurrentUserId);
 
-            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = createdQuestion.Id });
         }
@@ -101,9 +100,8 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
-            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
+            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, this.CurrentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
