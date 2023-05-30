@@ -119,5 +119,20 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            @if (Model.IsDeleted == false && Model.QuestionsCount == 0 && Model.TestsCount == 0 && Model.UsersCount == 0)
+            {
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@Model.Id">
+                    Update
+                </a>
+                <a class="btn btn-danger" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@Model.Id">
+                    Delete
+                </a>
+            }
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="List">
+                Go back
+            </a>
+        </div>
     </div>
 </div>
