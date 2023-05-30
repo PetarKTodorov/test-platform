@@ -77,6 +77,10 @@
         public async Task<IActionResult> Details(Guid id)
         {
             var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
+            if (question.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
 
             return this.View(question);
         }
