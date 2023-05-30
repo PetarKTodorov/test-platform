@@ -133,5 +133,185 @@
         "Id": "1307917f-79d0-4715-8ccf-fd82c2702035",
         "Content": "Cell",
         "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "1f7b3ccf-3193-4a11-95d1-02cf5019d79f",
+        "Content": "None of above",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b89272eb-0ec8-45ff-ac44-065a0b1f8385",
+        "Content": "Nucleus",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "6eeaff81-124b-475a-a123-0af6dac609a7",
+        "Content": "Cartilaginous tissue",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "ca0248a2-1cd5-4594-8a26-0f677407b3ff",
+        "Content": "liver cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "56e69006-1fa2-4417-9961-11df91deec0e",
+        "Content": "hair cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "cdb4f6f3-81d5-4142-bfc8-170426995e15",
+        "Content": "alpha cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b095f587-4f84-4af5-bef4-1b097835e66b",
+        "Content": "Blood",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "769c63ef-19ae-4f87-8c1e-1cd9036435dd",
+        "Content": "Germination of pollen grains",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "132fa4ec-9327-483f-90b9-2df5eb5a821c",
+        "Content": "beta cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c15c8a21-dde5-4c16-a186-3376aaf6001d",
+        "Content": "Embryonic zone",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "1725f58e-7db9-4b03-a8fc-371b4c8eb408",
+        "Content": "red blood cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "21475c31-6ee6-4ed2-8589-377892eab502",
+        "Content": "Growing point",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "1f6dd0ce-5fb9-464c-ac00-3c57c561853f",
+        "Content": "Transfer of pollen from anther to stigma",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c671bcfb-6d58-44b2-a91f-4a2fc7817db7",
+        "Content": "Blood plasma is 30% of the total blood volume",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "1bc79f5b-e938-43b5-a30c-4f4e6ebac835",
+        "Content": "Neuro",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "5ebf0cf5-bfe7-4a68-aa88-4f6921268a45",
+        "Content": "skin cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c342d76c-5e5d-4ea3-a34f-54a68bc5a297",
+        "Content": "Cell wall",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "cbf6c878-a098-4ae0-b80f-55484684f120",
+        "Content": "Bone tissue",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "25e35bbd-5465-4571-ac1d-56e20311d3f7",
+        "Content": "Ribosome",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "0b7b521e-c2dd-4ebf-9c9b-5cc7122689ac",
+        "Content": "muscle cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "d6e1e624-d6f1-447b-a040-5e94bebcc4af",
+        "Content": "Erythrocytes are a small part of blood cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "57c47bc7-64b3-4687-84fe-7316093c11d1",
+        "Content": "Hepatocyte",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "7d0efb1c-0a97-4a7b-abed-8773b63d6eec",
+        "Content": "Cytoplasm",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b6fd2daa-fb20-4c5a-bb51-8d8ce378e211",
+        "Content": "Epithelial cell",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "df3128b9-8e66-4cd0-99d9-94f8c0fe09c4",
+        "Content": "gamma cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "786fd825-b32d-4d54-a139-9992d54140eb",
+        "Content": "The main function of platelets is related to the implementation of phacytosis",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8cede0f7-c009-44da-9806-9b36e28ab870",
+        "Content": "nerve cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "db98975d-9cbd-4937-b2ec-9cd608ebdc66",
+        "Content": "Zone of elongatio",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "5f2d5365-8578-4391-ad2d-a64878d90432",
+        "Content": "zeta cells",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "ca36e42d-025b-404d-9db1-b0d7e37d4f96",
+        "Content": "Nephro",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "e0524146-ab34-4ff7-b45f-c03b19535377",
+        "Content": "Leukocytes have a protective functio",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "38ba429f-2a1d-4c69-af94-cd7a8d9edc2a",
+        "Content": "hair follicles",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8fc1c837-c2f4-44c5-9d5b-d0be0a9f3c83",
+        "Content": "Root hairs",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "7ba8e96f-fcf2-4f84-9a3c-dc453f8f9c56",
+        "Content": "Growth of pollen tube in ovule",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b3001e83-23dc-4db7-9b1b-ec94294434a3",
+        "Content": "Visiting flowers by insects",
+        "Creat: edBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "7a58af69-8e39-452b-a11f-f11f1882a680",
+        "Content": "Mesh connective tissue",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
     }
 ]
