@@ -27,6 +27,9 @@
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Subjects;
     using TestPlatform.Application.Infrastructures.Searcher.MVC;
+    using TestPlatform.Services.Database.Questions.Interfaces;
+    using TestPlatform.Services.Database.Questions;
+    using TestPlatform.Database.Entities.Questions;
 
     public class Program
     {
@@ -68,8 +71,7 @@
 
             services.AddSingleton(configuration);
 
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
+            RegisterRepositories(services);
             RegisterAutoMapper(services);
             RegisterDatabaseServices(services);
             RegisterManagers(services);
@@ -116,6 +118,12 @@
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
         }
 
+        private static void RegisterRepositories(IServiceCollection services)
+        {
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IQuestionAnswerMapRepository), typeof(QuestionAnswerMapRepository));
+        }
+
         private static void RegisterAutoMapper(IServiceCollection services)
         {
             List<Assembly> assemblies = new List<Assembly>()
@@ -139,13 +147,23 @@
 
             services.AddTransient<ISubjectTagService, SubjectTagService>();
             services.AddTransient<IUserSubjectTagMapService, UserSubjectTagMapService>();
+            services.AddTransient<ITestSubjectTagMapService, TestSubjectTagMapService>();
 
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IQuestionCopyService, QuestionCopyService>();
+            services.AddTransient<IQuestionTypeService, QuestionTypeService>();
+            services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<IQuestionAnswerMapService, QuestionAnswerMapService>();
+
+            services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
+            services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
         {
             services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IQuestionAnswerMananger, QuestionAnswerMananger>();
             services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
         }
     }

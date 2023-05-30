@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Folder Include="DataSets\Authorization\" />
-    <Folder Include="DataSets\Subjects\" />
+    <Folder Include="DataSets\Tests\" />
   </ItemGroup>
 
   <ItemGroup>

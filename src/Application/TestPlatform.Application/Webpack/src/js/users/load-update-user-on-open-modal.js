@@ -26,8 +26,8 @@
                     const rolesMultiSelect = selects[0];
                     for (role of data.allRoles) {
                         let isRoleSelected = false;
-                        const userRolesIds = data.userRoles.map(ur => ur.roleId);
-                        if (userRolesIds.includes(role.id)) {
+                        const userRolesIds = data.userRoles.map(ur => ur.roleId.toLowerCase());
+                        if (userRolesIds.includes(role.id.toLowerCase())) {
                             isRoleSelected = true;
                         }
 
@@ -38,8 +38,8 @@
                     const subjectTagsSelect = selects[1];
                     for (subjectTag of data.allSubjectTags) {
                         let isSubjectTagSelected = false;
-                        const userSubjectTagsIds = data.userSubjectTags.map(ur => ur.subjectTagId);
-                        if (userSubjectTagsIds.includes(subjectTag.id)) {
+                        const userSubjectTagsIds = data.userSubjectTags.map(ur => ur.subjectTagId.toLowerCase());
+                        if (userSubjectTagsIds.includes(subjectTag.id.toLowerCase())) {
                             isSubjectTagSelected = true;
                         }
 

@@ -46,8 +46,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateSubjectTagBM model)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.subjectTagService.CreateAsync<SubjectTag, CreateSubjectTagBM>(model, currentUserId);
+            await this.subjectTagService.CreateAsync<SubjectTag, CreateSubjectTagBM>(model, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(List));
         }
@@ -72,8 +71,7 @@
         [HttpPost]
         public async Task<IActionResult> Update(UpdateSubjectTagBM model)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, currentUserId);
+            await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
@@ -90,8 +88,7 @@
         [HttpPost]
         public async Task<IActionResult> Delete(UpdateSubjectTagBM model)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.subjectTagService.DeleteAsync<UpdateSubjectTagBM>(model.Id, currentUserId);
+            await this.subjectTagService.DeleteAsync<UpdateSubjectTagBM>(model.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
         }
@@ -99,8 +96,7 @@
         [HttpGet]
         public async Task<IActionResult> Restore(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var subjectTag = await this.subjectTagService.RestoryAsync<DetailsSubjectTagVM>(id, currentUserId);
+            var subjectTag = await this.subjectTagService.RestoryAsync<DetailsSubjectTagVM>(id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = subjectTag.Id });
         }

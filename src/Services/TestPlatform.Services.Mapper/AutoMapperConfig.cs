@@ -5,6 +5,7 @@
     using AutoMapper;
     using TestPlatform.Database.Entities;
     using TestPlatform.Services.Mapper.Interfaces;
+    using TestPlatform.Services.Mapper.Profiles;
 
     public static class AutoMapperConfig
     {
@@ -60,6 +61,8 @@
                             configuration.CreateMap(map.Source, map.Destination);
                         }
                     });
+
+            config.AddProfile<SelectListItemProfile>();
 
             MapperInstance = new Mapper(new MapperConfiguration(config));
         }

@@ -5,16 +5,17 @@
     var restoreModalId = "restore-modal";
 }
 
-<h1 class="text-center">List Subject Tags</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
     <form method="get" class="search-form">
-        @Html.EditorFor(m => m.SearchCriteria)
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            @Html.EditorFor(m => m.SearchCriteria)
+        </div>
 
         <div class="d-flex">
             <button type="submit" class="btn btn-success">Apply filters</button>
         </div>
-
     </form>
 
     @{
@@ -36,6 +37,15 @@
                         @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.IsDeleted)
                     </th>
                     <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.QuestionsCount)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.TestsCount)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListSubjectTagsVM model) => model.UsersCount)
+                    </th>
+                    <th class="text-nowrap">
                         Actions
                     </th>
                 </tr>
@@ -48,37 +58,51 @@
                             @Html.DisplayFor(modelItem => row.Name)
                         </td>
                         <td>
-                            @if (row.IsDeleted)
-                            {
-                                <span>True</span>
-                            }
-                            else
-                            {
-                                <span>False</span>
-                            }
+                            @Html.DisplayTextFor(modelItem => row.IsDeleted)
                         </td>
                         <td>
-                            <div class="d-flex gap-1">
-                                <a class="btn btn-info btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
-                                    Details
-                                </a>
-                                @if (row.IsDeleted)
-                                {
-                                    <a class="btn btn-info btn-sm js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
-                                        Restore
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-warning btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
-                                        Update
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@row.Id">
-                                        Delete
-                                    </a>
-                                }
+                            @Html.DisplayTextFor(modelItem => row.QuestionsCount)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => row.TestsCount)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => row.UsersCount)
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
+                                            Details
+                                        </a>
+                                    </li>
+                                    @if (row.IsDeleted)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
+                                                Restore
+                                            </a>
+                                        </li>
+                                    }
+                                    else if (row.QuestionsCount == 0 && row.TestsCount == 0 && row.UsersCount == 0)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@row.Id">
+                                                Update
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@row.Id">
+                                                Delete
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
-
                         </td>
                     </tr>
                 }

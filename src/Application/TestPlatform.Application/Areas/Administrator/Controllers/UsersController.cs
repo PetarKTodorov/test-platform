@@ -5,7 +5,6 @@
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Users;

@@ -14,6 +14,7 @@ const webpackObject = {
         "libraries": "./src/js/entries/libraries.js",
         "application": "./src/js/entries/application.js",
         "users": "./src/js/entries/users.js",
+        "answers": "./src/js/entries/answers.js",
     },
     output: {
         path: WWWROOT_PATH,

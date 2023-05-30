@@ -1,0 +1,103 @@
+﻿@model DetailsQuestionCopyVM
+
+@{
+    ViewData["Title"] = "Question Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.OriginalQuestionTitle)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.OriginalQuestionTitle)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.HasRandomizedAnswers)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.HasRandomizedAnswers)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.QuestionTypeName)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.QuestionTypeName)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.SubjectTagName)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.SubjectTagName)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Answers)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.AnswersCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered table-striped">
+                            <thead class="">
+                                <tr>
+                                    <th class="text-nowrap" scope="col">
+                                        @Html.DisplayNameForInnerType((UpdateQuestionAnswerBM model) => model.AnswerContent)
+                                    </th>
+                                    <th class="text-nowrap" scope="col">
+                                        @Html.DisplayNameForInnerType((UpdateQuestionAnswerBM model) => model.IsCorrect)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var answer in Model.Answers)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => answer.AnswerContent)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayTextFor(model => answer.IsCorrect)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" asp-route-id="@Model.Id">
+                Update
+            </a>
+            <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
+                Delete
+            </a>
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">
+                Go back
+            </a>
+        </div>
+    </div>
+</div>

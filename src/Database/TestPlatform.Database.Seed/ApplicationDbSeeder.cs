@@ -2,10 +2,13 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+
     using TestPlatform.Database.Seed.DataSets;
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.Database.Seed.Seeders.Authorization;
+    using TestPlatform.Database.Seed.Seeders.Questions;
     using TestPlatform.Database.Seed.Seeders.Subjects;
+    using TestPlatform.Database.Seed.Seeders.Tests;
 
     public static class ApplicationDbSeeder
     {
@@ -23,8 +26,20 @@
                     new RolesSeeder(serviceProvider, logger, Constants.ROLES_JSON_FILE_NAME),
                     new UserSeeder(serviceProvider, logger, Constants.USERS_JSON_FILE_NAME),
                     new UserRoleMapSeeder(serviceProvider, logger, Constants.USERS_ROLES_MAP_JSON_FILE_NAME),
+
                     new SubjectTagSeeder(serviceProvider, logger, Constants.SUBJECT_TAGS_JSON_FILE_NAME),
                     new UserSubjectTagMapSeeder(serviceProvider, logger, Constants.USER_SUBJECT_TAG_MAP_JSON_FILE_NAME),
+                    
+                    new StatusSeeder(serviceProvider, logger, Constants.STATUS_JSON_FILE_NAME),
+                    new TestSeeder(serviceProvider, logger, Constants.TEST_JSON_FILE_NAME),
+                    new TestSubjectTagMapSeeder(serviceProvider, logger, Constants.TEST_SUBJECT_TAG_MAP_JSON_FILE_NAME),
+                    new TestApprovalMapSeeder(serviceProvider, logger, Constants.TEST_APPROVAL_MAP_FILE_NAME),
+                    
+                    new QuestionTypeSeeder(serviceProvider, logger, Constants.QUESTION_TYPE_JSON_FILE_NAME),
+                    new AnswersSeeder(serviceProvider, logger, Constants.ANSWERS_JSON_FILE_NAME),
+                    new QuestionsSeeder(serviceProvider, logger, Constants.QUESTIONS_JSON_FILE_NAME),
+                    new QuestionsCopySeeder(serviceProvider, logger, Constants.QUESTIONS_COPY_JSON_FILE_NAME),
+                    new QuestionsAnswersMapSeeeder(serviceProvider, logger, Constants.QUESTION_ANSWERS_MAP_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)

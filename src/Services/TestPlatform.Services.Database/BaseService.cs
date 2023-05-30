@@ -32,6 +32,7 @@
             TEntity entity = this.Mapper.Map<TEntity>(model);
             entity.CreatedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity);
             entity = await this.BaseRepository.AddAsync(entity);
             await this.BaseRepository.SaveChangesAsync();
 
@@ -44,7 +45,7 @@
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
 
-            this.BaseRepository.DetachLocal(entity, entity.Id);
+            this.BaseRepository.DetachLocal(entity);
 
             TEntity deletedEntity = this.BaseRepository.HardDelete(entity);
             await this.BaseRepository.SaveChangesAsync();
@@ -60,6 +61,7 @@
             entity.ModifiedBy = currentUserId;
             entity.DeletedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity);
             TEntity deletedEntity = this.BaseRepository.Delete(entity);
             await this.BaseRepository.SaveChangesAsync();
 
@@ -73,6 +75,7 @@
             TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
             entity.ModifiedBy = currentUserId;
 
+            this.BaseRepository.DetachLocal(entity);
             TEntity restoredEntity = this.BaseRepository.Restore(entity);
             await this.BaseRepository.SaveChangesAsync();
 
@@ -151,6 +154,8 @@
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId)
         {
             TEntity entity = await this.FindByIdAsync<TEntity>(id);
+
+            this.BaseRepository.DetachLocal(entity);
 
             TEntity updatedEntity = this.Mapper.Map(model, entity);
             updatedEntity.ModifiedBy = currentUserId;

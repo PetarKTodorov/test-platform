@@ -30,6 +30,6 @@
 
         Task<int> SaveChangesAsync();
 
-        void DetachLocal(TEntity t, Guid entryId);
+        void DetachLocal(TEntity t);
     }
 }

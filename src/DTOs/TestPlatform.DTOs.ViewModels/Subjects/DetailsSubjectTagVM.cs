@@ -32,6 +32,15 @@
 
         public string Name { get; set; }
 
+        [DisplayName("Users with this subject tag")]
+        public int UsersCount { get; set; }
+
+        [DisplayName("Questions with this subject tag")]
+        public int QuestionsCount { get; set; }
+
+        [DisplayName("Tests with this subject tag")]
+        public int TestsCount { get; set; }
+
         public IEnumerable<UserSubjectTagMapVM> Users { get; set; }
     }
 }

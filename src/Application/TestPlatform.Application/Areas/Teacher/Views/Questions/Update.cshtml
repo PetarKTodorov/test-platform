@@ -1,0 +1,102 @@
+﻿@model UpdateQuestionBM
+@{
+    ViewData["Title"] = "Update Question";
+
+    var subjectTags = (List<SelectListItem>)this.ViewData["SubjectTags"];
+    var questionTypes = (List<SelectListItem>)this.ViewData["QuestionTypes"];
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form class="w-50 mx-auto js-question-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Update" method="post">
+        @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
+        @Html.AntiForgeryToken()
+
+        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+
+        <input name="@Html.DisplayNameFor(model => model.OriginalQuestionId)" value="@Model.OriginalQuestionId" hidden />
+
+        @Html.FormGroupFor(model => model.OriginalQuestionTitle)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.SubjectTagId, new { @class = "form-label"})
+
+            <select class="js-select2 form-control" asp-for="SubjectTagId" asp-items="@subjectTags"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.SubjectTagId)
+            </span>
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            @Html.LabelFor(model => model.HasRandomizedAnswers, new { @class = "form-check-label"})
+
+            @Html.CheckBoxFor(model => model.HasRandomizedAnswers, new { @class = "form-check-input"})
+        </div>
+
+        <div class="mb-3">
+            <span>
+                @Html.LabelFor(model => model.QuestionTypeId, new { @class = "form-label"})
+            </span>
+
+            <select class="js-select2 form-control" asp-for="QuestionTypeId" asp-items="@questionTypes"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.QuestionTypeId)
+            </span>
+        </div>
+
+        <div class="mb-3">
+            @Html.DisplayNameFor(model => model.Answers)
+
+            @foreach (var (answer, index) in Model.Answers.Select((answer, index) => (answer, index)))
+            {
+                var idNameAttribute = $"Answers[{index}].Id";
+                var answerIdNameAttribute = $"Answers[{index}].AnswerId";
+                var isCorrectNameAttribute = $"Answers[{index}].IsCorrect";
+                var answerContentNameAttribute = $"Answers[{index}].AnswerContent";
+
+                <div class="my-2 js-answer-container">
+                    <input hidden type="text" name="@idNameAttribute" value="@answer.Id" />
+                    <input hidden type="text" name="@answerIdNameAttribute" value="@answer.AnswerId" />
+                    <div class="d-flex gap-2">
+
+                        @if (Model.QuestionTypeId == QuestionTypes.MultipleChoice.GetUid())
+                        {
+                            @Html.CheckBox(isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-checkbox" })
+                        }
+                        else if (Model.QuestionTypeId == QuestionTypes.SingleChoice.GetUid())
+                        {
+                            @Html.RadioButton("IsCorrect", isCorrectNameAttribute, answer.IsCorrect, new { @class = "js-answer-radio" })
+                        }
+                        <input class="form-control" type="text" name="@answerContentNameAttribute" value="@answer.AnswerContent" />
+                    </div>
+
+                    <span class="text-danger">
+                        @Html.ValidationMessage(answerContentNameAttribute)
+                    </span>
+                </div>
+            }
+
+            <div class="d-flex justify-content-end gap-1">
+                <button type="button" class="btn btn-success js-add-answer" data-max-answers-count="@Validations.MAX_QUESTION_ANSWERS_COUNT">
+                    Add new answer
+                </button>
+                <button type="button" class="btn btn-danger js-remove-answer">
+                    Remove the last one
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-1">
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">
+                Go back
+            </a>
+            <button type="submit" class="btn btn-warning">Update</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script asp-src-include="~/js/answers*.js" defer></script>
+}

@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database.Seed\TestPlatform.Database.Seed.csproj" />
     <ProjectReference Include="..\..\Database\TestPlatform.Database\TestPlatform.Database.csproj" />
   </ItemGroup>

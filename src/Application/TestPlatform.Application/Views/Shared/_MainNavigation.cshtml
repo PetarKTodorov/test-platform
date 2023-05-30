@@ -15,19 +15,6 @@
                 </li>
 
                 @{
-                    if (currentUser.IsInRole(ApplicationRoles.TEACHER))
-                    {
-                        <li class="nav-item dropdown">
-                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Test
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a>
-                                </li>
-                            </ul>
-                        </li>
-                    }
                     if (currentUser.IsInRole(ApplicationRoles.ADMINISTRATOR))
                     {
                         <li class="nav-item dropdown">
@@ -51,6 +38,38 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Create">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    if (currentUser.IsInRole(ApplicationRoles.TEACHER))
+                    {
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Test
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">Yours</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ListPending">Pending for approvals</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Questions
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">List</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Create">Create</a>
                                 </li>
                             </ul>
                         </li>

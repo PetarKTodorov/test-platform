@@ -4,7 +4,7 @@
     ViewData["Title"] = "Subject Tag Details";
 }
 
-<h1 class="text-center">Subject Tag Details</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
     <div class="table-responsive">
@@ -91,14 +91,7 @@
                 <tr>
                     <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
                     <td>
-                        @if (Model.IsDeleted)
-                        {
-                            <span>True</span>
-                        }
-                        else
-                        {
-                            <span>False</span>
-                        }
+                        @Html.DisplayTextFor(model => model.IsDeleted)
                     </td>
                 </tr>
                 <tr>
@@ -126,84 +119,20 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            @if (Model.IsDeleted == false && Model.QuestionsCount == 0 && Model.TestsCount == 0 && Model.UsersCount == 0)
+            {
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@Model.Id">
+                    Update
+                </a>
+                <a class="btn btn-danger" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@Model.Id">
+                    Delete
+                </a>
+            }
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="List">
+                Go back
+            </a>
+        </div>
     </div>
 </div>
-
-@*<div class="container-fluid px-5">
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.Id)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.CreatedBy)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.CreatedDate)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.ModifiedBy)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.ModifiedDate)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.DeletedBy)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.DeletedDate)
-                    </th>
-                    <th class="text-nowrap">
-                        <input type="checkbox" class="flipswitch" checked="@Model.IsDeleted" disabled />
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameFor(model => model.Users)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.CreatedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.ModifiedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.ModifiedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.DeletedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.DeletedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.IsDeleted)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Name)
-                    </td>
-                    <td>
-                        @{
-                            var userEmauls = Model.Users.Select(u => u.UserEmail).ToArray();
-                        }
-
-                        @string.Join(", ", userEmauls)
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>*@

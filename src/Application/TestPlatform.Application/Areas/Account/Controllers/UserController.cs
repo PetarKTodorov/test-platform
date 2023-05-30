@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.Filtres;
+    using TestPlatform.Common.Constants;
     using TestPlatform.DTOs.BindingModels.User;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -31,7 +32,7 @@
 
             if (isSucceeded == false)
             {
-                this.ViewBag.RegisterError = "This email is already used on the platform";
+                this.ViewBag.RegisterError = ErrorMessages.EMAIL_IS_ALREADY_USED_ERROR_MESSAGE;
 
                 return this.View(model);
             }
@@ -55,7 +56,7 @@
 
             if (isSucceeded == false)
             {
-                this.ViewBag.LoginError = "Invalid password or email.";
+                this.ViewBag.LoginError = ErrorMessages.INVALID_CREDENTIALS_ERROR_MESSAGE;
 
                 return this.View(model);
             }
