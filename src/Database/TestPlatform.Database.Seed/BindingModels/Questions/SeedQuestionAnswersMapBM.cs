@@ -17,5 +17,7 @@
 
         [Required]
         public bool? IsCorrect { get; set; }
+
+        public Guid? CreatedBy { get; set; }
     }
 }

@@ -24,10 +24,14 @@
 
             var dtoObjects = await Deserializer.DeserializeAsync<SeedAnswerBM>(this.JsonFileName, this.Logger);
 
-            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
             foreach (var dto in dtoObjects)
             {
-                await service.CreateAsync<Answer, SeedAnswerBM>(dto, administratorId);
+                if (dto.CreatedBy == null)
+                {
+                    dto.CreatedBy = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                }
+
+                await service.CreateAsync<Answer, SeedAnswerBM>(dto, dto.CreatedBy.Value);
             }
         }
     }

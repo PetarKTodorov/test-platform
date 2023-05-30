@@ -19,5 +19,7 @@
 
         [Required]
         public bool HasRandomizedAnswers { get; set; }
+
+        public Guid? CreatedBy { get; set; }
     }
 }

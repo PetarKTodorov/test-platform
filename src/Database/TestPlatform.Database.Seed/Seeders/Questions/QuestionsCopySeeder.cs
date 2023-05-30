@@ -27,7 +27,12 @@
             var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
             foreach (var dto in dtoObjects)
             {
-                await service.CreateAsync<QuestionCopy, SeedQuestionCopyBM>(dto, administratorId);
+                if (dto.CreatedBy == null)
+                {
+                    dto.CreatedBy = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                }
+
+                await service.CreateAsync<QuestionCopy, SeedQuestionCopyBM>(dto, dto.CreatedBy.Value);
             }
         }
     }

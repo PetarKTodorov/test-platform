@@ -15,5 +15,7 @@
         [Required]
         [StringLength(maximumLength: Validations.TWO_POWER_SIXTEEN, MinimumLength = Validations.ONE)]
         public string Title { get; set; }
+
+        public Guid? CreatedBy { get; set; }
     }
 }
