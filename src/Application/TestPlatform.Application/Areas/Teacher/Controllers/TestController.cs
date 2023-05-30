@@ -41,10 +41,9 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var dataQuery = this.testService
                 .FindAllAsQueryable<ListTestsVM>()
-                .Where(lt => lt.CreatedBy == currentUserId);
+                .Where(lt => lt.CreatedBy == this.CurrentUserId);
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -54,12 +53,11 @@
         [HttpGet]
         public async Task<IActionResult> ListPending(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var dataQuery = this.testService
                 .FindAllAsQueryable<ListPendingTestVM>()
-                .Where(lt => lt.CreatedBy != currentUserId)
+                .Where(lt => lt.CreatedBy != this.CurrentUserId)
                 .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
-                .Where(lt => !lt.ApproversIds.Contains(currentUserId));
+                .Where(lt => !lt.ApproversIds.Contains(this.CurrentUserId));
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -95,10 +93,9 @@
 
             model.StatusId = privateStatus.Id;
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var test = await this.testService.CreateAsync<Test, CreateTestBM>(model, currentUserId);
+            var test = await this.testService.CreateAsync<Test, CreateTestBM>(model, this.CurrentUserId);
 
-            await this.testService.UpdateSubjectTagsAsync(test.Id, model.SubjectTagsIds, currentUserId);
+            await this.testService.UpdateSubjectTagsAsync(test.Id, model.SubjectTagsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(List));
         }
@@ -117,9 +114,8 @@
             this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
             var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
-            if (test.CreatedBy != currentUserId)
+            if (test.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
@@ -137,14 +133,13 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            if (model.CreatedBy != currentUserId)
+            if (model.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, currentUserId);
-            await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, currentUserId);
+            await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, this.CurrentUserId);
+            await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
@@ -155,9 +150,8 @@
             this.ViewData["AllSubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
 
             var test = await this.testService.FindByIdAsync<UpdateTestBM>(id);
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
 
-            if (test.CreatedBy != currentUserId)
+            if (test.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
@@ -175,13 +169,12 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            if (model.CreatedBy != currentUserId)
+            if (model.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            await this.testService.DeleteAsync<UpdateTestBM>(model.Id, currentUserId);
+            await this.testService.DeleteAsync<UpdateTestBM>(model.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id, isDeleted = true });
         }
@@ -189,10 +182,9 @@
         [HttpGet]
         public async Task<IActionResult> Restore(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var test = await this.testService.RestoryAsync<Test>(id, currentUserId);
+            var test = await this.testService.RestoryAsync<Test>(id, this.CurrentUserId);
 
-            if (test.CreatedBy != currentUserId)
+            if (test.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
@@ -203,17 +195,15 @@
         [HttpGet]
         public async Task<IActionResult> Approve(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-
             var test = await this.testService.FindByIdAsync<Test>(id);
 
             var newTestApprovalMap = new TestApprovalMap()
             {
                 TestId = id,
-                UserId = currentUserId,
+                UserId = this.CurrentUserId,
             };
 
-            await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, currentUserId);
+            await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, this.CurrentUserId);
 
             if (test.Approvers.Count == 3)
             {

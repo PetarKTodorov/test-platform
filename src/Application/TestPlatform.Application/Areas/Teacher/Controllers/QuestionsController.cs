@@ -40,8 +40,7 @@
 
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var dataQuery = await this.questionCopyService.FindUserQuestionsAsQueryable<QuestionInformationVM>(currentUserId);
+            var dataQuery = await this.questionCopyService.FindUserQuestionsAsQueryable<QuestionInformationVM>(this.CurrentUserId);
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -67,10 +66,9 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
-            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, currentUserId);
+            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, this.CurrentUserId);
 
-            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, currentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = createdQuestion.Id });
         }
@@ -86,9 +84,8 @@
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
-            if (question.CreatedBy != currentUserId)
+            if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
@@ -110,15 +107,14 @@
                 return this.View(model);
             }
 
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(model.Id);
-            if (question.CreatedBy != currentUserId)
+            if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
-            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
+            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, this.CurrentUserId);
+            await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
@@ -126,9 +122,8 @@
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
-            if (question.CreatedBy != currentUserId)
+            if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
@@ -139,9 +134,8 @@
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
-            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(id);
-            if (question.CreatedBy != currentUserId)
+            if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
