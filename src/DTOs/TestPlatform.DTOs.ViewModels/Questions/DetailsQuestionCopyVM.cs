@@ -10,6 +10,8 @@
     {
         public Guid Id { get; set; }
 
+        public Guid CreatedBy { get; set; }
+
         public Guid OriginalQuestionId { get; set; }
 
         [DisplayName("Title")]

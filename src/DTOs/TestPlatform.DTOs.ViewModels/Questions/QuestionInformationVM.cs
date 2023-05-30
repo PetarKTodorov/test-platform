@@ -9,6 +9,8 @@
     {
         public Guid Id { get; set; }
 
+        public Guid CreatedBy { get; set; }
+
         [DisplayName("Title")]
         [CustomSearchField]
         public string OriginalQuestionTitle { get; set; }

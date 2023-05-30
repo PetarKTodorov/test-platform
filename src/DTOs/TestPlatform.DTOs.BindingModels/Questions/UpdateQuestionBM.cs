@@ -20,6 +20,8 @@
         [Required]
         public Guid Id { get; set; }
 
+        public Guid CreatedBy { get; set; }
+
         [Required]
         public Guid OriginalQuestionId { get; set; }
 

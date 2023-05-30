@@ -40,7 +40,8 @@
 
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.questionCopyService.FindAllAsQueryable<QuestionInformationVM>();
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var dataQuery = await this.questionCopyService.FindUserQuestionsAsQueryable<QuestionInformationVM>(currentUserId);
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -85,7 +86,12 @@
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<UpdateQuestionBM>(id);
+            if (question.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
 
             this.ViewData["SubjectTags"] = (await this.subjectTagService.FindAllAsync<SelectListItem>()).ToList();
             this.ViewData["QuestionTypes"] = (await this.questionTypeService.FindAllAsync<SelectListItem>(false)).ToList();
@@ -105,6 +111,12 @@
             }
 
             var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(model.Id);
+            if (question.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
+
             var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, currentUserId);
             await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, currentUserId);
 
@@ -114,7 +126,12 @@
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
             var question = await this.questionCopyService.FindByIdAsync<DetailsQuestionCopyVM>(id);
+            if (question.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
 
             return this.View(question);
         }
@@ -122,6 +139,13 @@
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
+            var currentUserId = Guid.Parse(this.User.FindFirstValue(UserClaimTypes.ID));
+            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(id);
+            if (question.CreatedBy != currentUserId)
+            {
+                return this.NotFound();
+            }
+
             await this.questionAnswerMananger.DeleteQuestionWithAnswersAsync(id);
 
             return this.RedirectToAction(nameof(List));

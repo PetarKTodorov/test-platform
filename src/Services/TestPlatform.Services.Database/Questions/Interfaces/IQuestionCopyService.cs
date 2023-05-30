@@ -5,5 +5,6 @@
 
     public interface IQuestionCopyService : IBaseService<QuestionCopy>
     {
+        Task<IQueryable<T>> FindUserQuestionsAsQueryable<T>(Guid userId);
     }
 }
