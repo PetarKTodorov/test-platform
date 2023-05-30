@@ -177,6 +177,13 @@
 
                 this.ViewBag.StatusError = ErrorMessages.SELECT_AT_LEAST_TWO_CORRECT_ANSWERS_ERROR_MESSAGE;
             }
+            else if (questionTypeId.Value == QuestionTypes.MultipleChoice.GetUid()
+                && answers.Count(a => a.IsCorrect) == answers.Count())
+            {
+                isModelStateValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.ALL_ANSWERS_ARE_CORRECT_ERROR_MESSAGE;
+            }
 
             return isModelStateValid;
         }

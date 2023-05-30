@@ -24,7 +24,6 @@
 
             var dtoObjects = await Deserializer.DeserializeAsync<SeedQuestionCopyBM>(this.JsonFileName, this.Logger);
 
-            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
             foreach (var dto in dtoObjects)
             {
                 if (dto.CreatedBy == null)
