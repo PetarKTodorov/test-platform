@@ -9,6 +9,10 @@
     {
         public SelectListItemProfile()
         {
+            this.CreateMap<QuestionCopy, SelectListItem>()
+                    .ForMember(csli => csli.Text, mo => mo.MapFrom(qtvm => qtvm.OriginalQuestion.Title))
+                    .ForMember(csli => csli.Value, mo => mo.MapFrom(qtvm => qtvm.Id));
+
             this.CreateMap<QuestionType, SelectListItem>()
                     .ForMember(csli => csli.Text, mo => mo.MapFrom(qtvm => qtvm.Name))
                     .ForMember(csli => csli.Value, mo => mo.MapFrom(qtvm => qtvm.Id));

@@ -13,5 +13,7 @@
         public const string EMAIL_IS_ALREADY_USED_ERROR_MESSAGE = "This email is already used on the platform";
 
         public const string INVALID_CREDENTIALS_ERROR_MESSAGE = "Invalid password or email.";
+
+        public const string QUESTION_POINTS_MUST_BE_GREATER_THAN_ZERO = "Question points must be greater than zero";
     }
 }

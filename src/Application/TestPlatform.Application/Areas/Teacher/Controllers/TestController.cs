@@ -1,18 +1,23 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
+    using System.Transactions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-
+    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
+    using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
+    using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class TestController : BaseTeacherController
     {
@@ -21,17 +26,23 @@
         private readonly ISubjectTagService subjectTagService;
         private readonly ISearchPageableMananager searchPageableMananager;
         private readonly ITestApprovalMapService testApprovalMapService;
+        private readonly IQuestionCopyService questionCopyService;
+        private readonly IQuestionTestMapService questionTestMapService;
 
         public TestController(ITestService testService, IStatusService statusService,
             ISubjectTagService subjectTagService,
             ISearchPageableMananager searchPageableMananager,
-            ITestApprovalMapService testApprovalMapService)
+            ITestApprovalMapService testApprovalMapService,
+            IQuestionCopyService questionCopyService,
+            IQuestionTestMapService questionTestMapService)
         {
             this.testService = testService;
             this.statusService = statusService;
             this.subjectTagService = subjectTagService;
             this.searchPageableMananager = searchPageableMananager;
             this.testApprovalMapService = testApprovalMapService;
+            this.questionCopyService = questionCopyService;
+            this.questionTestMapService = questionTestMapService;
         }
 
         [HttpGet]
@@ -99,9 +110,9 @@
         [HttpGet]
         public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
         {
-            var subjectTag = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
+            var test = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
 
-            return this.View(subjectTag);
+            return this.View(test);
         }
 
         [HttpGet]
@@ -225,6 +236,88 @@
             await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddQuestion(Guid testId)
+        {
+            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(testId);
+
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            this.ViewData["UserQuestions"] = (await this.questionCopyService
+                .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, test.SubjectTagsIds, test.QuestionsIds))
+                .ToList();
+
+            return this.View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddQuestion(AddQuestionToTestBM model)
+        {
+            if (!this.ValidateTestQuestion(model.QuestionPoints))
+            {
+                this.ViewData["UserQuestions"] = (await this.questionCopyService
+                    .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, model.SubjectTagsIds, model.QuestionsIds))
+                    .ToList();
+
+                return this.View(model);
+            }
+
+            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(model.Id);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            var createModel = new CreateTestQuestionMapBM()
+            {
+                QuestionId = model.QuestionId,
+                TestId = model.Id,
+                Points = model.QuestionPoints,
+            };
+            await this.questionTestMapService.CreateAsync<QuestionTestMap, CreateTestQuestionMapBM>(createModel, this.CurrentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = model.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveQuestion(Guid questionId, Guid testId)
+        {
+            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(testId);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(questionId);
+            var questionTestMap = await this.questionTestMapService.FindQuestionTestAsync<QuestionTestMap>(question.Id, test.Id);
+
+            await this.questionTestMapService.HardDeleteAsync<QuestionTestMap>(questionTestMap.Id);
+
+            return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        private bool ValidateTestQuestion(int points)
+        {
+            var isValid = true;
+
+            if (!this.ModelState.IsValid)
+            {
+                isValid = false;
+            }
+
+            if (points <= 0)
+            {
+                isValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.QUESTION_POINTS_MUST_BE_GREATER_THAN_ZERO;
+            }
+
+            return isValid;
         }
     }
 }

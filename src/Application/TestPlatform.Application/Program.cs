@@ -154,6 +154,7 @@
             services.AddTransient<IQuestionTypeService, QuestionTypeService>();
             services.AddTransient<IAnswerService, AnswerService>();
             services.AddTransient<IQuestionAnswerMapService, QuestionAnswerMapService>();
+            services.AddTransient<IQuestionTestMapService, QuestionTestMapService>();
 
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();

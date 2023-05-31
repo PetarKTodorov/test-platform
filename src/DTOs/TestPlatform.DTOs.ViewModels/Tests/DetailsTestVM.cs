@@ -5,6 +5,7 @@
     using AutoMapper;
 
     using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
 
     public class DetailsTestVM : IMapFrom<Test>, IHaveCustomMappings
@@ -49,6 +50,8 @@
 
         [DisplayName("Subject Tags")]
         public IEnumerable<string> SubjectTagNames { get; set; }
+
+        public IEnumerable<DetailsQuestionTestVM> Questions { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

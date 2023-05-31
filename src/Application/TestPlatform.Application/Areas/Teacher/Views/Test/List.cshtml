@@ -86,6 +86,11 @@
                                     else
                                     {
                                         <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@row.Id">
+                                                Add questions
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@row.Id">
                                                 Update
                                             </a>
