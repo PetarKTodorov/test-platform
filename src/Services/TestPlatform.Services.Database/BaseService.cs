@@ -43,7 +43,7 @@
 
         public virtual async Task<T> HardDeleteAsync<T>(Guid id)
         {
-            TEntity entity = await this.FindByIdAsync<TEntity>(id);
+            TEntity entity = await this.FindByIdAsync(id);
 
             this.BaseRepository.DetachLocal(entity);
 
@@ -57,7 +57,7 @@
 
         public virtual async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)
         {
-            TEntity entity = await this.FindByIdAsync<TEntity>(id);
+            TEntity entity = await this.FindByIdAsync(id);
             entity.ModifiedBy = currentUserId;
             entity.DeletedBy = currentUserId;
 
@@ -72,7 +72,7 @@
 
         public virtual async Task<T> RestoryAsync<T>(Guid id, Guid currentUserId)
         {
-            TEntity entity = await this.FindByIdAsync<TEntity>(id, true);
+            TEntity entity = await this.FindByIdAsync(id, true);
             entity.ModifiedBy = currentUserId;
 
             this.BaseRepository.DetachLocal(entity);
@@ -152,7 +152,7 @@
 
         public virtual async Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId)
         {
-            TEntity entity = await this.FindByIdAsync<TEntity>(id);
+            TEntity entity = await this.FindByIdAsync(id);
 
             this.BaseRepository.DetachLocal(entity);
 
@@ -165,6 +165,44 @@
             T entityToReturn = this.Mapper.Map<T>(updatedEntity);
 
             return entityToReturn;
+        }
+
+        private async Task<TEntity> FindByIdAsync(Guid id)
+        {
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id)
+                .SingleOrDefaultAsync();
+
+            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+            if (id == administratorId && entity == null)
+            {
+                var baseEntity = new BaseEntity()
+                {
+                    Id = administratorId,
+                };
+
+                entity = this.Mapper.Map<BaseEntity, TEntity>(baseEntity);
+            }
+            else if (entity == null)
+            {
+                string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
+                throw new NotFoundException(message);
+            }
+
+            return entity;
+        }
+
+        private async Task<TEntity> FindByIdAsync(Guid id, bool isDeletedFlag)
+        {
+            var entity = await this.BaseRepository.GetByIdAsQueryable(id, isDeletedFlag)
+                .SingleOrDefaultAsync();
+
+            if (entity == null)
+            {
+                string message = string.Format(ExceptionMessages.ENTITY_NOT_FOUND, this.GetType().Name);
+                throw new NotFoundException(message);
+            }
+
+            return entity;
         }
     }
 }
