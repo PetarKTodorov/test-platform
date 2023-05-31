@@ -282,16 +282,16 @@
         [HttpGet]
         public async Task<IActionResult> RemoveQuestion(Guid questionId, Guid testId)
         {
-            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(testId);
+            var test = await this.testService.FindByIdAsync<BaseBM>(testId);
             if (test.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(questionId);
-            var questionTestMap = await this.questionTestMapService.FindQuestionTestAsync<QuestionTestMap>(question.Id, test.Id);
+            var question = await this.questionCopyService.FindByIdAsync<BaseBM>(questionId);
+            var questionTestMap = await this.questionTestMapService.FindQuestionTestAsync<BaseBM>(question.Id, test.Id);
 
-            await this.questionTestMapService.HardDeleteAsync<QuestionTestMap>(questionTestMap.Id);
+            await this.questionTestMapService.HardDeleteAsync<BaseBM>(questionTestMap.Id);
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
         }
