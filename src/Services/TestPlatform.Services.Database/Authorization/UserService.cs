@@ -7,12 +7,12 @@
     using Microsoft.EntityFrameworkCore;
 
     using TestPlatform.Common.Helpers;
-    using TestPlatform.Database.Entities;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class UserService : BaseService<User>, IUserService
     {
@@ -81,6 +81,12 @@
             T entityToReturn = this.Mapper.Map<T>(entity);
 
             return entityToReturn;
+        }
+
+        public IQueryable<T> FindAllUsersAsQueryable<T>()
+        {
+            return this.FindAllAsQueryable()
+                .To<T>();
         }
 
         private async Task HardDeleteUserSubjectTagsMapAsync(Guid userId)

@@ -8,6 +8,7 @@
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
+    using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.DTOs.BindingModels.Questions;
@@ -48,10 +49,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.testService
-                .FindAllAsQueryable<ListTestsVM>()
-                .Where(lt => lt.CreatedBy == this.CurrentUserId);
-
+            var dataQuery = this.testService.FindUserTestsAsQueryable<ListTestsVM>(this.CurrentUserId);
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -60,10 +58,7 @@
         [HttpGet]
         public async Task<IActionResult> ListPending(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.testService
-                .FindAllAsQueryable<ListPendingTestVM>()
-                .Where(lt => lt.CreatedBy != this.CurrentUserId)
-                .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
+            var dataQuery = this.testService.FindPendingTestAsQueryable<ListPendingTestVM>(this.CurrentUserId)
                 .Where(lt => !lt.ApproversIds.Contains(this.CurrentUserId));
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);

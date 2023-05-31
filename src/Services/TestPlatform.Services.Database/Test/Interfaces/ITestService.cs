@@ -6,5 +6,9 @@
     public interface ITestService : IBaseService<Test>
     {
         public Task UpdateSubjectTagsAsync(Guid testId, IEnumerable<Guid> subjectTagsIds, Guid currentUserId);
+
+        IQueryable<T> FindUserTestsAsQueryable<T>(Guid userId);
+
+        IQueryable<T> FindPendingTestAsQueryable<T>(Guid userId);
     }
 }

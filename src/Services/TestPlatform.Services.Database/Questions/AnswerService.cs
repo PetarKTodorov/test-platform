@@ -35,7 +35,7 @@
 
         public async Task<T> FindByContentAsync<T>(string content)
         {
-            var answer = await this.FindAllAsQueryable<CreateAnswerBM>()
+            var answer = await this.FindAllAsQueryable()
                 .Where(a => a.Content == content)
                 .To<T>()
                 .FirstOrDefaultAsync();

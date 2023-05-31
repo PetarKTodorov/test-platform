@@ -15,7 +15,7 @@
 
         public async Task HardDeleteAnswers(Guid questionId)
         {
-            var questionAnswers = this.FindAllAsQueryable<DeleteQuestionAnswerMap>()
+            var questionAnswers = this.FindAllAsQueryable()
                 .Where(qam => qam.QuestionId == questionId)
                 .ToList();
 

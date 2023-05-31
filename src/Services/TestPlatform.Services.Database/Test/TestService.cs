@@ -5,12 +5,15 @@
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
+    using TestPlatform.Common.Enums;
+    using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.DTOs.BindingModels.Subjects;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class TestService : BaseService<Test>, ITestService
     {
@@ -49,6 +52,23 @@
 
                 await this.testSubjectTagMapService.CreateAsync<TestSubjectTagMap, CreateTestSubjectTagMapBM>(newTestSubjectTagMap, currentUserId);
             }
+        }
+
+        public IQueryable<T> FindUserTestsAsQueryable<T>(Guid userId)
+        {
+            return this
+                .FindAllAsQueryable()
+                .Where(lt => lt.CreatedBy == userId)
+                .To<T>();
+        }
+
+        public IQueryable<T> FindPendingTestAsQueryable<T>(Guid userId)
+        {
+            return this
+                .FindAllAsQueryable()
+                .Where(lt => lt.CreatedBy != userId)
+                .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
+                .To<T>();
         }
     }
 }

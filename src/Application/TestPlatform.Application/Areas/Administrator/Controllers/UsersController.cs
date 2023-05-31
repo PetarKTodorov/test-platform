@@ -42,7 +42,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.userService.FindAllAsQueryable<UserInformationVM>();
+            var dataQuery = this.userService.FindAllUsersAsQueryable<UserInformationVM>();
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);

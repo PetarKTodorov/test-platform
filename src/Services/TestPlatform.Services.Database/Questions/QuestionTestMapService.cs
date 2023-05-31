@@ -16,7 +16,7 @@
 
         public async Task<T> FindQuestionTestAsync<T>(Guid questionId, Guid testId)
         {
-            var questionTestMap = await this.FindAllAsQueryable<QuestionTestMapBM>()
+            var questionTestMap = await this.FindAllAsQueryable()
                 .SingleOrDefaultAsync(qtm => qtm.QuestionId == questionId && qtm.TestId == testId);
 
             var mappedObject = this.Mapper.Map<T>(questionTestMap);

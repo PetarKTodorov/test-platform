@@ -18,7 +18,7 @@
 
         public async Task<T> FindQuestionByTitleAsync<T>(string title)
         {
-            var question = await this.FindAllAsQueryable<QuestionBM>()
+            var question = await this.FindAllAsQueryable()
                 .Where(q => q.Title == title)
                 .To<T>()
                 .FirstOrDefaultAsync();

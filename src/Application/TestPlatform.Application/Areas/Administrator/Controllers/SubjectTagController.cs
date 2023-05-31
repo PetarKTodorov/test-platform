@@ -1,13 +1,9 @@
 ﻿namespace TestPlatform.Application.Areas.Administrator.Controllers
 {
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Mvc;
-
-    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
-    using TestPlatform.Database.Entities.Subjects;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -28,9 +24,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.subjectTagService
-                .FindAllAsQueryable<ListSubjectTagsVM>();
-
+            var dataQuery = this.subjectTagService.FindAllSubjectTagsAsQueryable<ListSubjectTagsVM>();
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -46,7 +40,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateSubjectTagBM model)
         {
-            await this.subjectTagService.CreateAsync<SubjectTag, CreateSubjectTagBM>(model, this.CurrentUserId);
+            await this.subjectTagService.CreateAsync<BaseBM, CreateSubjectTagBM>(model, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(List));
         }
@@ -71,7 +65,7 @@
         [HttpPost]
         public async Task<IActionResult> Update(UpdateSubjectTagBM model)
         {
-            await this.subjectTagService.UpdateAsync<SubjectTag, UpdateSubjectTagBM>(model.Id, model, this.CurrentUserId);
+            await this.subjectTagService.UpdateAsync<BaseBM, UpdateSubjectTagBM>(model.Id, model, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }

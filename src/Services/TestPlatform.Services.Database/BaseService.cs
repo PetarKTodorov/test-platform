@@ -103,10 +103,9 @@
             return colection;
         }
 
-        public virtual IQueryable<T> FindAllAsQueryable<T>()
+        public virtual IQueryable<TEntity> FindAllAsQueryable()
         {
-            var colection = this.BaseRepository.GetAllAsQueryable()
-                .To<T>();
+            var colection = this.BaseRepository.GetAllAsQueryable();
 
             return colection;
         }
