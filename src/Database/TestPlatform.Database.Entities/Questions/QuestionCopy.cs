@@ -26,8 +26,6 @@
         [Required]
         public bool HasRandomizedAnswers { get; set; }
 
-        public int CorrectAnswersCount { get; set; }
-
         public virtual ICollection<QuestionTestMap> Tests { get; set; }
 
         public virtual ICollection<QuestionAnswerMap> Answers { get; set; }
