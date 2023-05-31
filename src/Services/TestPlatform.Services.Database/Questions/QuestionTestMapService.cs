@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
-    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
 
     public class QuestionTestMapService : BaseService<QuestionTestMap>, IQuestionTestMapService
