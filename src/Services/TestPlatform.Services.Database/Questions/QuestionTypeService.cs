@@ -1,7 +1,5 @@
 ﻿namespace TestPlatform.Services.Database.Questions
 {
-    using System;
-    using System.Threading.Tasks;
     using AutoMapper;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;

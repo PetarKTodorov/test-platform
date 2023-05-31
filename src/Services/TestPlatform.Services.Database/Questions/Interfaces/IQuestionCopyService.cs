@@ -5,8 +5,8 @@
 
     public interface IQuestionCopyService : IBaseService<QuestionCopy>
     {
-        Task<IQueryable<T>> FindUserQuestionsAsQueryable<T>(Guid userId);
+        IQueryable<T> FindUserQuestionsAsQueryable<T>(Guid userId);
 
-        Task<IQueryable<T>> FindUserQuestionsForTestAsQueryable<T>(Guid userId, IEnumerable<Guid> subjectTags, IEnumerable<Guid> testQuestionsIds);
+        IQueryable<T> FindUserQuestionsForTestAsQueryable<T>(Guid userId, IEnumerable<Guid> subjectTags, IEnumerable<Guid> testQuestionsIds);
     }
 }

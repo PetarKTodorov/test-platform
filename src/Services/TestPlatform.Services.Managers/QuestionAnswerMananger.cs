@@ -1,7 +1,8 @@
 ﻿namespace TestPlatform.Services.Managers
 {
-    using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
+    using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -25,7 +26,7 @@
 
         public async Task<T> CreateQuestion<T>(CreateQuestionBM model, Guid currentUserId)
         {
-            var createdQuestion = await this.questionService.FindOrCreateAsync<Question, CreateQuestionBM>(model, model.Title, currentUserId);
+            var createdQuestion = await this.questionService.FindOrCreateAsync<BaseBM, CreateQuestionBM>(model, model.Title, currentUserId);
 
             var questionCopy = new CreateQuestionCopyBM()
             {
@@ -41,12 +42,13 @@
 
         public async Task<T> UpdateQuestionAsync<T>(UpdateQuestionBM model, Guid currentUserId)
         {
-            var question = await this.questionService.FindByIdAsync<Question>(model.OriginalQuestionId);
+            var question = await this.questionService.FindByIdAsync<QuestionVM>(model.OriginalQuestionId);
             if (question.Title != model.OriginalQuestionTitle)
             {
-                question = await this.questionService.FindOrCreateAsync<Question, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
+                question = await this.questionService.FindOrCreateAsync<QuestionVM, UpdateQuestionBM>(model, model.OriginalQuestionTitle, currentUserId);
             }
             model.OriginalQuestionId = question.Id;
+            model.CreatedBy = currentUserId;
 
             var questionCopy = await this.questionCopyService.UpdateAsync<T, UpdateQuestionBM>(model.Id, model, currentUserId);
 
@@ -59,22 +61,22 @@
 
             foreach (var answer in answers)
             {
-                var createdAnswer = await this.answerService.FindOrCreateAsync<Answer>(answer.AnswerContent, currentUserId);
+                var createdAnswer = await this.answerService.FindOrCreateAsync<BaseBM>(answer.AnswerContent, currentUserId);
 
-                var questionAnswerMap = new QuestionAnswerMap()
+                var questionAnswerMap = new CreateQuestionAnswerBM()
                 {
                     QuestionId = questionId,
                     AnswerId = createdAnswer.Id,
                     IsCorrect = answer.IsCorrect,
                 };
-                await this.questionAnswerMapService.CreateAsync<QuestionAnswerMap, QuestionAnswerMap>(questionAnswerMap, currentUserId);
+                await this.questionAnswerMapService.CreateAsync<BaseBM, CreateQuestionAnswerBM>(questionAnswerMap, currentUserId);
             }
         }
 
         public async Task DeleteQuestionWithAnswersAsync(Guid questionId)
         {
             await this.questionAnswerMapService.HardDeleteAnswers(questionId);
-            await this.questionCopyService.HardDeleteAsync<QuestionCopy>(questionId);
+            await this.questionCopyService.HardDeleteAsync<BaseBM>(questionId);
         }
     }
 }

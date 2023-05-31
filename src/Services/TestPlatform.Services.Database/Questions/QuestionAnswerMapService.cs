@@ -3,6 +3,7 @@
     using AutoMapper;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
 
     public class QuestionAnswerMapService : BaseService<QuestionAnswerMap>, IQuestionAnswerMapService
@@ -14,13 +15,13 @@
 
         public async Task HardDeleteAnswers(Guid questionId)
         {
-            var questionAnswers = this.FindAllAsQueryable<QuestionAnswerMap>()
+            var questionAnswers = this.FindAllAsQueryable<DeleteQuestionAnswerMap>()
                 .Where(qam => qam.QuestionId == questionId)
                 .ToList();
 
             foreach (var questionAnswerMap in questionAnswers)
             {
-                await this.HardDeleteAsync<QuestionAnswerMap>(questionAnswerMap.Id);
+                await this.HardDeleteAsync<DeleteQuestionAnswerMap>(questionAnswerMap.Id);
             }
         }
     }

@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Mapper;
 
@@ -17,7 +18,7 @@
 
         public async Task<T> FindQuestionByTitleAsync<T>(string title)
         {
-            var question = await this.FindAllAsQueryable<Question>()
+            var question = await this.FindAllAsQueryable<QuestionBM>()
                 .Where(q => q.Title == title)
                 .To<T>()
                 .FirstOrDefaultAsync();

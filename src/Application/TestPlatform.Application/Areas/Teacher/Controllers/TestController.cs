@@ -248,8 +248,8 @@
                 return this.NotFound();
             }
 
-            this.ViewData["UserQuestions"] = (await this.questionCopyService
-                .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, test.SubjectTagsIds, test.QuestionsIds))
+            this.ViewData["UserQuestions"] = this.questionCopyService
+                .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, test.SubjectTagsIds, test.QuestionsIds)
                 .ToList();
 
             return this.View(test);
@@ -260,8 +260,8 @@
         {
             if (!this.ValidateTestQuestion(model.QuestionPoints))
             {
-                this.ViewData["UserQuestions"] = (await this.questionCopyService
-                    .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, model.SubjectTagsIds, model.QuestionsIds))
+                this.ViewData["UserQuestions"] = this.questionCopyService
+                    .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, model.SubjectTagsIds, model.QuestionsIds)
                     .ToList();
 
                 return this.View(model);
