@@ -186,15 +186,14 @@
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-danger" 
+                                <form method="post" 
                                     asp-area="@ApplicationAreas.TEACHER" 
                                     asp-controller="Test" 
-                                    asp-action="RemoveQuestion" 
+                                    asp-action="RemoveQuestion"
                                     asp-route-questionId="@question.QuestionId"
-                                    asp-route-testId="@Model.Id"
-                                >
-                                    Remove
-                                </a>
+                                    asp-route-testId="@Model.Id">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
                             </div>
                         </div>
                     </div>

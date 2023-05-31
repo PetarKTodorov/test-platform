@@ -11,6 +11,7 @@
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
@@ -279,7 +280,7 @@
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveQuestion(Guid questionId, Guid testId)
         {
             var test = await this.testService.FindByIdAsync<BaseBM>(testId);
