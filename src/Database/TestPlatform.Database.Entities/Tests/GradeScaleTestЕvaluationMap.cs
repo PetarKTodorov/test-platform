@@ -8,6 +8,6 @@
         public virtual GradeScale GradeScale { get; set; }
 
         public Guid TestЕvaluationId { get; set; }
-        public virtual TestЕvaluation TestЕvaluation { get; set; }
+        public virtual TestEvaluation TestЕvaluation { get; set; }
     }
 }

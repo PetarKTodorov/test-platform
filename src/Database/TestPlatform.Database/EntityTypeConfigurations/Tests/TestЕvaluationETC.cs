@@ -5,14 +5,14 @@
 
     using TestPlatform.Database.Entities.Tests;
 
-    internal class TestЕvaluationETC : IEntityTypeConfiguration<TestЕvaluation>
+    internal class TestЕvaluationETC : IEntityTypeConfiguration<TestEvaluation>
     {
-        public void Configure(EntityTypeBuilder<TestЕvaluation> builder)
+        public void Configure(EntityTypeBuilder<TestEvaluation> builder)
         {
             builder
                 .HasOne(te => te.Test)
                 .WithOne(t => t.Еvaluation)
-                .HasForeignKey<TestЕvaluation>(te => te.TestId);
+                .HasForeignKey<TestEvaluation>(te => te.TestId);
         }
     }
 }

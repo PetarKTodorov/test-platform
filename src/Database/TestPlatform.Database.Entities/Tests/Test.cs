@@ -36,7 +36,7 @@
         public virtual Status Status { get; set; }
 
         public Guid? ЕvaluationId { get; set; }
-        public virtual TestЕvaluation Еvaluation { get; set; }
+        public virtual TestEvaluation Еvaluation { get; set; }
 
         [Required]
         public bool HasRandomizeQuestions { get; set; }

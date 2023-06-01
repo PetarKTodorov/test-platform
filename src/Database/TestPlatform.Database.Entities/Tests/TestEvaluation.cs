@@ -2,9 +2,9 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class TestЕvaluation : BaseEntity
+    public class TestEvaluation : BaseEntity
     {
-        public TestЕvaluation()
+        public TestEvaluation()
         {
             this.GradeScales = new HashSet<GradeScaleTestЕvaluationMap>();
         }

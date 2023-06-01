@@ -55,7 +55,7 @@
 
         public DbSet<TestUserMap> TestsUsersMap { get; set; }
 
-        public DbSet<TestЕvaluation> TestЕvaluations { get; set; }
+        public DbSet<TestEvaluation> TestЕvaluations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
