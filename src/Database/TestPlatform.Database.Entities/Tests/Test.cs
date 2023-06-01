@@ -41,10 +41,6 @@
         [Required]
         public bool HasRandomizeQuestions { get; set; }
 
-        // TODO: calculate property
-        [NotMapped]
-        public double TotalPoints { get; set; }
-
         public virtual ICollection<TestApprovalMap> Approvers { get; set; }
 
         public virtual ICollection<TestSubjectTagMap> SubjectTags { get; set; }
