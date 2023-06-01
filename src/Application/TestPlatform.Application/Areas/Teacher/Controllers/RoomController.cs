@@ -3,14 +3,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
-    using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.Database.Entities.Rooms;
-    using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Rooms;
-    using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Rooms;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -39,9 +35,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.roomService
-                .FindAllAsQueryable<ListRoomsVM>()
-                .Where(r => r.CreatedBy == this.CurrentUserId);
+            var dataQuery = this.roomService.FindAllRoomsAsQueryable<ListRoomsVM>(this.CurrentUserId);
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
@@ -51,7 +45,7 @@
         [HttpGet]
         public async Task<IActionResult> Create(Guid testId)
         {
-            var test = await this.testService.FindByIdAsync<Test>(testId);
+            var test = await this.testService.FindByIdAsync<TestTitleVM>(testId);
 
             if (test == null)
             {
@@ -79,7 +73,7 @@
                 return this.View(model);
             }
 
-            var room = await this.roomService.CreateAsync<Room, CreateRoomBM>(model, this.CurrentUserId);
+            var room = await this.roomService.CreateAsync<BaseBM, CreateRoomBM>(model, this.CurrentUserId);
 
             await this.roomService.UpdateParticipantsAsync(room.Id, model.ParticipantsIds, this.CurrentUserId);
 
@@ -137,7 +131,7 @@
                 return this.View(model);
             }
 
-            await this.roomService.UpdateAsync<Room, UpdateRoomBM>(model.Id, model, this.CurrentUserId);
+            await this.roomService.UpdateAsync<BaseBM, UpdateRoomBM>(model.Id, model, this.CurrentUserId);
             await this.roomService.UpdateParticipantsAsync(model.Id, model.ParticipantsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });

@@ -9,6 +9,7 @@
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.DTOs.BindingModels.Rooms;
     using TestPlatform.Services.Database.Rooms.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class RoomService : BaseService<Room>, IRoomService
     {
@@ -19,6 +20,13 @@
             : base(baseRepository, mapper)
         {
             this.roomParticipantMapService = roomParticipantMapService;
+        }
+
+        public IQueryable<T> FindAllRoomsAsQueryable<T>(Guid userId)
+        {
+            return this.FindAllAsQueryable()
+                .Where(r => r.CreatedBy == userId)
+                .To<T>();
         }
 
         public async Task UpdateParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds, Guid currentUserId)
