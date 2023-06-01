@@ -7,6 +7,10 @@
     {
         IQueryable<T> FindAllRoomsAsQueryable<T>(Guid userId);
 
-        public Task UpdateParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds, Guid currentUserId);
+        IQueryable<T> FindAllRoomsByUserIdAsQueryable<T>(Guid userId);
+
+        Task UpdateParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds, Guid currentUserId);
+
+        Task HardDeleteParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds);
     }
 }

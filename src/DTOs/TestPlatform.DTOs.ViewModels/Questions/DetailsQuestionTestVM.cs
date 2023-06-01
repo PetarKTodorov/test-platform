@@ -19,6 +19,8 @@
 
         public int Points { get; set; }
 
-        public IEnumerable<DetailsQuestionAnswerVM> QuestionAnswers { get; set; }
+        public IList<Guid> SelectedAnswerIds { get; set; }
+
+        public IList<DetailsQuestionAnswerVM> QuestionAnswers { get; set; }
     }
 }

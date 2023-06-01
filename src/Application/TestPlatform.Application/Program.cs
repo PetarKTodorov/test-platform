@@ -160,6 +160,8 @@
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
+            services.AddTransient<ITestUserMapService, TestUserMapService>();
+            
             services.AddTransient<IGradeScaleService, GradeScaleService>();
             services.AddTransient<IGradeScaleTestEvaluationMapService, GradeScaleTestEvaluationMapService>();
             services.AddTransient<ITestEvaluationService, TestEvaluationService>();

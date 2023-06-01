@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	
   <ItemGroup>
-    <Folder Include="Areas\Student\Views\" />
     <Folder Include="Webpack\src\js\answers\" />
   </ItemGroup>
 	
