@@ -89,17 +89,6 @@
             return entityTypes;
         }
 
-        private static IEnumerable<TypesMap> GetEntityTypesToBaseBM(IEnumerable<Type> types)
-        {
-            Type baseBM = types.Where(t => t.Name == "BaseBM")
-                .First();
-
-            IEnumerable<TypesMap> entityTypes = GetTypesWithBaseTypeBaseEntity(types)
-                .Select(t => new TypesMap() { Source = t, Destination = baseBM });
-
-            return entityTypes;
-        }
-
         private static IEnumerable<Type> GetTypesWithBaseTypeBaseEntity(IEnumerable<Type> types)
         {
             IEnumerable<Type> entityTypes = types.Where(t =>
