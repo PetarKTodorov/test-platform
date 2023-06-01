@@ -13,16 +13,16 @@
 
         private readonly IGradeScaleService gradeScaleService;
         private readonly ITestEvaluationService testEvaluationService;
-        private readonly IGradeScaleTestЕvaluationMapService gradeScaleTestЕvaluationMapService;
+        private readonly IGradeScaleTestEvaluationMapService gradeScaleTestEvaluationMapService;
 
         public TestGradeScaleManager(
             IGradeScaleService gradeScaleService,
             ITestEvaluationService testEvaluationService,
-            IGradeScaleTestЕvaluationMapService gradeScaleTestЕvaluationMapService)
+            IGradeScaleTestEvaluationMapService gradeScaleTestEvaluationMapService)
         {
             this.gradeScaleService = gradeScaleService;
             this.testEvaluationService = testEvaluationService;
-            this.gradeScaleTestЕvaluationMapService = gradeScaleTestЕvaluationMapService;
+            this.gradeScaleTestEvaluationMapService = gradeScaleTestEvaluationMapService;
         }
 
         public async Task CreateGradeScaleForTestAsync(Guid testId, int totalPoints, Guid userId)
@@ -38,7 +38,7 @@
 
             foreach (var gradeScaleTestEvaluation in testWithGradeScales.GradeScales)
             {
-                await this.gradeScaleTestЕvaluationMapService.HardDeleteAsync<BaseBM>(gradeScaleTestEvaluation.Id);
+                await this.gradeScaleTestEvaluationMapService.HardDeleteAsync<BaseBM>(gradeScaleTestEvaluation.Id);
             }
 
             foreach (var gradeScaleTestEvaluation in testWithGradeScales.GradeScales)
@@ -91,9 +91,9 @@
             var gradeScaleTestEvaluation = new CreateGradeScaleTestEvaluationBM()
             {
                 GradeScaleId = gradeScaleId,
-                TestЕvaluationId = testEvaluationId,
+                TestEvaluationId = testEvaluationId,
             };
-            await this.gradeScaleTestЕvaluationMapService
+            await this.gradeScaleTestEvaluationMapService
                 .CreateAsync<BaseBM, CreateGradeScaleTestEvaluationBM>(gradeScaleTestEvaluation, userId);
         }
 

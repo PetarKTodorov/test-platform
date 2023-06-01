@@ -145,7 +145,7 @@ namespace TestPlatform.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TestЕvaluations",
+                name: "TestEvaluations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -161,7 +161,7 @@ namespace TestPlatform.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestЕvaluations", x => x.Id);
+                    table.PrimaryKey("PK_TestEvaluations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,12 +230,12 @@ namespace TestPlatform.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GradeScalesTestЕvaluationsMap",
+                name: "GradeScalesTestEvaluationsMap",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GradeScaleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TestЕvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TestEvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -246,18 +246,18 @@ namespace TestPlatform.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GradeScalesTestЕvaluationsMap", x => x.Id);
-                    table.UniqueConstraint("AK_GradeScalesTestЕvaluationsMap_GradeScaleId_TestЕvaluationId", x => new { x.GradeScaleId, x.TestЕvaluationId });
+                    table.PrimaryKey("PK_GradeScalesTestEvaluationsMap", x => x.Id);
+                    table.UniqueConstraint("AK_GradeScalesTestEvaluationsMap_GradeScaleId_TestEvaluationId", x => new { x.GradeScaleId, x.TestEvaluationId });
                     table.ForeignKey(
-                        name: "FK_GradeScalesTestЕvaluationsMap_GradeScales_GradeScaleId",
+                        name: "FK_GradeScalesTestEvaluationsMap_GradeScales_GradeScaleId",
                         column: x => x.GradeScaleId,
                         principalTable: "GradeScales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GradeScalesTestЕvaluationsMap_TestЕvaluations_TestЕvaluationId",
-                        column: x => x.TestЕvaluationId,
-                        principalTable: "TestЕvaluations",
+                        name: "FK_GradeScalesTestEvaluationsMap_TestEvaluations_TestEvaluationId",
+                        column: x => x.TestEvaluationId,
+                        principalTable: "TestEvaluations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -271,7 +271,7 @@ namespace TestPlatform.Database.Migrations
                     Instructions = table.Column<string>(type: "nvarchar(max)", maxLength: 65536, nullable: true),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ЕvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     HasRandomizeQuestions = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -291,9 +291,9 @@ namespace TestPlatform.Database.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tests_TestЕvaluations_ЕvaluationId",
-                        column: x => x.ЕvaluationId,
-                        principalTable: "TestЕvaluations",
+                        name: "FK_Tests_TestEvaluations_EvaluationId",
+                        column: x => x.EvaluationId,
+                        principalTable: "TestEvaluations",
                         principalColumn: "Id");
                 });
 
@@ -590,9 +590,9 @@ namespace TestPlatform.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GradeScalesTestЕvaluationsMap_TestЕvaluationId",
-                table: "GradeScalesTestЕvaluationsMap",
-                column: "TestЕvaluationId");
+                name: "IX_GradeScalesTestEvaluationsMap_TestEvaluationId",
+                table: "GradeScalesTestEvaluationsMap",
+                column: "TestEvaluationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionCopies_OriginalQuestionId",
@@ -654,11 +654,11 @@ namespace TestPlatform.Database.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_ЕvaluationId",
+                name: "IX_Tests_EvaluationId",
                 table: "Tests",
-                column: "ЕvaluationId",
+                column: "EvaluationId",
                 unique: true,
-                filter: "[ЕvaluationId] IS NOT NULL");
+                filter: "[EvaluationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tests_StatusId",
@@ -700,7 +700,7 @@ namespace TestPlatform.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GradeScalesTestЕvaluationsMap");
+                name: "GradeScalesTestEvaluationsMap");
 
             migrationBuilder.DropTable(
                 name: "QuestionsAnswersMap");
@@ -760,7 +760,7 @@ namespace TestPlatform.Database.Migrations
                 name: "Statuses");
 
             migrationBuilder.DropTable(
-                name: "TestЕvaluations");
+                name: "TestEvaluations");
         }
     }
 }

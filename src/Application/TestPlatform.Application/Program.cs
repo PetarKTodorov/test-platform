@@ -161,7 +161,7 @@
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
             services.AddTransient<IGradeScaleService, GradeScaleService>();
-            services.AddTransient<IGradeScaleTestЕvaluationMapService, GradeScaleTestЕvaluationMapService>();
+            services.AddTransient<IGradeScaleTestEvaluationMapService, GradeScaleTestEvaluationMapService>();
             services.AddTransient<ITestEvaluationService, TestEvaluationService>();
 
             services.AddTransient<IRoomService, RoomService>();

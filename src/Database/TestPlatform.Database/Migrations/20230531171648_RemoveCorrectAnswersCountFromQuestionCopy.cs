@@ -9,11 +9,11 @@ namespace TestPlatform.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Tests_TestЕvaluations_ЕvaluationId",
+                name: "FK_Tests_TestEvaluations_EvaluationId",
                 table: "Tests");
 
             migrationBuilder.DropIndex(
-                name: "IX_Tests_ЕvaluationId",
+                name: "IX_Tests_EvaluationId",
                 table: "Tests");
 
             migrationBuilder.DropColumn(
@@ -21,15 +21,15 @@ namespace TestPlatform.Database.Migrations
                 table: "QuestionCopies");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestЕvaluations_TestId",
-                table: "TestЕvaluations",
+                name: "IX_TestEvaluations_TestId",
+                table: "TestEvaluations",
                 column: "TestId",
                 unique: true,
                 filter: "[TestId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_TestЕvaluations_Tests_TestId",
-                table: "TestЕvaluations",
+                name: "FK_TestEvaluations_Tests_TestId",
+                table: "TestEvaluations",
                 column: "TestId",
                 principalTable: "Tests",
                 principalColumn: "Id");
@@ -38,12 +38,12 @@ namespace TestPlatform.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_TestЕvaluations_Tests_TestId",
-                table: "TestЕvaluations");
+                name: "FK_TestEvaluations_Tests_TestId",
+                table: "TestEvaluations");
 
             migrationBuilder.DropIndex(
-                name: "IX_TestЕvaluations_TestId",
-                table: "TestЕvaluations");
+                name: "IX_TestEvaluations_TestId",
+                table: "TestEvaluations");
 
             migrationBuilder.AddColumn<int>(
                 name: "CorrectAnswersCount",
@@ -53,17 +53,17 @@ namespace TestPlatform.Database.Migrations
                 defaultValue: 0);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_ЕvaluationId",
+                name: "IX_Tests_EvaluationId",
                 table: "Tests",
-                column: "ЕvaluationId",
+                column: "EvaluationId",
                 unique: true,
-                filter: "[ЕvaluationId] IS NOT NULL");
+                filter: "[EvaluationId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Tests_TestЕvaluations_ЕvaluationId",
+                name: "FK_Tests_TestEvaluations_EvaluationId",
                 table: "Tests",
-                column: "ЕvaluationId",
-                principalTable: "TestЕvaluations",
+                column: "EvaluationId",
+                principalTable: "TestEvaluations",
                 principalColumn: "Id");
         }
     }

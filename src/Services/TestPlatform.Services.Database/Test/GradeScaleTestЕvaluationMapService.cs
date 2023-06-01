@@ -5,9 +5,9 @@
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
 
-    public class GradeScaleTestЕvaluationMapService : BaseService<GradeScaleTestЕvaluationMap>, IGradeScaleTestЕvaluationMapService
+    public class GradeScaleTestEvaluationMapService : BaseService<GradeScaleTestEvaluationMap>, IGradeScaleTestEvaluationMapService
     {
-        public GradeScaleTestЕvaluationMapService(IBaseRepository<GradeScaleTestЕvaluationMap> baseRepository, IMapper mapper)
+        public GradeScaleTestEvaluationMapService(IBaseRepository<GradeScaleTestEvaluationMap> baseRepository, IMapper mapper)
             : base(baseRepository, mapper)
         {
 

@@ -7,7 +7,7 @@
     {
         public GradeScale()
         {
-            this.Еvaluations = new HashSet<GradeScaleTestЕvaluationMap>();
+            this.Evaluations = new HashSet<GradeScaleTestEvaluationMap>();
         }
 
         [Required]
@@ -22,6 +22,6 @@
         [StringLength(maximumLength: Validations.TWO_POWER_EIGHT, MinimumLength = Validations.ONE)]
         public string Grade { get; set; }
 
-        public virtual ICollection<GradeScaleTestЕvaluationMap> Еvaluations { get; set; }
+        public virtual ICollection<GradeScaleTestEvaluationMap> Evaluations { get; set; }
     }
 }

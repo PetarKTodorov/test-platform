@@ -3,7 +3,7 @@
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Database.Interfaces;
 
-    public interface IGradeScaleTestЕvaluationMapService : IBaseService<GradeScaleTestЕvaluationMap>
+    public interface IGradeScaleTestEvaluationMapService : IBaseService<GradeScaleTestEvaluationMap>
     {
     }
 }

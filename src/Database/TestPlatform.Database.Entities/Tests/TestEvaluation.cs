@@ -6,7 +6,7 @@
     {
         public TestEvaluation()
         {
-            this.GradeScales = new HashSet<GradeScaleTestЕvaluationMap>();
+            this.GradeScales = new HashSet<GradeScaleTestEvaluationMap>();
         }
 
         // If is true and letter add plus (+) or minus(-) B+ if is true and number 3.45 
@@ -16,6 +16,6 @@
         public Guid? TestId { get; set; }
         public virtual Test Test { get; set; }
 
-        public virtual ICollection<GradeScaleTestЕvaluationMap> GradeScales { get; set; }
+        public virtual ICollection<GradeScaleTestEvaluationMap> GradeScales { get; set; }
     }
 }
