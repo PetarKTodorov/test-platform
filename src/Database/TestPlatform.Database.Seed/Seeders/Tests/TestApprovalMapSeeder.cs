@@ -7,8 +7,8 @@
     using Microsoft.Extensions.Logging;
 
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Database.Seed.BindingModels.Tests;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.Services.Database.Test.Interfaces;
 
     internal class TestApprovalMapSeeder : BaseSeeder
@@ -27,7 +27,7 @@
             foreach (var dto in dtoObjects)
             {
                 var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
-                await testApprovalMapService.CreateAsync<TestApprovalMap, SeedTestApprovalMapBM>(dto, administratorId);
+                await testApprovalMapService.CreateAsync<BaseBM, SeedTestApprovalMapBM>(dto, administratorId);
             }
         }
     }
