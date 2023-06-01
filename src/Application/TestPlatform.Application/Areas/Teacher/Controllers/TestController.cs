@@ -25,6 +25,7 @@
         private readonly ITestApprovalMapService testApprovalMapService;
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTestMapService questionTestMapService;
+        private readonly ITestGradeScaleManager testGradeScaleManager;
 
         public TestController(ITestService testService,
             IStatusService statusService,
@@ -32,7 +33,8 @@
             ISearchPageableMananager searchPageableMananager,
             ITestApprovalMapService testApprovalMapService,
             IQuestionCopyService questionCopyService,
-            IQuestionTestMapService questionTestMapService)
+            IQuestionTestMapService questionTestMapService,
+            ITestGradeScaleManager testGradeScaleManager)
         {
             this.testService = testService;
             this.statusService = statusService;
@@ -41,6 +43,7 @@
             this.testApprovalMapService = testApprovalMapService;
             this.questionCopyService = questionCopyService;
             this.questionTestMapService = questionTestMapService;
+            this.testGradeScaleManager = testGradeScaleManager;
         }
 
         [HttpGet]
@@ -271,7 +274,7 @@
             }
             else if (model.StatusId == StatusType.Pending.GetUid())
             {
-                // TODO: Generate grade scale based on the total points
+                await this.testGradeScaleManager.CreateGradeScaleForTestAsync(test.Id, test.TotalPoints, this.CurrentUserId);
             }
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });

@@ -15,10 +15,13 @@
 
         public IEnumerable<Guid> TestApprovalsIds { get; set; }
 
+        public int TotalPoints { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Test, ChangeTestStatusBM>()
-                .ForMember(dest => dest.TestApprovalsIds, mo => mo.MapFrom(src => src.Approvers.Select(a => a.Id)));
+                .ForMember(dest => dest.TestApprovalsIds, mo => mo.MapFrom(src => src.Approvers.Select(a => a.Id)))
+                .ForMember(dest => dest.TotalPoints, mo => mo.MapFrom(src => src.Questions.Sum(a => a.Points)));
         }
     }
 }
