@@ -5,5 +5,6 @@
 
     public interface ITestEvaluationService : IBaseService<TestEvaluation>
     {
+        Task<T> FindTestEvaluationByTestIdAsync<T>(Guid testId);
     }
 }

@@ -269,6 +269,7 @@
                     await this.testApprovalMapService.HardDeleteAsync<BaseBM>(testApprovalId);
                 }
 
+                await this.testGradeScaleManager.DeleteGradeScalesAsync(test.Id, this.CurrentUserId);
                 // TDOD: Delete the grade scale 
                 // TODO: Delete the rooms associated with this test
             }

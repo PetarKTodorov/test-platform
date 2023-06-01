@@ -32,6 +32,23 @@
             await this.CreateGradeScalesAsync(totalPoints, userId, createdTestEvaluation.Id);
         }
 
+        public async Task DeleteGradeScalesAsync(Guid testId, Guid userId)
+        {
+            var testWithGradeScales = await this.testEvaluationService.FindTestEvaluationByTestIdAsync<TestEvaluationGradeScaleVM>(testId);
+
+            foreach (var gradeScaleTestEvaluation in testWithGradeScales.GradeScales)
+            {
+                await this.gradeScaleTestЕvaluationMapService.HardDeleteAsync<BaseBM>(gradeScaleTestEvaluation.Id);
+            }
+
+            foreach (var gradeScaleTestEvaluation in testWithGradeScales.GradeScales)
+            {
+                await this.gradeScaleService.HardDeleteAsync<BaseBM>(gradeScaleTestEvaluation.GradeScaleId);
+            }
+
+            await this.testEvaluationService.HardDeleteAsync<BaseBM>(testWithGradeScales.Id);
+        }
+
         private async Task CreateGradeScalesAsync(int totalPoints, Guid userId, Guid testEvaluationId)
         {
             var gradePointsStep = totalPoints / COUNT_OF_GRADES;
