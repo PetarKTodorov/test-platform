@@ -5,8 +5,10 @@
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
+    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Rooms;
+    using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Rooms;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.Services.Database.Authorization.Interfaces;
@@ -135,6 +137,56 @@
             await this.roomService.UpdateParticipantsAsync(model.Id, model.ParticipantsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var room = await this.roomService.FindByIdAsync<UpdateRoomBM>(id);
+
+            if (room.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+
+            if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
+            {
+                this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
+            }
+
+            return this.View(room);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UpdateRoomBM model)
+        {
+            if (model.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            var room = await this.roomService.FindByIdAsync<UpdateRoomBM>(model.Id);
+            if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
+            {
+                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
+
+                return this.View(room);
+            }
+
+            if (this.ModelState.IsValid == false)
+            {
+                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+
+                return this.View(model);
+            }
+
+            await this.roomService.HardDeleteParticipantsAsync(room.Id, model.ParticipantsIds);
+            await this.roomService.HardDeleteAsync<BaseBM>(room.Id);
+
+            return this.RedirectToAction(nameof(List));
         }
     }
 }

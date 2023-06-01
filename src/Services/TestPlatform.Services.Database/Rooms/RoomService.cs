@@ -56,5 +56,18 @@
                 await this.roomParticipantMapService.CreateAsync<RoomParticipantMap, CreateRoomParticipantMapBM>(newRoomParticipantMap, currentUserId);
             }
         }
+
+        public async Task HardDeleteParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds)
+        {
+            var currentParticipants = await this.roomParticipantMapService.FindAllByRoomIdAsync<RoomParticipantMap>(roomId);
+
+            foreach (var participantId in participantIds)
+            {
+                var participantToRemove = currentParticipants
+                    .SingleOrDefault(x => x.UserId == participantId && x.RoomId == roomId);
+
+                await this.roomParticipantMapService.HardDeleteAsync<RoomParticipantMap>(participantToRemove.Id);
+            }
+        }
     }
 }
