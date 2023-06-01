@@ -16,7 +16,7 @@
         {
             var local = this.DbSet
                 .Local
-                .FirstOrDefault(entry => entry.AnswerId.Equals(entity.AnswerId) 
+                .FirstOrDefault(entry => entry.AnswerId.Equals(entity.AnswerId)
                     && entry.QuestionId.Equals(entity.QuestionId));
             if (local != null)
             {

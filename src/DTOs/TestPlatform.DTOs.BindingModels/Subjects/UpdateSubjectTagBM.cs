@@ -1,6 +1,5 @@
 ﻿namespace TestPlatform.DTOs.BindingModels.Subjects
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Subjects;

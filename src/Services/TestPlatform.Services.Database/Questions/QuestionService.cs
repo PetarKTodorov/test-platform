@@ -5,7 +5,6 @@
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
-    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Mapper;
 

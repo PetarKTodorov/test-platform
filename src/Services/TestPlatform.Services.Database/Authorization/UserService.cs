@@ -88,7 +88,7 @@
             return this.FindAllAsQueryable()
                 .To<T>();
         }
-        
+
         public async Task<T> FindAllByRoleIdAsync<T>(Guid roleId)
         {
             var entities = await this.BaseRepository

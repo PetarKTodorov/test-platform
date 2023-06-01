@@ -1,7 +1,6 @@
 ﻿namespace TestPlatform.DTOs.ViewModels.Rooms
 {
     using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Services.Mapper.Interfaces;
 

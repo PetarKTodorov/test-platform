@@ -29,12 +29,12 @@
 
                     new SubjectTagSeeder(serviceProvider, logger, Constants.SUBJECT_TAGS_JSON_FILE_NAME),
                     new UserSubjectTagMapSeeder(serviceProvider, logger, Constants.USER_SUBJECT_TAG_MAP_JSON_FILE_NAME),
-                    
+
                     new StatusSeeder(serviceProvider, logger, Constants.STATUS_JSON_FILE_NAME),
                     new TestSeeder(serviceProvider, logger, Constants.TEST_JSON_FILE_NAME),
                     new TestSubjectTagMapSeeder(serviceProvider, logger, Constants.TEST_SUBJECT_TAG_MAP_JSON_FILE_NAME),
                     new TestApprovalMapSeeder(serviceProvider, logger, Constants.TEST_APPROVAL_MAP_FILE_NAME),
-                    
+
                     new QuestionTypeSeeder(serviceProvider, logger, Constants.QUESTION_TYPE_JSON_FILE_NAME),
                     new AnswersSeeder(serviceProvider, logger, Constants.ANSWERS_JSON_FILE_NAME),
                     new QuestionsSeeder(serviceProvider, logger, Constants.QUESTIONS_JSON_FILE_NAME),
