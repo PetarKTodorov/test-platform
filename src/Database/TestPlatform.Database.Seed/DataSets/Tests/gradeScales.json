@@ -1,0 +1,37 @@
+[
+    {
+        "Id": "63DB3ABC-4B7B-4AD4-87B1-F3F9DBE0713B",
+        "LowerBound": 0,
+        "UpperBound": 5,
+        "Grade": "2",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "C3C3E3C0-94F2-4F0F-A28E-DAA1BBE58E35",
+        "LowerBound": 6,
+        "UpperBound": 11,
+        "Grade": "3",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "49C7C839-7C5E-4CC2-824C-FA87868115B8",
+        "LowerBound": 12,
+        "UpperBound": 17,
+        "Grade": "4",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "A905077F-7C7F-4AA2-8BB3-57A0143CD3D5",
+        "LowerBound": 18,
+        "UpperBound": 23,
+        "Grade": "5",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "81BF6778-69B8-4378-82A9-ECAEEEBFA547",
+        "LowerBound": 24,
+        "UpperBound": 30,
+        "Grade": "6",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    }
+]

@@ -31,5 +31,11 @@
         public const string QUESTION_ANSWERS_MAP_JSON_FILE_NAME = "questionsAnswersMap";
 
         public const string QUESTION_TEST_MAP_JSON_FILE_NAME = "questionsTestsMap";
+
+        public const string TEST_EVALUATION_JSON_FILE_NAME = "testEvaluation";
+
+        public const string GRADE_SCALE_JSON_FILE_NAME = "gradeScales";
+
+        public const string GRADE_SCALE_TEST_EVALUATION_MAP_JSON_FILE_NAME = "gradeScalesTestEvaluationMap";
     }
 }
