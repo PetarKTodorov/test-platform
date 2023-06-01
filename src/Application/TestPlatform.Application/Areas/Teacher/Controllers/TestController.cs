@@ -1,6 +1,5 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
-    using System.Transactions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -8,9 +7,6 @@
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Authorization;
-    using TestPlatform.Database.Entities.Questions;
-    using TestPlatform.Database.Entities.Tests;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
@@ -19,7 +15,6 @@
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
-    using TestPlatform.Services.Mapper;
 
     public class TestController : BaseTeacherController
     {
@@ -85,7 +80,7 @@
                 return this.View(model);
             }
 
-            var privateStatus = await this.statusService.FindByIdAsync<Status>(StatusType.Private.GetUid());
+            var privateStatus = await this.statusService.FindByIdAsync<BaseBM>(StatusType.Private.GetUid());
 
             if (privateStatus == null)
             {
@@ -96,7 +91,7 @@
 
             model.StatusId = privateStatus.Id;
 
-            var test = await this.testService.CreateAsync<Test, CreateTestBM>(model, this.CurrentUserId);
+            var test = await this.testService.CreateAsync<BaseBM, CreateTestBM>(model, this.CurrentUserId);
 
             await this.testService.UpdateSubjectTagsAsync(test.Id, model.SubjectTagsIds, this.CurrentUserId);
 
@@ -141,7 +136,7 @@
                 return this.NotFound();
             }
 
-            await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, this.CurrentUserId);
+            await this.testService.UpdateAsync<BaseBM, UpdateTestBM>(model.Id, model, this.CurrentUserId);
             await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
@@ -185,7 +180,7 @@
         [HttpGet]
         public async Task<IActionResult> Restore(Guid id)
         {
-            var test = await this.testService.RestoryAsync<Test>(id, this.CurrentUserId);
+            var test = await this.testService.RestoryAsync<BaseBM>(id, this.CurrentUserId);
 
             if (test.CreatedBy != this.CurrentUserId)
             {
@@ -198,21 +193,20 @@
         [HttpGet]
         public async Task<IActionResult> Approve(Guid id)
         {
-            var newTestApprovalMap = new TestApprovalMap()
+            var newTestApprovalMap = new CreateTestApprovalBM()
             {
                 TestId = id,
                 UserId = this.CurrentUserId,
             };
 
-            await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, this.CurrentUserId);
+            await this.testApprovalMapService.CreateAsync<BaseBM, CreateTestApprovalBM>(newTestApprovalMap, this.CurrentUserId);
 
-            var test = await this.testService.FindByIdAsync<Test>(id);
-
-            if (test.Approvers.Count == GlobalConstants.DEFAULT_TEST_APPROVELS_COUNT)
+            var test = await this.testService.FindByIdAsync<UpdateApproveTestBM>(id);
+            if (test.ApproversCount == GlobalConstants.DEFAULT_TEST_APPROVELS_COUNT)
             {
                 test.IsApproved = true;
                 test.StatusId = StatusType.Ready.GetUid();
-                await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
+                await this.testService.UpdateAsync<BaseBM, UpdateApproveTestBM>(test.Id, test, this.CurrentUserId);
             }
 
             return this.RedirectToAction(nameof(Details), new { id = id });
@@ -221,7 +215,7 @@
         [HttpPost]
         public async Task<IActionResult> MakePublic(Guid id)
         {
-            var test = await this.testService.FindByIdAsync<Test>(id);
+            var test = await this.testService.FindByIdAsync<MakePublicTestBM>(id);
 
             if (test.CreatedBy != this.CurrentUserId)
             {
@@ -229,7 +223,7 @@
             }
 
             test.StatusId = StatusType.Public.GetUid();
-            await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
+            await this.testService.UpdateAsync<BaseBM, MakePublicTestBM>(test.Id, test, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
         }
@@ -275,7 +269,7 @@
                 TestId = model.Id,
                 Points = model.QuestionPoints,
             };
-            await this.questionTestMapService.CreateAsync<QuestionTestMap, CreateTestQuestionMapBM>(createModel, this.CurrentUserId);
+            await this.questionTestMapService.CreateAsync<BaseBM, CreateTestQuestionMapBM>(createModel, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
         }

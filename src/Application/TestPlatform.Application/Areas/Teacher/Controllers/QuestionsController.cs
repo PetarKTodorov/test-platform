@@ -1,14 +1,11 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
-    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Questions;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
