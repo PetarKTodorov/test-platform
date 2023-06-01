@@ -215,7 +215,7 @@
         [HttpPost]
         public async Task<IActionResult> MakePublic(Guid id)
         {
-            var test = await this.testService.FindByIdAsync<MakePublicTestBM>(id);
+            var test = await this.testService.FindByIdAsync<ChangeTestStatusBM>(id);
 
             if (test.CreatedBy != this.CurrentUserId)
             {
@@ -223,7 +223,28 @@
             }
 
             test.StatusId = StatusType.Public.GetUid();
-            await this.testService.UpdateAsync<BaseBM, MakePublicTestBM>(test.Id, test, this.CurrentUserId);
+            await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(test.Id, test, this.CurrentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakePending(Guid id)
+        {
+            var test = await this.testService.FindByIdAsync<ChangeTestStatusBM>(id);
+
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            if (test.StatusId != StatusType.Private.GetUid())
+            {
+                return this.NotFound();
+            }
+
+            test.StatusId = StatusType.Pending.GetUid();
+            await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(test.Id, test, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
         }
