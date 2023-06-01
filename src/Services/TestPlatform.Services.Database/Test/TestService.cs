@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Subjects;
@@ -69,6 +71,55 @@
                 .Where(lt => lt.CreatedBy != userId)
                 .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
                 .To<T>();
+        }
+
+        public List<SelectListItem> GetTestNextStatuses(Guid testStatusId)
+        {
+            var statuses = new List<SelectListItem>();
+            if (testStatusId == StatusType.Private.GetUid())
+            {
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Pending.GetDisplayName(),
+                    Value = StatusType.Pending.GetUid().ToString()
+                });
+            }
+            else if (testStatusId == StatusType.Pending.GetUid())
+            {
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Private.GetDisplayName(),
+                    Value = StatusType.Private.GetUid().ToString()
+                });
+            }
+            else if (testStatusId == StatusType.Ready.GetUid())
+            {
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Public.GetDisplayName(),
+                    Value = StatusType.Public.GetUid().ToString()
+                });
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Private.GetDisplayName(),
+                    Value = StatusType.Private.GetUid().ToString()
+                });
+            }
+            else if (testStatusId == StatusType.Public.GetUid())
+            {
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Ready.GetDisplayName(),
+                    Value = StatusType.Ready.GetUid().ToString()
+                });
+                statuses.Add(new SelectListItem
+                {
+                    Text = StatusType.Private.GetDisplayName(),
+                    Value = StatusType.Private.GetUid().ToString()
+                });
+            }
+
+            return statuses;
         }
     }
 }

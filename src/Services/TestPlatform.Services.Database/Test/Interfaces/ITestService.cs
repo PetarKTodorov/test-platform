@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Database.Test.Interfaces
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Database.Interfaces;
 
@@ -10,5 +11,7 @@
         IQueryable<T> FindUserTestsAsQueryable<T>(Guid userId);
 
         IQueryable<T> FindPendingTestAsQueryable<T>(Guid userId);
+
+        List<SelectListItem> GetTestNextStatuses(Guid testStatusId);
     }
 }
