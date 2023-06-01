@@ -2,7 +2,6 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Rooms;

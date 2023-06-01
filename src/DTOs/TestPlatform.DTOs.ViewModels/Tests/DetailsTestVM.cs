@@ -57,6 +57,8 @@
         [DisplayName("Questions count")]
         public int QuestionsCount { get; set; }
 
+        public DetailsTestEvaluationVM Еvaluation { get; set; }
+
         public IEnumerable<DetailsQuestionTestVM> Questions { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
