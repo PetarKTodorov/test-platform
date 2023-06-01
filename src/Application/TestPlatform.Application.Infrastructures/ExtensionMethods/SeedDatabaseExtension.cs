@@ -4,6 +4,8 @@
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
+
+    using TestPlatform.Database;
     using TestPlatform.Database.Seed;
 
     public static class SeedDatabaseExtension
@@ -12,9 +14,22 @@
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
 
-            if (ApplicationDbSeeder.IsNotSeeded(serviceScope.ServiceProvider))
+            var databaseContext =
+                serviceScope.ServiceProvider.GetRequiredService<TestPlatformDbContext>();
+
+            using var dbContextTransaction = databaseContext.Database.BeginTransaction();
+            try
             {
-                await ApplicationDbSeeder.SeedAsync(serviceScope.ServiceProvider);
+                if (ApplicationDbSeeder.IsNotSeeded(serviceScope.ServiceProvider))
+                {
+                    await ApplicationDbSeeder.SeedAsync(serviceScope.ServiceProvider);
+                }
+
+                await dbContextTransaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await dbContextTransaction.RollbackAsync();
             }
         }
     }
