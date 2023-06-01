@@ -1,0 +1,16 @@
+[
+    {
+        "Id": "38C40864-D0FC-4AA0-9D05-6DBB65330CFE",
+        "QuestionId": "0155ED01-55C0-4106-A2C4-1DB76A0F930C",
+        "TestId": "CBFF85AD-91BB-418A-8334-83FE54AB2CFA",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 2
+    },
+    {
+        "Id": "76376D8C-3A5C-45A4-BA64-EE20EB2F9583",
+        "QuestionId": "B26EE38F-8ACB-4DA7-B6A0-14FDB656E0FA",
+        "TestId": "CBFF85AD-91BB-418A-8334-83FE54AB2CFA",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    }
+]

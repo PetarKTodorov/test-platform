@@ -29,5 +29,7 @@
         public const string QUESTIONS_COPY_JSON_FILE_NAME = "questionsCopy";
 
         public const string QUESTION_ANSWERS_MAP_JSON_FILE_NAME = "questionsAnswersMap";
+
+        public const string QUESTION_TEST_MAP_JSON_FILE_NAME = "questionsTestsMap";
     }
 }

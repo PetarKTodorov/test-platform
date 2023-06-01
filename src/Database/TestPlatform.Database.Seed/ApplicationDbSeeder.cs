@@ -40,6 +40,7 @@
                     new QuestionsSeeder(serviceProvider, logger, Constants.QUESTIONS_JSON_FILE_NAME),
                     new QuestionsCopySeeder(serviceProvider, logger, Constants.QUESTIONS_COPY_JSON_FILE_NAME),
                     new QuestionsAnswersMapSeeeder(serviceProvider, logger, Constants.QUESTION_ANSWERS_MAP_JSON_FILE_NAME),
+                    new QuestionTestMapSeeder(serviceProvider, logger, Constants.QUESTION_TEST_MAP_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)
