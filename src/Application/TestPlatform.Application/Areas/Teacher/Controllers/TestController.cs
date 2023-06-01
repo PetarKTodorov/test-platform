@@ -270,7 +270,6 @@
                 }
 
                 await this.testGradeScaleManager.DeleteGradeScalesAsync(test.Id, this.CurrentUserId);
-                // TDOD: Delete the grade scale 
                 // TODO: Delete the rooms associated with this test
             }
             else if (model.StatusId == StatusType.Pending.GetUid())
