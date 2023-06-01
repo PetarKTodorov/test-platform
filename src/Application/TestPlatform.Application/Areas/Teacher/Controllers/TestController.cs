@@ -243,6 +243,20 @@
                 return this.View();
             }
 
+            if (test.StatusId == StatusType.Public.GetUid())
+            {
+                if (model.StatusId == StatusType.Private.GetUid())
+                {
+                    // TODO: Proceed only if there are not create rooms in the future with this test
+                    // Otherwise return error
+                }
+                else if (model.StatusId == StatusType.Ready.GetUid())
+                {
+                    // TODO: Proceed only if there are not create rooms by other users in the future with this test
+                    // Otherwise return error
+                }
+            }
+
             await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(model.Id, model, this.CurrentUserId);
 
             if (model.StatusId == StatusType.Private.GetUid())
