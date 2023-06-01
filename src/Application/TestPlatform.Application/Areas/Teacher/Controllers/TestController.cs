@@ -222,6 +222,11 @@
                 return this.NotFound();
             }
 
+            if (test.StatusId != StatusType.Pending.GetUid())
+            {
+                return this.NotFound();
+            }
+
             test.StatusId = StatusType.Public.GetUid();
             await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(test.Id, test, this.CurrentUserId);
 
