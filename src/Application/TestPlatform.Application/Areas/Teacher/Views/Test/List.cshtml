@@ -105,11 +105,6 @@
                                     @if (row.StatusId == StatusType.Ready.GetUid())
                                     {
                                         <li>
-                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@row.Id">
-                                                <button type="submit" class="btn dropdown-item">Create room</button>
-                                            </form>
-                                        </li>
-                                        <li>
                                             <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="MakePublic" asp-route-id="@row.Id">
                                                 <button type="submit" class="btn dropdown-item">Make test public</button>
                                             </form>
@@ -118,9 +113,18 @@
                                     else if (row.StatusId == StatusType.Private.GetUid())
                                     {
                                         <li>
-                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="MakePublic" asp-route-id="@row.Id">
-                                                <button type="submit" class="btn dropdown-item">Make test public</button>
+                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="MakePending" asp-route-id="@row.Id">
+                                                <button type="submit" class="btn dropdown-item">Make test pending</button>
                                             </form>
+                                        </li>
+                                    }
+
+                                    @if (row.StatusId == StatusType.Ready.GetUid() || row.StatusId == StatusType.Public.GetUid())
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@row.Id">
+                                                Create room
+                                            </a>
                                         </li>
                                     }
                                 </ul>

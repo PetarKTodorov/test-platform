@@ -1,0 +1,38 @@
+﻿@model CreateRoomBM
+@{
+    ViewData["Title"] = "Create Room";
+
+    var isDisabled = true;
+    var allStudents = (List<SelectListItem>)this.ViewData["AllStudents"];
+}
+
+<h1 class="text-center my-5">@ViewData["Title"]</h1>
+
+<div class="container">
+    @*@Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result*@
+
+    <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.TestId)
+
+        @Html.FormGroupFor(model => model.TestTitle, isDisabled)
+
+        @Html.FormGroupFor(model => model.StartDateTime)
+
+        @Html.FormGroupFor(model => model.EndDateTime)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.ParticipantsIds, new { @class = "form-label"})
+
+            <select class="js-select2-multiple form-control" asp-for="ParticipantsIds" asp-items="@allStudents"></select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.ParticipantsIds)
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>

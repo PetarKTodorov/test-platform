@@ -88,6 +88,18 @@
             return this.FindAllAsQueryable()
                 .To<T>();
         }
+        
+        public async Task<T> FindAllByRoleIdAsync<T>(Guid roleId)
+        {
+            var entities = await this.BaseRepository
+                .GetAllAsQueryable()
+                .Where(u => u.Roles.Any(r => r.RoleId == roleId))
+                .ToListAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(entities);
+
+            return entityToReturn;
+        }
 
         private async Task HardDeleteUserSubjectTagsMapAsync(Guid userId)
         {

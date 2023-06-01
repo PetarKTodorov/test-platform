@@ -10,5 +10,7 @@
         Task<T> FindByEmailAsync<T>(string email);
 
         IQueryable<T> FindAllUsersAsQueryable<T>();
+        
+        Task<T> FindAllByRoleIdAsync<T>(Guid roleId);
     }
 }
