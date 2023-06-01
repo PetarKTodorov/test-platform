@@ -158,62 +158,68 @@
             </a>
         </div>
 
-        @foreach (var (index, question) in Model.Questions.Select((question, index) => (index, question)))
-        {
-            var accordionId = $"accordion-{index}";
-            var accordionHeadingId = $"accordion-heading-${index}";
-            var accordionBodyId = $"accordion-body-{index}";
+        <div>
+            <h4>
+                @Html.DisplayNameFor(model => model.Questions)
+            </h4>
 
-            <div class="accordion my-3" id="@accordionId">
-                <div class="accordion-item">
-                    <h2 class="accordion-header mt-0" id="@accordionHeadingId">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@accordionBodyId" aria-expanded="false" aria-controls="@accordionBodyId">
-                            <span class="d-flex flex-column">
-                                <span>
-                                    @question.QuestionOriginalQuestionTitle
+            @foreach (var (index, question) in Model.Questions.Select((question, index) => (index, question)))
+            {
+                var accordionId = $"accordion-{index}";
+                var accordionHeadingId = $"accordion-heading-${index}";
+                var accordionBodyId = $"accordion-body-{index}";
+
+                <div class="accordion my-3" id="@accordionId">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header mt-0" id="@accordionHeadingId">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@accordionBodyId" aria-expanded="false" aria-controls="@accordionBodyId">
+                                <span class="d-flex flex-column">
+                                    <span>
+                                        @question.QuestionOriginalQuestionTitle
+                                    </span>
+
+                                    <span class="small text-secondary fst-italic">
+                                        Points: @question.Points
+                                    </span>
                                 </span>
+                            </button>
+                        </h2>
+                        <div id="@accordionBodyId" class="accordion-collapse collapse" aria-labelledby="@accordionHeadingId" data-bs-parent="#@accordionId">
+                            <div class="accordion-body">
+                                <div>
+                                    @foreach (var answer in question.QuestionAnswers)
+                                    {
+                                        <div class="my-2 d-flex gap-2">
+                                            @if (question.QuestionQuestionTypeId == QuestionTypes.MultipleChoice.GetUid())
+                                            {
+                                                @Html.CheckBoxFor(modelInfo => answer.IsCorrect, new { disabled = true })
+                                            }
+                                            else if (question.QuestionQuestionTypeId == QuestionTypes.SingleChoice.GetUid())
+                                            {
+                                                var radioButtonValue = $"IsCorrect[{index}]";
 
-                                <span class="small text-secondary fst-italic">
-                                    Points: @question.Points
-                                </span>
-                            </span>
-                        </button>
-                    </h2>
-                    <div id="@accordionBodyId" class="accordion-collapse collapse" aria-labelledby="@accordionHeadingId" data-bs-parent="#@accordionId">
-                        <div class="accordion-body">
-                            <div>
-                                @foreach (var answer in question.QuestionAnswers)
-                                {
-                                    <div class="my-2 d-flex gap-2">
-                                        @if (question.QuestionQuestionTypeId == QuestionTypes.MultipleChoice.GetUid())
-                                        {
-                                            @Html.CheckBoxFor(modelInfo => answer.IsCorrect, new { disabled = true })
-                                        }
-                                        else if (question.QuestionQuestionTypeId == QuestionTypes.SingleChoice.GetUid())
-                                        {
-                                            var radioButtonValue = $"IsCorrect[{index}]";
+                                                @Html.RadioButton(radioButtonValue, radioButtonValue, answer.IsCorrect, new { disabled = true })
+                                            }
+                                            <input class="form-control" type="text" value="@answer.AnswerContent" disabled />
+                                        </div>
+                                    }
+                                </div>
 
-                                            @Html.RadioButton(radioButtonValue, radioButtonValue, answer.IsCorrect, new { disabled = true })
-                                        }
-                                        <input class="form-control" type="text" value="@answer.AnswerContent" disabled />
-                                    </div>
-                                }
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-                                <form method="post" 
-                                    asp-area="@ApplicationAreas.TEACHER" 
-                                    asp-controller="Test" 
-                                    asp-action="RemoveQuestion"
-                                    asp-route-questionId="@question.QuestionId"
-                                    asp-route-testId="@Model.Id">
-                                    <button type="submit" class="btn btn-danger">Remove</button>
-                                </form>
+                                <div class="d-flex justify-content-end">
+                                    <form method="post"
+                                      asp-area="@ApplicationAreas.TEACHER"
+                                      asp-controller="Test"
+                                      asp-action="RemoveQuestion"
+                                      asp-route-questionId="@question.QuestionId"
+                                      asp-route-testId="@Model.Id">
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
