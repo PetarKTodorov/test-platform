@@ -160,6 +160,9 @@
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
+            services.AddTransient<IGradeScaleService, GradeScaleService>();
+            services.AddTransient<IGradeScaleTestЕvaluationMapService, GradeScaleTestЕvaluationMapService>();
+            services.AddTransient<ITestEvaluationService, TestEvaluationService>();
 
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
@@ -170,6 +173,7 @@
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IQuestionAnswerMananger, QuestionAnswerMananger>();
             services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
+            services.AddTransient<ITestGradeScaleManager, TestGradeScaleManager>();
         }
     }
 }
