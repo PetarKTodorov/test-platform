@@ -73,6 +73,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Rooms
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="List">List</a>
+                                </li>
+                            </ul>
+                        </li>
                     }
                 }
             </ul>

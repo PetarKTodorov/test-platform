@@ -29,7 +29,8 @@
     using TestPlatform.Application.Infrastructures.Searcher.MVC;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Questions;
-    using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.Services.Database.Rooms.Interfaces;
+    using TestPlatform.Services.Database.Rooms;
 
     public class Program
     {
@@ -158,6 +159,9 @@
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
+
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)

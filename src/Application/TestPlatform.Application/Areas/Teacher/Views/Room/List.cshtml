@@ -1,7 +1,7 @@
-﻿@model SearchFilterVM<ListTestsVM>
+﻿@model SearchFilterVM<ListRoomsVM>
 
 @{
-    ViewData["Title"] = "Your Tests";
+    ViewData["Title"] = "Your Rooms";
     var restoreModalId = "restore-modal";
 }
 
@@ -31,16 +31,13 @@
             <thead class="table-dark">
                 <tr>
                     <th class="text-nowrap">
-                        @Html.DisplayNameForInnerType((ListTestsVM model) => model.Title)
+                        @Html.DisplayNameForInnerType((ListRoomsVM model) => model.TestTitle)
                     </th>
                     <th class="text-nowrap">
-                        @Html.DisplayNameForInnerType((ListTestsVM model) => model.IsApproved)
+                        @Html.DisplayNameForInnerType((ListRoomsVM model) => model.StartDateTime)
                     </th>
                     <th class="text-nowrap">
-                        @Html.DisplayNameForInnerType((ListTestsVM model) => model.StatusName)
-                    </th>
-                    <th class="text-nowrap">
-                        @Html.DisplayNameForInnerType((ListTestsVM model) => model.Instructions)
+                        @Html.DisplayNameForInnerType((ListRoomsVM model) => model.EndDateTime)
                     </th>
                     <th class="text-nowrap">
                         Actions
@@ -52,16 +49,13 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => row.Title)
+                            @Html.DisplayFor(modelItem => row.TestTitle)
                         </td>
                         <td>
-                            @Html.DisplayTextFor(modelItem => row.IsApproved)
+                            @Html.DisplayTextFor(modelItem => row.StartDateTime)
                         </td>
                         <td>
-                            @Html.DisplayTextFor(modelItem => row.StatusName)
-                        </td>
-                        <td>
-                            @Html.DisplayTextFor(modelItem => row.Instructions)
+                            @Html.DisplayTextFor(modelItem => row.EndDateTime)
                         </td>
                         <td>
                             <div class="dropdown">
@@ -70,7 +64,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
                                             Details
                                         </a>
                                     </li>
@@ -86,29 +80,13 @@
                                     else
                                     {
                                         <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@row.Id">
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@row.Id">
                                                 Update
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@row.Id">
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@row.Id">
                                                 Delete
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (row.StatusId == StatusType.Ready.GetUid())
-                                    {
-                                        <li>
-                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="MakePublic" asp-route-id="@row.Id">
-                                                <button type="submit" class="btn dropdown-item">Make test public</button>
-                                            </form>
-                                        </li>
-                                    }
-                                    @if (row.StatusId == StatusType.Ready.GetUid() || row.StatusId == StatusType.Public.GetUid())
-                                    {
-                                        <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@row.Id">
-                                                Create room
                                             </a>
                                         </li>
                                     }

@@ -8,6 +8,8 @@
     using Microsoft.AspNetCore.Http;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Common.Enums;
+    using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
     using TestPlatform.DTOs.ViewModels.Users;
@@ -68,7 +70,7 @@
             var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
             var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model, administratorId);
 
-            var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
+            var roleTask = this.roleService.FindByNameAsync<Role>(Roles.Student.GetDisplayName());
 
             Task.WaitAll(userTask, roleTask);
 

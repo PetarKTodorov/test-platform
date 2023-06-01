@@ -41,10 +41,26 @@
     },
     {
         "Id": "4EE73BF7-FE5D-4096-BE3A-8E35400FD350",
-        "Email": "student@email.mail",
-        "FirstName": "Student",
-        "MiddleName": "Student",
-        "LastName": "Student",
+        "Email": "student1@email.mail",
+        "FirstName": "Student1",
+        "MiddleName": "Student1",
+        "LastName": "Student1",
+        "Password": "12msHZ&!srd"
+    },
+    {
+        "Id": "6fa1e60f-41d6-4f7e-93ed-f95e0435b448",
+        "Email": "student2@email.mail",
+        "FirstName": "Student2",
+        "MiddleName": "Student2",
+        "LastName": "Student2",
+        "Password": "12msHZ&!srd"
+    },
+    {
+        "Id": "cb83f7e5-491d-4432-86c9-4af50d1a803b",
+        "Email": "student3@email.mail",
+        "FirstName": "Student3",
+        "MiddleName": "Student3",
+        "LastName": "Student3",
         "Password": "12msHZ&!srd"
     }
 ]

@@ -13,6 +13,7 @@
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class UserService : BaseService<User>, IUserService
     {
@@ -79,6 +80,18 @@
                 .SingleOrDefaultAsync(u => u.Email == email);
 
             T entityToReturn = this.Mapper.Map<T>(entity);
+
+            return entityToReturn;
+        }
+
+        public async Task<T> FindAllByRoleIdAsync<T>(Guid roleId)
+        {
+            var entities = await this.BaseRepository
+                .GetAllAsQueryable()
+                .Where(u => u.Roles.Any(r => r.RoleId == roleId))
+                .ToListAsync();
+
+            T entityToReturn = this.Mapper.Map<T>(entities);
 
             return entityToReturn;
         }
