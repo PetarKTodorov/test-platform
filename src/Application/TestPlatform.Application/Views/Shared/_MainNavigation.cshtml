@@ -84,6 +84,12 @@
                             </ul>
                         </li>
                     }
+                    if (currentUser.IsInRole(ApplicationRoles.STUDENT))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="@ApplicationAreas.STUDENT" asp-controller="Rooms" asp-action="List">My Rooms</a>
+                        </li>
+                    }
                 }
             </ul>
 

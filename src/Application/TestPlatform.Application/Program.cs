@@ -160,6 +160,7 @@
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
+            services.AddTransient<ITestUserMapService, TestUserMapService>();
 
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
