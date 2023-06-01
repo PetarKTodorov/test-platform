@@ -39,7 +39,11 @@
         </div>
 
 
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end gap-1">
+            <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@Model.Id">
+                Add questions
+            </a>
+
             <button type="submit" class="btn btn-success">Update</button>
         </div>
     </form>

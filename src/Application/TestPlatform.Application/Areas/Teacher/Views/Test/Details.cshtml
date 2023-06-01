@@ -131,6 +131,9 @@
         <div class="d-flex justify-content-center gap-1">
             @if (Model.IsDeleted == false)
             {
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@Model.Id">
+                    Add questions
+                </a>
                 <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@Model.Id">
                     Update
                 </a>
