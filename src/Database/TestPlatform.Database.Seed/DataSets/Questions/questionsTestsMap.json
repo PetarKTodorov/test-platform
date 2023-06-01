@@ -12,5 +12,89 @@
         "TestId": "CBFF85AD-91BB-418A-8334-83FE54AB2CFA",
         "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
         "Points": 1
+    },
+    {
+        "Id": "D58CAB10-9449-460E-9F37-184440233CD5",
+        "QuestionId": "E3FB1AC0-FFB4-411A-B857-AE63A5FAB065",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 2
+    },
+    {
+        "Id": "CF7E5587-A1DE-4FFE-9F96-332098FC4081",
+        "QuestionId": "14A5D30D-EB90-408E-B0BB-8695DC7D2102",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 3
+    },
+    {
+        "Id": "88B0BEB2-C584-4A45-9784-4DF7CDE6E81A",
+        "QuestionId": "DEDFE3E6-E9C2-4452-8A58-E33C1B3E0C13",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "79F6FBAA-8E04-4C89-854A-9714258025D2",
+        "QuestionId": "76B59218-01AD-4069-AD50-505269F83012",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "E4971416-41DC-4C37-A7D9-A6AE7423BF44",
+        "QuestionId": "3F4F92E3-ADAB-4FEA-8080-52428AD4FF00",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 2
+    },
+    {
+        "Id": "EDD59A0A-5526-46CA-AF9A-AE3D275BE145",
+        "QuestionId": "9C13B897-0F3B-4C0A-BC21-3318BC2B6CEC",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 2
+    },
+    {
+        "Id": "F545A5F3-6E57-4892-9EE0-AE5933497632",
+        "QuestionId": "0765402C-4533-47EA-A191-55CA61A2A87C",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 2
+    },
+    {
+        "Id": "3FC05457-9AE3-4894-8CF3-C2D1DDE7AFAC",
+        "QuestionId": "0240C293-39AB-4838-A20F-28121E945662",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "B567F6B0-18CA-447B-8CA3-CA7A4BC5F52C",
+        "QuestionId": "E28C7911-055C-49A0-BE4B-11183C97B27D",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "4ED0D008-1427-4FFD-87AB-D4B5052BFA65",
+        "QuestionId": "4D620EA0-FF96-4380-9C6E-E42203B24415",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "DBA67BA4-1DA6-41D6-8592-ECB0D974BB5C",
+        "QuestionId": "F79D6EEA-E662-48BB-B48D-84E8DFCC4DB7",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 1
+    },
+    {
+        "Id": "CA108A55-04D6-4B5E-8ACF-F0036A8F3A6A",
+        "QuestionId": "4E5092E9-B99D-4FF9-B800-81DF495DE8BB",
+        "TestId": "6CF4BB58-6AFA-4B1C-B0EF-F683AFD4144D",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Points": 3
     }
 ]
