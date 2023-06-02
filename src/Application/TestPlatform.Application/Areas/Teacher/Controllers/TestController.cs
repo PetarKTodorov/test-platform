@@ -259,6 +259,14 @@
                     // Otherwise return error
                 }
             }
+            else if (test.StatusId == StatusType.Pending.GetUid())
+            {
+                if (model.StatusId == StatusType.Private.GetUid())
+                {
+                    // TODO: Proceed only if there are questions with at least 5 points in order the grade scale logic to work
+                    // Otherwise return error
+                }
+            }
 
             await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(model.Id, model, this.CurrentUserId);
 
