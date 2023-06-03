@@ -79,7 +79,7 @@
         public async Task<IActionResult> FinishTest(ConductTestVM model)
         {
             var room = await this.roomService.FindByIdAsync<ConductTestVM>(model.Id);
-            if (room == null || !(room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime.AddMinutes(GlobalConstants.TEST_RESOLVE_BUFFER)))
+            if (room == null || !(room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime.AddMinutes(GlobalConstants.TEST_TIME_RESOLVE_BUFFER)))
             {
                 return this.NotFound();
             }
