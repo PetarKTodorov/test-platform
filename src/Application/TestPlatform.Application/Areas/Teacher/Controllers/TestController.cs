@@ -335,12 +335,7 @@
 
         private bool ValidateTestQuestion(int points)
         {
-            var isValid = true;
-
-            if (!this.ModelState.IsValid)
-            {
-                isValid = false;
-            }
+            var isValid = this.ModelState.IsValid;
 
             if (points <= Validations.ZERO)
             {
@@ -354,14 +349,9 @@
 
         private bool ValidateChangeStatus(Guid testId, Guid oldTestStatusId, Guid newTestStatusId)
         {
-            var isValid = true;
+            var isValid = this.ModelState.IsValid;
 
-            if (!this.ModelState.IsValid)
-            {
-                isValid = false;
-            }
-
-            if (oldTestStatusId == StatusType.Public.GetUid() &&
+            if ((oldTestStatusId == StatusType.Public.GetUid() || oldTestStatusId == StatusType.Ready.GetUid()) &&
                 (newTestStatusId == StatusType.Private.GetUid() || newTestStatusId == StatusType.Ready.GetUid()))
             {
                 var countOfRoomsCreatedWithTest = this.roomService.CountOfRoomsInTheFutureByTestId(testId);
