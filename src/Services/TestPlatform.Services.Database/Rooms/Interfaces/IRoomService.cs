@@ -9,6 +9,8 @@
 
         IQueryable<T> FindAllRoomsByUserIdAsQueryable<T>(Guid userId);
 
+        int CountOfRoomsInTheFutureByTestId(Guid testId);
+
         Task UpdateParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds, Guid currentUserId);
 
         Task HardDeleteParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds);

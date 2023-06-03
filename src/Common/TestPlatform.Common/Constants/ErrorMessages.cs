@@ -15,5 +15,9 @@
         public const string INVALID_CREDENTIALS_ERROR_MESSAGE = "Invalid password or email.";
 
         public const string QUESTION_POINTS_MUST_BE_GREATER_THAN_ZERO = "Question points must be greater than zero";
+
+        public const string TEST_DOESNT_HAVE_ENOUGH_QUESTION_POINTS = "In order to create a test you should add questions with at least {0} points at total";
+
+        public const string THERE_ARE_ROOMS_IN_THE_FUTURE_WITH_THIS_TEST = "There are rooms in the future with this test. Count of the rooms: {0}";
     }
 }

@@ -36,6 +36,13 @@
                 .To<T>();
         }
 
+        public int CountOfRoomsInTheFutureByTestId(Guid testId)
+        {
+            return this.FindAllAsQueryable()
+                .Count(r => r.TestId == testId
+                    && r.EndDateTime > DateTime.Now);
+        }
+
         public async Task UpdateParticipantsAsync(Guid roomId, IEnumerable<Guid> participantIds, Guid currentUserId)
         {
             var currentParticipants = await this.roomParticipantMapService.FindAllByRoomIdAsync<RoomParticipantMap>(roomId);

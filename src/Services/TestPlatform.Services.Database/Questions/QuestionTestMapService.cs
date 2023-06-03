@@ -22,5 +22,12 @@
 
             return mappedObject;
         }
+
+        public int FindSumOfQuestionPointsByTest(Guid testId)
+        {
+            return this.FindAllAsQueryable()
+                .Where(q => q.TestId == testId)
+                .Sum(q => q.Points);
+        }
     }
 }

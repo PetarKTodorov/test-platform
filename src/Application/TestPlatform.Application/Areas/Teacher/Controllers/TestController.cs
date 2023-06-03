@@ -12,6 +12,7 @@
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.Services.Database.Questions.Interfaces;
+    using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
@@ -26,6 +27,7 @@
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTestMapService questionTestMapService;
         private readonly ITestGradeScaleManager testGradeScaleManager;
+        private readonly IRoomService roomService;
 
         public TestController(ITestService testService,
             IStatusService statusService,
@@ -34,7 +36,8 @@
             ITestApprovalMapService testApprovalMapService,
             IQuestionCopyService questionCopyService,
             IQuestionTestMapService questionTestMapService,
-            ITestGradeScaleManager testGradeScaleManager)
+            ITestGradeScaleManager testGradeScaleManager,
+            IRoomService roomService)
         {
             this.testService = testService;
             this.statusService = statusService;
@@ -44,6 +47,7 @@
             this.questionCopyService = questionCopyService;
             this.questionTestMapService = questionTestMapService;
             this.testGradeScaleManager = testGradeScaleManager;
+            this.roomService = roomService;
         }
 
         [HttpGet]
@@ -239,33 +243,11 @@
                 return this.NotFound();
             }
 
-            if (!this.ModelState.IsValid)
+            if (!this.ValidateChangeStatus(test.Id, test.StatusId, model.StatusId))
             {
                 this.ViewData["Statuses"] = this.testService.GetTestNextStatuses(test.StatusId);
 
                 return this.View();
-            }
-
-            if (test.StatusId == StatusType.Public.GetUid())
-            {
-                if (model.StatusId == StatusType.Private.GetUid())
-                {
-                    // TODO: Proceed only if there are not create rooms in the future with this test
-                    // Otherwise return error
-                }
-                else if (model.StatusId == StatusType.Ready.GetUid())
-                {
-                    // TODO: Proceed only if there are not create rooms by other users in the future with this test
-                    // Otherwise return error
-                }
-            }
-            else if (test.StatusId == StatusType.Pending.GetUid())
-            {
-                if (model.StatusId == StatusType.Private.GetUid())
-                {
-                    // TODO: Proceed only if there are questions with at least 5 points in order the grade scale logic to work
-                    // Otherwise return error
-                }
             }
 
             await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(model.Id, model, this.CurrentUserId);
@@ -360,11 +342,51 @@
                 isValid = false;
             }
 
-            if (points <= 0)
+            if (points <= Validations.ZERO)
             {
                 isValid = false;
 
                 this.ViewBag.StatusError = ErrorMessages.QUESTION_POINTS_MUST_BE_GREATER_THAN_ZERO;
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateChangeStatus(Guid testId, Guid oldTestStatusId, Guid newTestStatusId)
+        {
+            var isValid = true;
+
+            if (!this.ModelState.IsValid)
+            {
+                isValid = false;
+            }
+
+            if (oldTestStatusId == StatusType.Public.GetUid() &&
+                (newTestStatusId == StatusType.Private.GetUid() || newTestStatusId == StatusType.Ready.GetUid()))
+            {
+                var countOfRoomsCreatedWithTest = this.roomService.CountOfRoomsInTheFutureByTestId(testId);
+                if (countOfRoomsCreatedWithTest > 0)
+                {
+                    isValid = false;
+
+                    this.ViewBag.StatusError = string.Format(
+                        ErrorMessages.THERE_ARE_ROOMS_IN_THE_FUTURE_WITH_THIS_TEST,
+                        countOfRoomsCreatedWithTest
+                    );
+                }
+            }
+            else if (oldTestStatusId == StatusType.Pending.GetUid() && newTestStatusId == StatusType.Private.GetUid())
+            {
+                var points = this.questionTestMapService.FindSumOfQuestionPointsByTest(testId);
+                if (points < GlobalConstants.COUNT_OF_GRADES)
+                {
+                    isValid = false;
+
+                    this.ViewBag.StatusError = string.Format(
+                        ErrorMessages.TEST_DOESNT_HAVE_ENOUGH_QUESTION_POINTS,
+                        GlobalConstants.COUNT_OF_GRADES
+                    );
+                }
             }
 
             return isValid;

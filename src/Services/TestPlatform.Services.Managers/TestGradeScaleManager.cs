@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Managers
 {
+    using TestPlatform.Common.Constants;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
@@ -8,9 +9,6 @@
 
     public class TestGradeScaleManager : ITestGradeScaleManager
     {
-        // Grades: 2, 3, 4, 5, 6
-        private const int COUNT_OF_GRADES = 5;
-
         private readonly IGradeScaleService gradeScaleService;
         private readonly ITestEvaluationService testEvaluationService;
         private readonly IGradeScaleTestEvaluationMapService gradeScaleTestEvaluationMapService;
@@ -51,16 +49,16 @@
 
         private async Task CreateGradeScalesAsync(int totalPoints, Guid userId, Guid testEvaluationId)
         {
-            var gradePointsStep = totalPoints / COUNT_OF_GRADES;
+            var gradePointsStep = totalPoints / GlobalConstants.COUNT_OF_GRADES;
 
             var lowestGrade = 2;
             var points = 0;
-            for (int grade = lowestGrade; grade < lowestGrade + COUNT_OF_GRADES; grade++)
+            for (int grade = lowestGrade; grade < lowestGrade + GlobalConstants.COUNT_OF_GRADES; grade++)
             {
                 var lowerGradeBound = points;
                 var upperGradeBound = points + gradePointsStep - 1;
 
-                if (grade == lowestGrade + COUNT_OF_GRADES - 1)
+                if (grade == lowestGrade + GlobalConstants.COUNT_OF_GRADES - 1)
                 {
                     upperGradeBound = totalPoints;
                 }

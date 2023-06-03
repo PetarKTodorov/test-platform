@@ -6,5 +6,7 @@
     public interface IQuestionTestMapService : IBaseService<QuestionTestMap>
     {
         Task<T> FindQuestionTestAsync<T>(Guid questionId, Guid testId);
+
+        int FindSumOfQuestionPointsByTest(Guid testId);
     }
 }
