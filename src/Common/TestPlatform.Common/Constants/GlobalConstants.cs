@@ -10,8 +10,8 @@
 
         public const string DEFAULT_TEST_GRADE_VALUE = "Not Submited";
 
-        public const int TEST_RESOVE_BUFFER = 3;
-        
+        public const int TEST_RESOLVE_BUFFER = 3;
+
         // Grades: 2, 3, 4, 5, 6
         public const int COUNT_OF_GRADES = 5;
     }

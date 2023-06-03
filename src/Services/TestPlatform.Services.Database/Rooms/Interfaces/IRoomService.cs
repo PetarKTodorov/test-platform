@@ -8,7 +8,7 @@
         IQueryable<T> FindTeacherRoomsAsQueryable<T>(Guid userId);
 
         IQueryable<T> FindAllRoomsByUserIdAsQueryable<T>(Guid userId);
-        
+
         Task<T> FindRoomByUserIdAndTestIdAsync<T>(Guid userId, Guid testId);
 
         int CountOfRoomsInTheFutureByTestId(Guid testId);
