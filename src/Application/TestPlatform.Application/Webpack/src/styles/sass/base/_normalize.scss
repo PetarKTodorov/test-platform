@@ -55,7 +55,6 @@ optgroup {
     font-family: inherit;
 }
 
-button:disabled,
-button[disabled] {
+*:disabled {
     cursor: not-allowed;
 }

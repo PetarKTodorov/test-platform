@@ -23,6 +23,8 @@
         {
             var dataQuery = this.roomService.FindAllRoomsByUserIdAsQueryable<ListStudentRoomVM>(this.CurrentUserId);
 
+            // TODO: fix Grade set
+
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
