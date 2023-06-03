@@ -1,5 +1,7 @@
 ﻿namespace TestPlatform.Common.Constants
 {
+    using System;
+
     public static class ErrorMessages
     {
         public const string ENTER_AT_LEAST_TWO_ANSWERS_ERROR_MESSAGE = "Please, enter at least two answers!";
@@ -19,5 +21,7 @@
         public const string TEST_DOESNT_HAVE_ENOUGH_QUESTION_POINTS = "In order to create a test you should add questions with at least {0} points at total";
 
         public const string THERE_ARE_ROOMS_IN_THE_FUTURE_WITH_THIS_TEST = "There are rooms in the future with this test. Count of the rooms: {0}";
+
+        public const string PARTICIPANTS_ARE_REQUIRED = "The participants are required";
     }
 }

@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
+    using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Rooms;
@@ -68,7 +69,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomBM model)
         {
-            if (this.ModelState.IsValid == false)
+            if (!this.ValidateCreateRoom(model.ParticipantsIds))
             {
                 this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
 
@@ -187,6 +188,20 @@
             await this.roomService.HardDeleteAsync<BaseBM>(room.Id);
 
             return this.RedirectToAction(nameof(List));
+        }
+
+        private bool ValidateCreateRoom(IEnumerable<Guid> participantsIds)
+        {
+            var isValid = this.ModelState.IsValid;
+
+            if (participantsIds == null || !participantsIds.Any())
+            {
+                isValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.PARTICIPANTS_ARE_REQUIRED;
+            }
+
+            return isValid;
         }
     }
 }
