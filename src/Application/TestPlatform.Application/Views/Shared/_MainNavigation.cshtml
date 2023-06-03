@@ -113,12 +113,12 @@
                             <a class="nav-link dropdown-toggle" href="#" id="user-profil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 @User.FindFirst(UserClaimTypes.EMAIL).Value
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="user-profil">
+                            <ul class="dropdown-menu" aria-labelledby="user-profile">
                                 <li>
-                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Profile">Profile</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
                                 </li>
                             </ul>
                         </li>
