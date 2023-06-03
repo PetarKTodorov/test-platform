@@ -89,17 +89,28 @@
                 .To<T>();
         }
 
-        public async Task<T> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId)
+        public async Task<IEnumerable<T>> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId, Guid? roomId = null)
         {
-            var entities = await this.BaseRepository
+            var query = this.BaseRepository
                 .GetAllAsQueryable()
-                .Where(u => u.Roles.Any(r => r.RoleId == roleId))
-                .Where(u => !u.Rooms.Any(r => r.Room.TestId == testId))
+                .Where(u => u.Roles.Any(r => r.RoleId == roleId));
+
+            if (roomId.HasValue)
+            {
+                query = query.Where(u => !u.Rooms
+                        .Any(r => r.Room.TestId == testId && r.RoomId != roomId.Value));
+            }
+            else
+            {
+                query = query.Where(u => !u.Rooms
+                        .Any(r => r.Room.TestId == testId));
+            }
+
+            var entities = await query
+                .To<T>()
                 .ToListAsync();
 
-            T entityToReturn = this.Mapper.Map<T>(entities);
-
-            return entityToReturn;
+            return entities;
         }
 
         private async Task HardDeleteUserSubjectTagsMapAsync(Guid userId)
