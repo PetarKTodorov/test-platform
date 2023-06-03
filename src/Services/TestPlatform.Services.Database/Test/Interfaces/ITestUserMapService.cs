@@ -5,6 +5,8 @@
 
     public interface ITestUserMapService : IBaseService<TestUserMap>
     {
-        Task<T> FindByTestIdAndRoomIdAsync<T>(Guid testId, Guid userId);
+        IQueryable<T> FindByUserIdAsQueryable<T>(Guid userId);
+
+        Task<T> FindByTestIdAndUserIdAsync<T>(Guid testId, Guid userId);
     }
 }

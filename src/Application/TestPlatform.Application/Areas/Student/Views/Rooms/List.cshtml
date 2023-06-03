@@ -48,9 +48,20 @@
 
                             @if (@row.StartDateTime <= DateTime.Now && DateTime.Now <= @row.EndDateTime)
                             {
-                                <div class="d-flex justify-content-end">
-                                    <a class="btn btn-primary" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="StartTest" asp-route-roomId="@row.Id">Start test</a>
-                                </div>
+                                @if (string.IsNullOrWhiteSpace(row.Grade))
+                                {
+                                    <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="StartTest" asp-route-roomId="@row.Id">Start test</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="button" disabled>
+                                            Start test
+                                        </button>
+                                    </div>
+                                }
                             }
                             else
                             {

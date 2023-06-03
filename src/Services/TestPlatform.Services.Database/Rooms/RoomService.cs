@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using AutoMapper;
-
+    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.DTOs.BindingModels.Rooms;
@@ -84,6 +84,14 @@
 
                 await this.roomParticipantMapService.HardDeleteAsync<RoomParticipantMap>(participantToRemove.Id);
             }
+        }
+
+        public Task<T> FindRoomByUserIdAndTestIdAsync<T>(Guid userId, Guid testId)
+        {
+            return this.FindAllAsQueryable()
+                .Where(r => r.Participants.Any(a => a.UserId == userId) && r.TestId == testId)
+                .To<T>()
+                .SingleOrDefaultAsync();
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using AutoMapper;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Services.Mapper.Interfaces;
@@ -26,5 +27,7 @@
 
         [DisplayName("Instructions")]
         public string TestInstructions { get; set; }
+
+        public string Grade { get; set; }
     }
 }

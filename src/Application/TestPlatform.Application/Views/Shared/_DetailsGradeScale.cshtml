@@ -1,10 +1,10 @@
-﻿@model DetailsTestVM
+﻿@model DetailsTestEvaluationVM
 
-@if (Model.Evaluation != null)
+@if (Model != null)
 {
     <div>
         <h4>
-            @Html.DisplayNameFor(model => model.Evaluation.GradeScales)
+            @Html.DisplayNameFor(model => model.GradeScales)
         </h4>
 
         <div class="table-responsive mt-3">
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var row in Model.Evaluation.GradeScales.OrderByDescending(gs => gs.GradeScaleLowerBound))
+                    @foreach (var row in Model.GradeScales.OrderByDescending(gc => gc.GradeScaleLowerBound))
                     {
                         <tr>
                             <td>

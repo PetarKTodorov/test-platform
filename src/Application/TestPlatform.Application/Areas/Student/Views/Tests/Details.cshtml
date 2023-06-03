@@ -1,0 +1,80 @@
+﻿@model DetailsTestVM
+
+@{
+    ViewData["Title"] = "Test Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Title)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Instructions)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Instructions)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.HasRandomizeQuestions)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.HasRandomizeQuestions)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.SubjectTagNames)</th>
+                    <td>
+                        @if (Model.SubjectTagNames.Any() == false)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @string.Join(", ", Model.SubjectTagNames)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.QuestionsCount)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.QuestionsCount)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.TotalPoints)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.TotalPoints)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        @Html.PartialAsync("_DetailsGradeScale", Model.Evaluation).Result
+
+        @if (this.ViewData["EndDateTimeNotCameError"] != null)
+        {
+            <h4 class="">@this.ViewData["EndDateTimeNotCameError"]</h4>
+        }
+        else
+        {
+            @Html.PartialAsync("_DetailsQuestions", Model).Result
+        }
+    </div>
+</div>
