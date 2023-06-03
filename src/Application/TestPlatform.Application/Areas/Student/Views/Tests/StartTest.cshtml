@@ -111,11 +111,10 @@
         </form>
     </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-test-modal">
+    <button type="button" class="btn btn-primary d-none js-test-leave-modal-button" data-bs-toggle="modal" data-bs-target="#leave-test-modal">
         Launch leave test modal
     </button>
-    @Html.PartialAsync("_LeaveTestModal", new { Id = "leave-test-modal" }).Result
+
 
     @section Scripts {
         <script asp-src-include="~/js/conduct-test*.js" defer></script>

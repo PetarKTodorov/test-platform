@@ -11,5 +11,7 @@
         public const string DEFAULT_TEST_GRADE_VALUE = "Not Submited";
 
         public const int TEST_RESOVE_BUFFER = 3;
+
+        public const string CONDUCT_TEST_PART_URL = "Student/Tests/StartTest";
     }
 }

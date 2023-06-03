@@ -26,7 +26,11 @@
         <partial name="./_MainFooter.cshtml" />
     </footer>
 
-    <div class="js-block-site-modal block-site-modal"></div>
+    @if (Context.Request.Path.Value.Contains(GlobalConstants.CONDUCT_TEST_PART_URL))
+    {
+        <div class="js-block-site-modal block-site-modal"></div>
+        @Html.PartialAsync("_LeaveTestModal", new { Id = "leave-test-modal" }).Result
+    }
 
     <script asp-src-include="~/js/libraries*.js" defer></script>
     <script asp-src-include="~/js/application*.js" defer></script>
