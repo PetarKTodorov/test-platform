@@ -1,4 +1,4 @@
-﻿namespace TestPlatform.DTOs.ViewModels.Tests
+﻿namespace TestPlatform.DTOs.ViewModels.Tests.ConductTest
 {
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.ViewModels.Questions;
@@ -19,5 +19,7 @@
         public string TestInstructions { get; set; }
 
         public IList<DetailsQuestionTestVM> TestQuestions { get; set; }
+
+        public DetailsTestEvaluationVM TestEvaluation { get; set; }
     }
 }

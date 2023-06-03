@@ -7,5 +7,7 @@
         public const string ADMINISTRATOR_ID = "1EE73BF7-FE5D-4096-BE3A-8E35400FD350";
 
         public const int DEFAULT_TEST_APPROVELS_COUNT = 3;
+
+        public const string DEFAULT_TEST_GRADE_VALUE = "Not Submited";
     }
 }

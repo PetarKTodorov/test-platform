@@ -17,12 +17,21 @@
 
         }
 
-        public async Task<T> FindByTestIdAndRoomIdAsync<T>(Guid testId, Guid userId)
+        public async Task<T> FindByTestIdAndUserIdAsync<T>(Guid testId, Guid userId)
         {
             var testUserMap = await this.FindAllAsQueryable()
                 .Where(tum => tum.TestId == testId && tum.UserId == userId)
                 .To<T>()
                 .SingleOrDefaultAsync();
+
+            return testUserMap;
+        }
+
+        public IQueryable<T> FindByUserIdAsQueryable<T>(Guid userId)
+        {
+            var testUserMap = this.FindAllAsQueryable()
+                .Where(tum => tum.UserId == userId)
+                .To<T>();
 
             return testUserMap;
         }

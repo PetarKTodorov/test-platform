@@ -14,9 +14,13 @@
 
         <div>@Model.StartDateTime.ToString(dateFormat) - @Model.EndDateTime.ToString(dateFormat)</div>
     </section>
+
+    <section class="text-center">
+        @Html.PartialAsync("_DetailsGradeScale", Model.TestEvaluation).Result
+    </section>
     
 
-    <form asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="FinishTest" method="post">
+    <form class="js-conduct-test-form" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="FinishTest" method="post">
 
         @Html.HiddenFor(model => model.Id)
 
@@ -51,7 +55,7 @@
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@accordionBodyId" aria-expanded="true" aria-controls="@accordionBodyId">
                             <span class="d-flex flex-column">
                                 <span class="h6">
-                                    @question.QuestionOriginalQuestionTitle
+                                    @(index + 1). @question.QuestionOriginalQuestionTitle
                                 </span>
 
                                 <span class="small text-secondary fst-italic">
@@ -70,20 +74,27 @@
                                         @Html.HiddenFor(model => model.TestQuestions[index].QuestionAnswers[answerIndex].AnswerContent)
                                     </div>
 
-                                    var radioButtonId = "Generated" + answer.AnswerId.ToString();
+                                    var inputId = $"Generated{index}{answerIndex}";
 
                                     <div class="d-flex gap-2">
 
                                         @if (question.QuestionQuestionTypeId == QuestionTypes.MultipleChoice.GetUid())
                                         {
-                                            @Html.CheckBox($"TestQuestions[{index}].SelectedAnswerIds[{answerIndex}]", false, new { @class = "js-test-conduct-form-checkbox", id = radioButtonId })
+                                            var checboxName = $"SelectedAnswerIds[{index}]"; // It does not matter, needs to be the different for every question
+
+                                            @Html.CheckBox(checboxName, false,
+                                            new { @class = "js-test-conduct-form-checkbox",
+                                                        data_answer_id = answer.AnswerId,
+                                                        data_answer_name = $"TestQuestions[{index}].SelectedAnswerIds",
+                                                        data_question_index = index,
+                                                        id = inputId })
                                         }
                                         else if (question.QuestionQuestionTypeId == QuestionTypes.SingleChoice.GetUid())
                                         {
-                                            @Html.RadioButtonFor(model => model.TestQuestions[index].SelectedAnswerIds[0], answer.AnswerId, new { id = radioButtonId })
+                                            @Html.RadioButtonFor(model => model.TestQuestions[index].SelectedAnswerIds[0], answer.AnswerId, new { id = inputId })
                                         }
 
-                                        @Html.Label(radioButtonId, answer.AnswerContent, new { @class = "d-block w-100 p-1 border border-info rounded-1" })
+                                        @Html.Label(inputId, answer.AnswerContent, new { @class = "d-block w-100 p-1 border border-info rounded-1" })
                                     </div>
                                 }
                             </div>
@@ -99,3 +110,6 @@
     </form>
 </div>
 
+@section Scripts {
+    <script asp-src-include="~/js/conduct-test*.js" defer></script>
+}
