@@ -14,5 +14,7 @@
 
         // Grades: 2, 3, 4, 5, 6
         public const int COUNT_OF_GRADES = 5;
+
+        public const string CONDUCT_TEST_PART_URL = "Student/Tests/StartTest";
     }
 }
