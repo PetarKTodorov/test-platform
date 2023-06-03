@@ -2,6 +2,7 @@
 	
   <ItemGroup>
     <Folder Include="Webpack\src\js\answers\" />
+    <Folder Include="Webpack\src\js\main\buttons\" />
   </ItemGroup>
 	
   <ItemGroup>
