@@ -35,5 +35,14 @@
 
             return testUserMap;
         }
+
+        public string FindUserGradeForTest(Guid testId, Guid currentUserId)
+        {
+            return this.FindAllAsQueryable()
+                .AsNoTracking()
+                .SingleOrDefault(tu => tu.TestId == testId
+                    && tu.UserId == currentUserId)
+                .Grade;
+        }
     }
 }
