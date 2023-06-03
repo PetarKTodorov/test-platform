@@ -5,7 +5,7 @@
 
     public interface IRoomService : IBaseService<Room>
     {
-        IQueryable<T> FindAllRoomsAsQueryable<T>(Guid userId);
+        IQueryable<T> FindTeacherRoomsAsQueryable<T>(Guid userId);
 
         IQueryable<T> FindAllRoomsByUserIdAsQueryable<T>(Guid userId);
 

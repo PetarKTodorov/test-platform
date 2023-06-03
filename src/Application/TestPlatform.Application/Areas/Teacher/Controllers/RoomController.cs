@@ -38,7 +38,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.roomService.FindAllRoomsAsQueryable<ListRoomsVM>(this.CurrentUserId);
+            var dataQuery = this.roomService.FindTeacherRoomsAsQueryable<ListRoomsVM>(this.CurrentUserId);
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 

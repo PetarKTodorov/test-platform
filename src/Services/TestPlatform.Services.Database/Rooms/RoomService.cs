@@ -22,10 +22,12 @@
             this.roomParticipantMapService = roomParticipantMapService;
         }
 
-        public IQueryable<T> FindAllRoomsAsQueryable<T>(Guid userId)
+        public IQueryable<T> FindTeacherRoomsAsQueryable<T>(Guid userId)
         {
             return this.FindAllAsQueryable()
                 .Where(r => r.CreatedBy == userId)
+                .OrderByDescending(r => r.StartDateTime)
+                .ThenByDescending(r => r.EndDateTime)
                 .To<T>();
         }
 
