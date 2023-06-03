@@ -6,10 +6,8 @@
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Rooms;
-    using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Rooms;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.Services.Database.Authorization.Interfaces;

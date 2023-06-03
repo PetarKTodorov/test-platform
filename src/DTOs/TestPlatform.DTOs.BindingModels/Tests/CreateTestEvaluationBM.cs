@@ -1,7 +1,7 @@
 ﻿namespace TestPlatform.DTOs.BindingModels.Tests
 {
     using System.ComponentModel.DataAnnotations;
- 
+
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Mapper.Interfaces;
 

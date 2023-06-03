@@ -17,7 +17,6 @@
     {
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTypeService questionTypeService;
-        private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
         private readonly IQuestionAnswerMananger questionAnswerMananger;
         private readonly ISearchPageableMananager searchPageableMananager;

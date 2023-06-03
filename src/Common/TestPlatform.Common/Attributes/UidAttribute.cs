@@ -10,7 +10,7 @@
 
         public UidAttribute(string uid)
         {
-            if (!Guid.TryParse(uid, out Uid))
+            if (!Guid.TryParse(uid, out this.Uid))
             {
                 throw new Exception(string.Format(ExceptionMessages.CAN_NOT_PARSE_UID, uid));
             }

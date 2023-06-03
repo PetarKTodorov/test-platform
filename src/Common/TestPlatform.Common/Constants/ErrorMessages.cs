@@ -1,7 +1,5 @@
 ﻿namespace TestPlatform.Common.Constants
 {
-    using System;
-
     public static class ErrorMessages
     {
         public const string ENTER_AT_LEAST_TWO_ANSWERS_ERROR_MESSAGE = "Please, enter at least two answers!";
