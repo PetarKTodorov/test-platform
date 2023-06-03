@@ -365,7 +365,7 @@
                     );
                 }
             }
-            else if (oldTestStatusId == StatusType.Pending.GetUid() && newTestStatusId == StatusType.Private.GetUid())
+            else if (newTestStatusId == StatusType.Pending.GetUid() && oldTestStatusId == StatusType.Private.GetUid())
             {
                 var points = this.questionTestMapService.FindSumOfQuestionPointsByTest(testId);
                 if (points < GlobalConstants.COUNT_OF_GRADES)
