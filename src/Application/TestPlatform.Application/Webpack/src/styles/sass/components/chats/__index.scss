@@ -7,10 +7,4 @@
 ================================================================================
 */
 
-@use "./global/__index.scss" as global;
-
-@use "./form/__index.scss" as form;
-
-@use "./conduct-form/__index.scss" as conductForm;
-
-@use "./chats/__index.scss" as chats;
+@use "./_chat.scss";

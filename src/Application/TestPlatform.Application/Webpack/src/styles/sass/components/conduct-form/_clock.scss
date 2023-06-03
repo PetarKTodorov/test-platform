@@ -1,0 +1,14 @@
+@use "../../abstracts/__index.scss" as *;
+
+.test-clock {
+    position: fixed;
+    right: 3rem;
+
+    z-index: 5;
+
+    user-select: none;
+}
+
+.red-frame {
+    border: 10px solid $color-red-500;
+}

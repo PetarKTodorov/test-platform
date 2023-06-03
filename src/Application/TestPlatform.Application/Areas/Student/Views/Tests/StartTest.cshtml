@@ -3,10 +3,13 @@
 @{
     ViewData["Title"] = "Test";
     string dateFormat = "HH:mm";
+    string clockDateFormat = "dd/MM/yyyy HH:mm";
 }
 
 <div class="position-relative u-z-index-100">
     <h1 class="text-center">@Model.TestTitle</h1>
+
+    <div class="js-test-clock test-clock badge bg-secondary" data-end-date="@Model.EndDateTime.ToString(clockDateFormat)"></div>
 
     <div class="container-fluid px-5">
 
@@ -114,6 +117,40 @@
     <button type="button" class="btn btn-primary d-none js-test-leave-modal-button" data-bs-toggle="modal" data-bs-target="#leave-test-modal">
         Launch leave test modal
     </button>
+
+    
+    <button class="btn btn-primary chat-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <span class="icon-font icon-font--chat-2 fs-4"></span>
+        <span>Chat</span>
+    </button>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Room chat</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+            <div class="chat">
+                <div class="chat__message">
+                    <p class="chat__message-text">How are you?</p>
+                    <div class="chat__message-time">10:35</div>
+                </div>
+
+
+            </div> 
+
+            <div>
+                <form>
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="text" class="form-control" />
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon-font icon-font--chat"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
     @section Scripts {
