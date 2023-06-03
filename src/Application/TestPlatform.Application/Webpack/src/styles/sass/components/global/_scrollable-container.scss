@@ -1,0 +1,6 @@
+.scrollable-container {
+    --scroll-container-height: 12rem;
+        
+    height: var(--scroll-container-height);
+    overflow-y: scroll;
+}

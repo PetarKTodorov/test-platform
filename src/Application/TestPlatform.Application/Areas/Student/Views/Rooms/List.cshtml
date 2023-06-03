@@ -44,7 +44,9 @@
                         </h5>
                         <div class="card-body">
                             <h5 class="card-title">Test instructions</h5>
-                            <p class="card-text">@row.TestInstructions</p>
+                            <div class="scrollable-container mb-2">
+                                <p class="card-text">@row.TestInstructions</p>
+                            </div>
 
                             @if (@row.StartDateTime <= DateTime.Now && DateTime.Now <= @row.EndDateTime)
                             {
