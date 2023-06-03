@@ -69,26 +69,29 @@
                                         </a>
                                     </li>
 
-                                    @if (row.IsDeleted)
+                                    @if (row.StartDateTime > DateTime.UtcNow)
                                     {
-                                        <li>
-                                            <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
-                                                Restore
-                                            </a>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@row.Id">
-                                                Update
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@row.Id">
-                                                Delete
-                                            </a>
-                                        </li>
+                                        @if (row.IsDeleted)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
+                                                    Restore
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@row.Id">
+                                                    Update
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@row.Id">
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>

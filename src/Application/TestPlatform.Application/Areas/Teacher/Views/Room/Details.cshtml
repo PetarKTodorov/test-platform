@@ -55,7 +55,7 @@
                         }
                     </td>
                 </tr>
-                
+
                 <tr>
                     <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
                     <td>
@@ -66,14 +66,17 @@
         </table>
 
         <div class="d-flex justify-content-center gap-1">
-            @if (Model.IsDeleted == false)
+            @if (Model.StartDateTime > DateTime.UtcNow)
             {
-                <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@Model.Id">
-                    Update
-                </a>
-                <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@Model.Id">
-                    Delete
-                </a>
+                @if (Model.IsDeleted == false)
+                {
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@Model.Id">
+                        Update
+                    </a>
+                    <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@Model.Id">
+                        Delete
+                    </a>
+                }
             }
             <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="List">
                 Go back
