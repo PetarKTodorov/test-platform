@@ -56,7 +56,7 @@
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            entity.CreatedDate = DateTime.UtcNow;
+            entity.CreatedDate = DateTime.Now;
 
             var entityEntry = await this.DbSet
                 .AddAsync(entity)
@@ -67,7 +67,7 @@
 
         public TEntity Update(TEntity entity)
         {
-            entity.ModifiedDate = DateTime.UtcNow;
+            entity.ModifiedDate = DateTime.Now;
             var entry = this.DbContext.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
@@ -89,7 +89,7 @@
         public TEntity Delete(TEntity entity)
         {
             entity.IsDeleted = true;
-            entity.DeletedDate = DateTime.UtcNow;
+            entity.DeletedDate = DateTime.Now;
 
             return this.Update(entity);
         }

@@ -11,7 +11,7 @@
     {
         public CreateRoomBM()
         {
-            var startDate = DateTime.UtcNow.AddDays(1);
+            var startDate = DateTime.Now.AddDays(1);
             var endDate = startDate.AddHours(1);
 
             this.StartDateTime = new DateTime(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, 0);
