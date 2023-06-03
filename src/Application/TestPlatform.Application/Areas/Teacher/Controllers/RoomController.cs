@@ -61,7 +61,7 @@
                 TestTitle = test.Title
             };
 
-            this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+            this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), testId)).ToList();
 
             return this.View(createRoomBM);
         }
@@ -71,7 +71,7 @@
         {
             if (!this.ValidateRoom(model.ParticipantsIds))
             {
-                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), model.TestId)).ToList();
 
                 return this.View(model);
             }
@@ -106,7 +106,7 @@
                 this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
             }
 
-            this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+            this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), room.TestId)).ToList();
 
             return this.View(room);
         }
@@ -121,7 +121,7 @@
 
             if (!this.ValidateRoom(model.ParticipantsIds))
             {
-                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), model.TestId)).ToList();
 
                 return this.View(model);
             }
@@ -130,7 +130,7 @@
             if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
             {
                 this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
-                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), model.TestId)).ToList();
                 return this.View(model);
             }
 
@@ -150,7 +150,7 @@
                 return this.NotFound();
             }
 
-            this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+            this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), room.TestId)).ToList();
 
             if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
             {
@@ -171,7 +171,7 @@
             var room = await this.roomService.FindByIdAsync<UpdateRoomBM>(model.Id);
             if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
             {
-                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), model.TestId)).ToList();
                 this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
 
                 return this.View(room);
@@ -179,7 +179,7 @@
 
             if (this.ModelState.IsValid == false)
             {
-                this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
+                this.ViewData["AllStudents"] = (await this.userService.FindAllUsersForRoomAsync<List<SelectListItem>>(Roles.Student.GetUid(), model.TestId)).ToList();
 
                 return this.View(model);
             }

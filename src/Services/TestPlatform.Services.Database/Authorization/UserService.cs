@@ -89,11 +89,12 @@
                 .To<T>();
         }
 
-        public async Task<T> FindAllByRoleIdAsync<T>(Guid roleId)
+        public async Task<T> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId)
         {
             var entities = await this.BaseRepository
                 .GetAllAsQueryable()
                 .Where(u => u.Roles.Any(r => r.RoleId == roleId))
+                .Where(u => !u.Rooms.Any(r => r.Room.TestId == testId))
                 .ToListAsync();
 
             T entityToReturn = this.Mapper.Map<T>(entities);

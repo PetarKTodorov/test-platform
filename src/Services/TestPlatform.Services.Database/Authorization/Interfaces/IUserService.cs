@@ -11,6 +11,6 @@
 
         IQueryable<T> FindAllUsersAsQueryable<T>();
 
-        Task<T> FindAllByRoleIdAsync<T>(Guid roleId);
+        Task<T> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId);
     }
 }
