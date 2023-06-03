@@ -1,10 +1,13 @@
 ﻿namespace TestPlatform.Application.Areas.Student.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Tests;
+    using TestPlatform.DTOs.ViewModels.Rooms;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests.ConductTest;
     using TestPlatform.DTOs.ViewModels.Tests.ConductTest.Valid;
@@ -75,6 +78,12 @@
         [HttpPost]
         public async Task<IActionResult> FinishTest(ConductTestVM model)
         {
+            var room = await this.roomService.FindByIdAsync<ConductTestVM>(model.Id);
+            if (room == null || !(room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime.AddMinutes(GlobalConstants.TEST_RESOVE_BUFFER)))
+            {
+                return this.NotFound();
+            }
+
             var validTest = await this.testService.FindByIdAsync<ValidConductTestVM>(model.TestId);
             var totalPoints = validTest.Questions.Sum(q => q.Points);
 
@@ -103,6 +112,21 @@
             await this.testUserMapService.UpdateAsync<BaseBM, CreateTestUserMapBM>(testUserMap.Id, testUserMap, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(List));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
+        {
+            var test = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
+
+            var room = await this.roomService.FindRoomByUserIdAndTestIdAsync<DetailsRoomVM>(this.CurrentUserId, test.Id);
+
+            if (room == null || (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime))
+            {
+                this.ViewData["EndDateTimeNotCameError"] = "Sorry, you can not see the answers yet, the test is currently in duration.";
+            }
+
+            return this.View(test);
         }
     }
 }

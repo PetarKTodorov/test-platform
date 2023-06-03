@@ -1,5 +1,9 @@
 ﻿@model DetailsTestVM
 
+@{
+    CustomClaimsPrincipal currentUser = new CustomClaimsPrincipal(this.User);
+}
+
 @if (Model.Questions != null && Model.Questions.Any())
 {
     <div>
@@ -49,16 +53,21 @@
                                 }
                             </div>
 
-                            <div class="d-flex justify-content-end">
-                                <form method="post"
-                              asp-area="@ApplicationAreas.TEACHER"
-                              asp-controller="Test"
-                              asp-action="RemoveQuestion"
-                              asp-route-questionId="@question.QuestionId"
-                              asp-route-testId="@Model.Id">
-                                    <button type="submit" class="btn btn-danger">Remove</button>
-                                </form>
-                            </div>
+                            @if (currentUser.IsInRole(ApplicationRoles.TEACHER))
+                            {
+                                <div class="d-flex justify-content-end">
+                                    <form method="post"
+                                          asp-area="@ApplicationAreas.TEACHER"
+                                          asp-controller="Test"
+                                          asp-action="RemoveQuestion"
+                                          asp-route-questionId="@question.QuestionId"
+                                          asp-route-testId="@Model.Id">
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </div>
+                            }
+
+                            
                         </div>
                     </div>
                 </div>

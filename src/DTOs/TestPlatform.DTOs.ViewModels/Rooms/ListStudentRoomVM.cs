@@ -2,11 +2,12 @@
 {
     using System;
     using System.ComponentModel;
+    using AutoMapper;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Services.Mapper.Interfaces;
 
-    public class ListStudentRoomVM : IMapFrom<Room>
+    public class ListStudentRoomVM : IMapFrom<Room>, IHaveCustomMappings
     {
         public Guid Id { get; set; }
 
@@ -26,5 +27,13 @@
 
         [DisplayName("Instructions")]
         public string TestInstructions { get; set; }
+
+        public string Grade { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Room, ListStudentRoomVM>()
+                .ForMember(ctbm => ctbm.Grade, mo => mo.MapFrom(t => t.Test.Users.SingleOrDefault(u => u.TestId == t.TestId).Grade));
+        }
     }
 }
