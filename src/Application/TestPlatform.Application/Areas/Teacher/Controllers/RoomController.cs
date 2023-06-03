@@ -69,7 +69,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomBM model)
         {
-            if (!this.ValidateCreateRoom(model.ParticipantsIds))
+            if (!this.ValidateRoom(model.ParticipantsIds))
             {
                 this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
 
@@ -114,16 +114,16 @@
         [HttpPost]
         public async Task<IActionResult> Update(UpdateRoomBM model)
         {
-            if (this.ModelState.IsValid == false)
+            if (model.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            if (!this.ValidateRoom(model.ParticipantsIds))
             {
                 this.ViewData["AllStudents"] = (await this.userService.FindAllByRoleIdAsync<List<SelectListItem>>(Roles.Student.GetUid())).ToList();
 
                 return this.View(model);
-            }
-
-            if (model.CreatedBy != this.CurrentUserId)
-            {
-                return this.NotFound();
             }
 
             var room = await this.roomService.FindByIdAsync<UpdateRoomBM>(model.Id);
@@ -190,7 +190,7 @@
             return this.RedirectToAction(nameof(List));
         }
 
-        private bool ValidateCreateRoom(IEnumerable<Guid> participantsIds)
+        private bool ValidateRoom(IEnumerable<Guid> participantsIds)
         {
             var isValid = this.ModelState.IsValid;
 
