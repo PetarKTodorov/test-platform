@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="DataSets\Authorization\" />
-    <Folder Include="DataSets\Tests\" />
   </ItemGroup>
 
   <ItemGroup>

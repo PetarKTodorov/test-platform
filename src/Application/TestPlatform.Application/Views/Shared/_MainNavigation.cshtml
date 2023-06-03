@@ -73,6 +73,25 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Rooms
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="List">List</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    if (currentUser.IsInRole(ApplicationRoles.STUDENT))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="@ApplicationAreas.STUDENT" asp-controller="Rooms" asp-action="List">My Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="List">My Tests</a>
+                        </li>
                     }
                 }
             </ul>
@@ -90,8 +109,18 @@
                     }
                     else
                     {
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="user-profil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.FindFirst(UserClaimTypes.EMAIL).Value
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="user-profile">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Profile">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
+                                </li>
+                            </ul>
                         </li>
                     }
                 }

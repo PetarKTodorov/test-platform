@@ -1,0 +1,37 @@
+﻿@model ChangeTestStatusBM
+
+@{
+    this.ViewData["Title"] = "Change status";
+
+    var statuses = (List<SelectListItem>)this.ViewData["Statuses"];
+}
+
+
+<h1 class="text-center my-5">@ViewData["Title"]</h1>
+
+<div class="container">
+    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
+    <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ChangeStatus" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.HiddenFor(model => model.CreatedBy)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.StatusId, new { @class = "form-label"})
+
+            <select class="js-select2 form-control" asp-for="StatusId" asp-items="@statuses">
+                <option selected disabled>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.StatusId)
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-1">
+            <button type="submit" class="btn btn-success">Change status</button>
+        </div>
+    </form>
+</div>

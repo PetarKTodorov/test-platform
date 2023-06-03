@@ -5,6 +5,6 @@
 
     public interface ISubjectTagService : IBaseService<SubjectTag>
     {
-
+        IQueryable<T> FindAllSubjectTagsAsQueryable<T>();
     }
 }

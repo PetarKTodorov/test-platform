@@ -1,14 +1,12 @@
 ﻿namespace TestPlatform.Application.Areas.Teacher.Controllers
 {
-    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
@@ -19,7 +17,6 @@
     {
         private readonly IQuestionCopyService questionCopyService;
         private readonly IQuestionTypeService questionTypeService;
-        private readonly IQuestionAnswerMapService questionAnswerMapService;
         private readonly ISubjectTagService subjectTagService;
         private readonly IQuestionAnswerMananger questionAnswerMananger;
         private readonly ISearchPageableMananager searchPageableMananager;
@@ -40,7 +37,7 @@
 
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = await this.questionCopyService.FindUserQuestionsAsQueryable<QuestionInformationVM>(this.CurrentUserId);
+            var dataQuery = this.questionCopyService.FindUserQuestionsAsQueryable<QuestionInformationVM>(this.CurrentUserId);
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -66,7 +63,7 @@
                 return this.View(model);
             }
 
-            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<QuestionCopy>(model, this.CurrentUserId);
+            var createdQuestion = await this.questionAnswerMananger.CreateQuestion<BaseBM>(model, this.CurrentUserId);
 
             await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, createdQuestion.Id, this.CurrentUserId);
 
@@ -111,13 +108,13 @@
                 return this.View(model);
             }
 
-            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(model.Id);
+            var question = await this.questionCopyService.FindByIdAsync<BaseBM>(model.Id);
             if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<QuestionCopy>(model, this.CurrentUserId);
+            var questionCopy = await this.questionAnswerMananger.UpdateQuestionAsync<BaseBM>(model, this.CurrentUserId);
             await this.questionAnswerMananger.AddAnswersToQuestionAsync(model.Answers, questionCopy.Id, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
@@ -138,7 +135,7 @@
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
-            var question = await this.questionCopyService.FindByIdAsync<QuestionCopy>(id);
+            var question = await this.questionCopyService.FindByIdAsync<BaseBM>(id);
             if (question.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();

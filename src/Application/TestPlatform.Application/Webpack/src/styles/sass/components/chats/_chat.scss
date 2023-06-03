@@ -1,0 +1,26 @@
+@use "../../abstracts/__index.scss"as *;
+
+.chat {
+    flex-grow: 1;
+
+    &__message {
+
+    }
+
+    &__message-text {
+        padding: 1rem;
+
+        background-color: var(--bs-blue);
+
+        border-radius: 8px;
+
+        color: $color-white-500;
+    }
+
+    &__message-time {
+        padding: 0 0.1rem;
+
+        text-align: right;
+        color: var(--bs-gray-500);
+    }
+}

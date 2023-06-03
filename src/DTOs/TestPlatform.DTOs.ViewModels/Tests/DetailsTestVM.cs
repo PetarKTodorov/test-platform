@@ -5,6 +5,7 @@
     using AutoMapper;
 
     using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
 
     public class DetailsTestVM : IMapFrom<Test>, IHaveCustomMappings
@@ -50,11 +51,22 @@
         [DisplayName("Subject Tags")]
         public IEnumerable<string> SubjectTagNames { get; set; }
 
+        [DisplayName("Total points")]
+        public int TotalPoints { get; set; }
+
+        [DisplayName("Questions count")]
+        public int QuestionsCount { get; set; }
+
+        public DetailsTestEvaluationVM Evaluation { get; set; }
+
+        public IEnumerable<DetailsQuestionTestVM> Questions { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Test, DetailsTestVM>()
                 .ForMember(ctbm => ctbm.SubjectTagNames,
-                    mo => mo.MapFrom(t => t.SubjectTags.Select(tsm => tsm.SubjectTag.Name)));
+                    mo => mo.MapFrom(t => t.SubjectTags.Select(tsm => tsm.SubjectTag.Name)))
+                .ForMember(ctbm => ctbm.TotalPoints, mo => mo.MapFrom(t => t.Questions.Sum(q => q.Points)));
         }
     }
 }

@@ -45,7 +45,7 @@
 
         public DbSet<GradeScale> GradeScales { get; set; }
 
-        public DbSet<GradeScaleTestЕvaluationMap> GradeScalesTestЕvaluationsMap { get; set; }
+        public DbSet<GradeScaleTestEvaluationMap> GradeScalesTestEvaluationsMap { get; set; }
 
         public DbSet<Status> Statuses { get; set; }
 
@@ -55,7 +55,7 @@
 
         public DbSet<TestUserMap> TestsUsersMap { get; set; }
 
-        public DbSet<TestЕvaluation> TestЕvaluations { get; set; }
+        public DbSet<TestEvaluation> TestEvaluations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

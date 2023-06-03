@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Services.Mapper.Interfaces;

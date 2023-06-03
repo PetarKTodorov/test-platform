@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Mapper;
 
@@ -22,11 +23,11 @@
 
             if (answer == null)
             {
-                var answerModel = new Answer()
+                var answerModel = new CreateAnswerBM()
                 {
                     Content = answerContent,
                 };
-                answer = await this.CreateAsync<T, Answer>(answerModel, currentUserId);
+                answer = await this.CreateAsync<T, CreateAnswerBM>(answerModel, currentUserId);
             }
 
             return answer;
@@ -34,7 +35,7 @@
 
         public async Task<T> FindByContentAsync<T>(string content)
         {
-            var answer = await this.FindAllAsQueryable<Answer>()
+            var answer = await this.FindAllAsQueryable()
                 .Where(a => a.Content == content)
                 .To<T>()
                 .FirstOrDefaultAsync();

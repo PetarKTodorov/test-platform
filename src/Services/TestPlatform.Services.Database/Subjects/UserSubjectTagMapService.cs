@@ -16,7 +16,7 @@
 
         public async Task<IEnumerable<T>> FindUserSubjectTagsAsync<T>(Guid userId)
         {
-            var userSubjectTags = await this.FindAllAsQueryable<UserSubjectTagMap>()
+            var userSubjectTags = await this.FindAllAsQueryable()
                 .Where(x => x.UserId == userId)
                 .To<T>()
                 .ToArrayAsync();
@@ -26,7 +26,7 @@
 
         public async Task<IEnumerable<T>> FindUserSubjectTagsBySubjectTagIdAsync<T>(Guid subjectTagId)
         {
-            var userSubjectTags = await this.FindAllAsQueryable<UserSubjectTagMap>()
+            var userSubjectTags = await this.FindAllAsQueryable()
                 .Where(x => x.SubjectTagId == subjectTagId)
                 .To<T>()
                 .ToArrayAsync();

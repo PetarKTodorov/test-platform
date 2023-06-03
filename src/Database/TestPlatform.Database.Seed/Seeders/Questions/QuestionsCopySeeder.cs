@@ -7,8 +7,8 @@
     using Microsoft.Extensions.Logging;
 
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Seed.BindingModels.Questions;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.Services.Database.Questions.Interfaces;
 
     internal class QuestionsCopySeeder : BaseSeeder
@@ -31,7 +31,7 @@
                     dto.CreatedBy = new Guid(GlobalConstants.ADMINISTRATOR_ID);
                 }
 
-                await service.CreateAsync<QuestionCopy, SeedQuestionCopyBM>(dto, dto.CreatedBy.Value);
+                await service.CreateAsync<BaseBM, SeedQuestionCopyBM>(dto, dto.CreatedBy.Value);
             }
         }
     }

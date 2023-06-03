@@ -1,0 +1,78 @@
+﻿@model SearchFilterVM<ListStudentRoomVM>
+
+@{
+    ViewData["Title"] = "Your Rooms";
+    string dateFormat = "dd.MM.yyyy HH:mm";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <h2>Search filter:</h2>
+
+    <form method="get" class="search-form">
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            @Html.EditorFor(m => m.SearchCriteria)
+        </div>
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+    </form>
+
+    @{
+        if (this.Model.Data.Items.Any() == false)
+        {
+            <div class="text-center fs-3 mt-5">There are no results found.</div>
+            return;
+        }
+    }
+
+    <section class="my-5">
+
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+            @foreach (var row in Model.Data.Items)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <h5 class="card-header mt-0 d-flex flex-wrap gap-1 justify-content-between">
+                            <span>@row.TestTitle</span>
+                            <span class="text-muted d-flex flex-wrap gap-3 justify-content-between">
+                                <span>@row.StartDateTime.ToString(dateFormat)</span>
+                                <span>@row.EndDateTime.ToString(dateFormat)</span>
+                            </span>
+                        </h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Test instructions</h5>
+                            <div class="scrollable-container mb-2">
+                                <p class="card-text">@row.TestInstructions</p>
+                            </div>
+
+                            @if (@row.StartDateTime <= DateTime.Now && DateTime.Now <= @row.EndDateTime)
+                            {
+                                @if (string.IsNullOrWhiteSpace(row.Grade))
+                                {
+                                    <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="StartTest" asp-route-roomId="@row.Id">Start test</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="button" disabled>
+                                            Start test
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted">The room is locked, it will be unlocked on @row.StartDateTime.ToString(dateFormat) till @row.EndDateTime.ToString(dateFormat)</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>

@@ -19,7 +19,7 @@
 
         public async Task<IEnumerable<T>> FindUserRolesAsync<T>(Guid userId)
         {
-            var userSubjectTags = await this.FindAllAsQueryable<UserRoleMap>()
+            var userSubjectTags = await this.FindAllAsQueryable()
                 .Where(x => x.UserId == userId)
                 .To<T>()
                 .ToArrayAsync();

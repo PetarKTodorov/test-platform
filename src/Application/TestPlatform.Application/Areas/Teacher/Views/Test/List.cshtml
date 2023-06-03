@@ -74,40 +74,48 @@
                                             Details
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ChangeStatus" asp-route-id="@row.Id">
+                                            Change status
+                                        </a>
+                                    </li>
 
-                                    @if (row.IsDeleted)
+                                    @if (row.StatusId == StatusType.Ready.GetUid() || row.StatusId == StatusType.Public.GetUid())
                                     {
                                         <li>
-                                            <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
-                                                Restore
+                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@row.Id">
+                                                Create room
                                             </a>
                                         </li>
                                     }
-                                    else
+                                    else if (row.StatusId == StatusType.Private.GetUid())
                                     {
-                                        <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@row.Id">
-                                                Update
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@row.Id">
-                                                Delete
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (row.StatusId == StatusType.Ready.GetUid())
-                                    {
-                                        <li>
-                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@row.Id">
-                                                <button type="submit" class="btn dropdown-item">Create room</button>
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <form method="post" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="MakePublic" asp-route-id="@row.Id">
-                                                <button type="submit" class="btn dropdown-item">Make test public</button>
-                                            </form>
-                                        </li>
+                                        @if (row.IsDeleted)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item js-restore-modal-button" data-bs-toggle="modal" data-bs-target="#@restoreModalId" data-model-id="@row.Id">
+                                                    Restore
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@row.Id">
+                                                    Add questions
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@row.Id">
+                                                    Update
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@row.Id">
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>

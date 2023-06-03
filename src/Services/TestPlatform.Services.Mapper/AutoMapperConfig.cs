@@ -60,6 +60,12 @@
                         {
                             configuration.CreateMap(map.Source, map.Destination);
                         }
+
+                        // GetEntityTypesToBaseBM
+                        foreach (var map in GetEntityTypesToBaseEntity(types))
+                        {
+                            configuration.CreateMap(map.Source, map.Destination);
+                        }
                     });
 
             config.AddProfile<SelectListItemProfile>();

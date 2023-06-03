@@ -125,22 +125,49 @@
                         @Html.DisplayTextFor(model => model.IsDeleted)
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.QuestionsCount)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.QuestionsCount)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.TotalPoints)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.TotalPoints)
+                    </td>
+                </tr>
             </tbody>
         </table>
 
         <div class="d-flex justify-content-center gap-1">
-            @if (Model.IsDeleted == false)
+            @if (Model.StatusName == StatusType.Ready.GetDisplayName() || Model.StatusName == StatusType.Public.GetDisplayName())
             {
-                <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@Model.Id">
-                    Update
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@Model.Id">
+                    Create room
                 </a>
-                <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@Model.Id">
-                    Delete
-            </a>
+            }
+            else if (Model.StatusName == StatusType.Private.GetDisplayName())
+            {
+                @if (!Model.IsDeleted)
+                {
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@Model.Id">
+                        Add questions
+                    </a>
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@Model.Id">
+                        Update
+                    </a>
+                    <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@Model.Id">
+                        Delete
+                    </a>
+                }
             }
             <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">
                 Go back
             </a>
         </div>
+
+        @Html.PartialAsync("_DetailsGradeScale", Model.Evaluation).Result
+        @Html.PartialAsync("_DetailsQuestions", Model).Result
     </div>
 </div>

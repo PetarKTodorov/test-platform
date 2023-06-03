@@ -1,7 +1,7 @@
 ﻿namespace TestPlatform.Application.Controllers
 {
     using System.Security.Claims;
-    
+
     using Microsoft.AspNetCore.Mvc;
 
     using TestPlatform.Application.Infrastructures.ApplicationUser;

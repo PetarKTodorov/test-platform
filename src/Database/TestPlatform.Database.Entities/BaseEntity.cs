@@ -8,7 +8,7 @@
         public BaseEntity()
         {
             this.Id = Guid.NewGuid();
-            this.CreatedDate = DateTime.UtcNow;
+            this.CreatedDate = DateTime.Now;
             this.IsDeleted = false;
         }
 

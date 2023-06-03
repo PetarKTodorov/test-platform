@@ -2,14 +2,17 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-
+    using Microsoft.EntityFrameworkCore;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
-    using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.BindingModels.Common;
+    using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
+    using TestPlatform.Services.Database.Questions.Interfaces;
+    using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Database.Test.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
@@ -21,26 +24,36 @@
         private readonly ISubjectTagService subjectTagService;
         private readonly ISearchPageableMananager searchPageableMananager;
         private readonly ITestApprovalMapService testApprovalMapService;
+        private readonly IQuestionCopyService questionCopyService;
+        private readonly IQuestionTestMapService questionTestMapService;
+        private readonly ITestGradeScaleManager testGradeScaleManager;
+        private readonly IRoomService roomService;
 
-        public TestController(ITestService testService, IStatusService statusService,
+        public TestController(ITestService testService,
+            IStatusService statusService,
             ISubjectTagService subjectTagService,
             ISearchPageableMananager searchPageableMananager,
-            ITestApprovalMapService testApprovalMapService)
+            ITestApprovalMapService testApprovalMapService,
+            IQuestionCopyService questionCopyService,
+            IQuestionTestMapService questionTestMapService,
+            ITestGradeScaleManager testGradeScaleManager,
+            IRoomService roomService)
         {
             this.testService = testService;
             this.statusService = statusService;
             this.subjectTagService = subjectTagService;
             this.searchPageableMananager = searchPageableMananager;
             this.testApprovalMapService = testApprovalMapService;
+            this.questionCopyService = questionCopyService;
+            this.questionTestMapService = questionTestMapService;
+            this.testGradeScaleManager = testGradeScaleManager;
+            this.roomService = roomService;
         }
 
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.testService
-                .FindAllAsQueryable<ListTestsVM>()
-                .Where(lt => lt.CreatedBy == this.CurrentUserId);
-
+            var dataQuery = this.testService.FindUserTestsAsQueryable<ListTestsVM>(this.CurrentUserId);
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -49,10 +62,7 @@
         [HttpGet]
         public async Task<IActionResult> ListPending(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.testService
-                .FindAllAsQueryable<ListPendingTestVM>()
-                .Where(lt => lt.CreatedBy != this.CurrentUserId)
-                .Where(lt => lt.StatusId == StatusType.Pending.GetUid())
+            var dataQuery = this.testService.FindPendingTestAsQueryable<ListPendingTestVM>(this.CurrentUserId)
                 .Where(lt => !lt.ApproversIds.Contains(this.CurrentUserId));
 
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
@@ -78,7 +88,7 @@
                 return this.View(model);
             }
 
-            var privateStatus = await this.statusService.FindByIdAsync<Status>(StatusType.Private.GetUid());
+            var privateStatus = await this.statusService.FindByIdAsync<BaseBM>(StatusType.Private.GetUid());
 
             if (privateStatus == null)
             {
@@ -89,7 +99,7 @@
 
             model.StatusId = privateStatus.Id;
 
-            var test = await this.testService.CreateAsync<Test, CreateTestBM>(model, this.CurrentUserId);
+            var test = await this.testService.CreateAsync<BaseBM, CreateTestBM>(model, this.CurrentUserId);
 
             await this.testService.UpdateSubjectTagsAsync(test.Id, model.SubjectTagsIds, this.CurrentUserId);
 
@@ -99,9 +109,9 @@
         [HttpGet]
         public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
         {
-            var subjectTag = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
+            var test = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
 
-            return this.View(subjectTag);
+            return this.View(test);
         }
 
         [HttpGet]
@@ -134,7 +144,7 @@
                 return this.NotFound();
             }
 
-            await this.testService.UpdateAsync<Test, UpdateTestBM>(model.Id, model, this.CurrentUserId);
+            await this.testService.UpdateAsync<BaseBM, UpdateTestBM>(model.Id, model, this.CurrentUserId);
             await this.testService.UpdateSubjectTagsAsync(model.Id, model.SubjectTagsIds, this.CurrentUserId);
 
             return this.RedirectToAction(nameof(Details), new { id = model.Id });
@@ -178,7 +188,7 @@
         [HttpGet]
         public async Task<IActionResult> Restore(Guid id)
         {
-            var test = await this.testService.RestoryAsync<Test>(id, this.CurrentUserId);
+            var test = await this.testService.RestoryAsync<BaseBM>(id, this.CurrentUserId);
 
             if (test.CreatedBy != this.CurrentUserId)
             {
@@ -191,40 +201,184 @@
         [HttpGet]
         public async Task<IActionResult> Approve(Guid id)
         {
-            var newTestApprovalMap = new TestApprovalMap()
+            var newTestApprovalMap = new CreateTestApprovalBM()
             {
                 TestId = id,
                 UserId = this.CurrentUserId,
             };
 
-            await this.testApprovalMapService.CreateAsync<TestApprovalMap, TestApprovalMap>(newTestApprovalMap, this.CurrentUserId);
+            await this.testApprovalMapService.CreateAsync<BaseBM, CreateTestApprovalBM>(newTestApprovalMap, this.CurrentUserId);
 
-            var test = await this.testService.FindByIdAsync<Test>(id);
-
-            if (test.Approvers.Count == GlobalConstants.DEFAULT_TEST_APPROVELS_COUNT)
+            var test = await this.testService.FindByIdAsync<UpdateApproveTestBM>(id);
+            if (test.ApproversCount == GlobalConstants.DEFAULT_TEST_APPROVELS_COUNT)
             {
                 test.IsApproved = true;
                 test.StatusId = StatusType.Ready.GetUid();
-                await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
+                await this.testService.UpdateAsync<BaseBM, UpdateApproveTestBM>(test.Id, test, this.CurrentUserId);
             }
 
             return this.RedirectToAction(nameof(Details), new { id = id });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> MakePublic(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> ChangeStatus(Guid id)
         {
-            var test = await this.testService.FindByIdAsync<Test>(id);
+            var test = await this.testService.FindByIdAsync<ChangeTestStatusBM>(id);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            this.ViewData["Statuses"] = this.testService.GetTestNextStatuses(test.StatusId);
+
+            return this.View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatus(ChangeTestStatusBM model)
+        {
+            var test = await this.testService.FindByIdAsync<ChangeTestStatusBM>(model.Id);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            if (!this.ValidateChangeStatus(test.Id, test.StatusId, model.StatusId))
+            {
+                this.ViewData["Statuses"] = this.testService.GetTestNextStatuses(test.StatusId);
+
+                return this.View();
+            }
+
+            await this.testService.UpdateAsync<BaseBM, ChangeTestStatusBM>(model.Id, model, this.CurrentUserId);
+
+            if (model.StatusId == StatusType.Private.GetUid())
+            {
+                foreach (var testApprovalId in test.TestApprovalsIds)
+                {
+                    await this.testApprovalMapService.HardDeleteAsync<BaseBM>(testApprovalId);
+                }
+
+                await this.testGradeScaleManager.DeleteGradeScalesAsync(test.Id, this.CurrentUserId);
+            }
+            else if (model.StatusId == StatusType.Pending.GetUid())
+            {
+                await this.testGradeScaleManager.CreateGradeScaleForTestAsync(test.Id, test.TotalPoints, this.CurrentUserId);
+            }
+
+            return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddQuestion(Guid testId)
+        {
+            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(testId);
 
             if (test.CreatedBy != this.CurrentUserId)
             {
                 return this.NotFound();
             }
 
-            test.StatusId = StatusType.Public.GetUid();
-            await this.testService.UpdateAsync<Test, Test>(test.Id, test, this.CurrentUserId);
+            this.ViewData["UserQuestions"] = this.questionCopyService
+                .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, test.SubjectTagsIds, test.QuestionsIds)
+                .ToList();
+
+            return this.View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddQuestion(AddQuestionToTestBM model)
+        {
+            if (!this.ValidateTestQuestion(model.QuestionPoints))
+            {
+                this.ViewData["UserQuestions"] = this.questionCopyService
+                    .FindUserQuestionsForTestAsQueryable<SelectListItem>(this.CurrentUserId, model.SubjectTagsIds, model.QuestionsIds)
+                    .ToList();
+
+                return this.View(model);
+            }
+
+            var test = await this.testService.FindByIdAsync<AddQuestionToTestBM>(model.Id);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            var createModel = new CreateTestQuestionMapBM()
+            {
+                QuestionId = model.QuestionId,
+                TestId = model.Id,
+                Points = model.QuestionPoints,
+            };
+            await this.questionTestMapService.CreateAsync<BaseBM, CreateTestQuestionMapBM>(createModel, this.CurrentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = model.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveQuestion(Guid questionId, Guid testId)
+        {
+            var test = await this.testService.FindByIdAsync<BaseBM>(testId);
+            if (test.CreatedBy != this.CurrentUserId)
+            {
+                return this.NotFound();
+            }
+
+            var question = await this.questionCopyService.FindByIdAsync<BaseBM>(questionId);
+            var questionTestMap = await this.questionTestMapService.FindQuestionTestAsync<BaseBM>(question.Id, test.Id);
+
+            await this.questionTestMapService.HardDeleteAsync<BaseBM>(questionTestMap.Id);
 
             return this.RedirectToAction(nameof(Details), new { id = test.Id });
+        }
+
+        private bool ValidateTestQuestion(int points)
+        {
+            var isValid = this.ModelState.IsValid;
+
+            if (points <= Validations.ZERO)
+            {
+                isValid = false;
+
+                this.ViewBag.StatusError = ErrorMessages.QUESTION_POINTS_MUST_BE_GREATER_THAN_ZERO;
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateChangeStatus(Guid testId, Guid oldTestStatusId, Guid newTestStatusId)
+        {
+            var isValid = this.ModelState.IsValid;
+
+            if ((oldTestStatusId == StatusType.Public.GetUid() || oldTestStatusId == StatusType.Ready.GetUid()) &&
+                (newTestStatusId == StatusType.Private.GetUid() || newTestStatusId == StatusType.Ready.GetUid()))
+            {
+                var countOfRoomsCreatedWithTest = this.roomService.CountOfRoomsInTheFutureByTestId(testId);
+                if (countOfRoomsCreatedWithTest > 0)
+                {
+                    isValid = false;
+
+                    this.ViewBag.StatusError = string.Format(
+                        ErrorMessages.THERE_ARE_ROOMS_IN_THE_FUTURE_WITH_THIS_TEST,
+                        countOfRoomsCreatedWithTest
+                    );
+                }
+            }
+            else if (newTestStatusId == StatusType.Pending.GetUid() && oldTestStatusId == StatusType.Private.GetUid())
+            {
+                var points = this.questionTestMapService.FindSumOfQuestionPointsByTest(testId);
+                if (points < GlobalConstants.COUNT_OF_GRADES)
+                {
+                    isValid = false;
+
+                    this.ViewBag.StatusError = string.Format(
+                        ErrorMessages.TEST_DOESNT_HAVE_ENOUGH_QUESTION_POINTS,
+                        GlobalConstants.COUNT_OF_GRADES
+                    );
+                }
+            }
+
+            return isValid;
         }
     }
 }

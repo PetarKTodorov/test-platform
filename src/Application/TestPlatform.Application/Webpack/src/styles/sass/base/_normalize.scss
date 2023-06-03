@@ -54,3 +54,7 @@ optgroup {
     font: inherit;
     font-family: inherit;
 }
+
+*:disabled {
+    cursor: not-allowed;
+}

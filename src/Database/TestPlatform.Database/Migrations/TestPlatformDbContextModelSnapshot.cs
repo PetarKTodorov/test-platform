@@ -291,9 +291,6 @@ namespace TestPlatform.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CorrectAnswersCount")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -364,6 +361,9 @@ namespace TestPlatform.Database.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("uniqueidentifier");
@@ -672,7 +672,7 @@ namespace TestPlatform.Database.Migrations
                     b.ToTable("GradeScales");
                 });
 
-            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.GradeScaleTestЕvaluationMap", b =>
+            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.GradeScaleTestEvaluationMap", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -702,16 +702,16 @@ namespace TestPlatform.Database.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("TestЕvaluationId")
+                    b.Property<Guid>("TestEvaluationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("GradeScaleId", "TestЕvaluationId");
+                    b.HasAlternateKey("GradeScaleId", "TestEvaluationId");
 
-                    b.HasIndex("TestЕvaluationId");
+                    b.HasIndex("TestEvaluationId");
 
-                    b.ToTable("GradeScalesTestЕvaluationsMap");
+                    b.ToTable("GradeScalesTestEvaluationsMap");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.Status", b =>
@@ -772,6 +772,9 @@ namespace TestPlatform.Database.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("HasRandomizeQuestions")
                         .HasColumnType("bit");
 
@@ -799,56 +802,11 @@ namespace TestPlatform.Database.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<Guid?>("ЕvaluationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StatusId");
 
-                    b.HasIndex("ЕvaluationId")
-                        .IsUnique()
-                        .HasFilter("[ЕvaluationId] IS NOT NULL");
-
                     b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestЕvaluation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRouned")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("TestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestЕvaluations");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestApprovalMap", b =>
@@ -893,6 +851,48 @@ namespace TestPlatform.Database.Migrations
                     b.ToTable("TestsApprovalsMap");
                 });
 
+            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestEvaluation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRouned")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("TestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId")
+                        .IsUnique()
+                        .HasFilter("[TestId] IS NOT NULL");
+
+                    b.ToTable("TestEvaluations");
+                });
+
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestUserMap", b =>
                 {
                     b.Property<Guid>("Id")
@@ -910,6 +910,11 @@ namespace TestPlatform.Database.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1087,23 +1092,23 @@ namespace TestPlatform.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.GradeScaleTestЕvaluationMap", b =>
+            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.GradeScaleTestEvaluationMap", b =>
                 {
                     b.HasOne("TestPlatform.Database.Entities.Tests.GradeScale", "GradeScale")
-                        .WithMany("Еvaluations")
+                        .WithMany("Evaluations")
                         .HasForeignKey("GradeScaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestPlatform.Database.Entities.Tests.TestЕvaluation", "TestЕvaluation")
+                    b.HasOne("TestPlatform.Database.Entities.Tests.TestEvaluation", "TestEvaluation")
                         .WithMany("GradeScales")
-                        .HasForeignKey("TestЕvaluationId")
+                        .HasForeignKey("TestEvaluationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("GradeScale");
 
-                    b.Navigation("TestЕvaluation");
+                    b.Navigation("TestEvaluation");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.Test", b =>
@@ -1114,13 +1119,7 @@ namespace TestPlatform.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestPlatform.Database.Entities.Tests.TestЕvaluation", "Еvaluation")
-                        .WithOne("Test")
-                        .HasForeignKey("TestPlatform.Database.Entities.Tests.Test", "ЕvaluationId");
-
                     b.Navigation("Status");
-
-                    b.Navigation("Еvaluation");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestApprovalMap", b =>
@@ -1140,6 +1139,15 @@ namespace TestPlatform.Database.Migrations
                     b.Navigation("Test");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestEvaluation", b =>
+                {
+                    b.HasOne("TestPlatform.Database.Entities.Tests.Test", "Test")
+                        .WithOne("Evaluation")
+                        .HasForeignKey("TestPlatform.Database.Entities.Tests.TestEvaluation", "TestId");
+
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestUserMap", b =>
@@ -1217,7 +1225,7 @@ namespace TestPlatform.Database.Migrations
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.GradeScale", b =>
                 {
-                    b.Navigation("Еvaluations");
+                    b.Navigation("Evaluations");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Tests.Status", b =>
@@ -1229,6 +1237,8 @@ namespace TestPlatform.Database.Migrations
                 {
                     b.Navigation("Approvers");
 
+                    b.Navigation("Evaluation");
+
                     b.Navigation("Questions");
 
                     b.Navigation("Rooms");
@@ -1238,11 +1248,9 @@ namespace TestPlatform.Database.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestЕvaluation", b =>
+            modelBuilder.Entity("TestPlatform.Database.Entities.Tests.TestEvaluation", b =>
                 {
                     b.Navigation("GradeScales");
-
-                    b.Navigation("Test");
                 });
 #pragma warning restore 612, 618
         }

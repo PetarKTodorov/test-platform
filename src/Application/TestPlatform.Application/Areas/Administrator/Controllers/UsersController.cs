@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
-    using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.ViewModels.Roles;
     using TestPlatform.DTOs.ViewModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Users;
@@ -42,7 +42,7 @@
         [HttpGet]
         public async Task<IActionResult> List(ICollection<AbstractSearch> searchCriteria, int? page = 1)
         {
-            var dataQuery = this.userService.FindAllAsQueryable<UserInformationVM>();
+            var dataQuery = this.userService.FindAllUsersAsQueryable<UserInformationVM>();
             var model = this.searchPageableMananager.CreateSearchFilterModelWithPaging(dataQuery, searchCriteria, page.Value);
 
             return this.View(model);
@@ -82,7 +82,7 @@
         public async Task<IActionResult> DeleteConfirmed(Guid userId)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.userService.DeleteAsync<User>(userId, currentUserId);
+            await this.userService.DeleteAsync<BaseBM>(userId, currentUserId);
 
             return this.RedirectToAction(nameof(List));
         }
@@ -99,7 +99,7 @@
         public async Task<IActionResult> RestoreConfirmed(Guid userId)
         {
             var currentUserId = new Guid(this.User.FindFirstValue(UserClaimTypes.ID));
-            await this.userService.RestoryAsync<User>(userId, currentUserId);
+            await this.userService.RestoryAsync<BaseBM>(userId, currentUserId);
 
             return this.RedirectToAction(nameof(List));
         }

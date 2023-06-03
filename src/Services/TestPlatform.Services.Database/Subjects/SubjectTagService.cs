@@ -7,6 +7,7 @@
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
+    using TestPlatform.Services.Mapper;
 
     public class SubjectTagService : BaseService<SubjectTag>, ISubjectTagService
     {
@@ -18,6 +19,12 @@
             : base(baseRepository, mapper)
         {
             this.userSubjectTagMapService = userSubjectTagMapService;
+        }
+
+        public IQueryable<T> FindAllSubjectTagsAsQueryable<T>()
+        {
+            return this.FindAllAsQueryable()
+                .To<T>();
         }
 
         public override async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)

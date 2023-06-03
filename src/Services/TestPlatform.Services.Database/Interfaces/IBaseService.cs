@@ -19,7 +19,7 @@
 
         Task<T> RestoryAsync<T>(Guid id, Guid currentUserId);
 
-        IQueryable<T> FindAllAsQueryable<T>();
+        IQueryable<TEntity> FindAllAsQueryable();
 
         Task<IEnumerable<T>> FindAllAsync<T>();
 

@@ -1,5 +1,6 @@
 ﻿namespace TestPlatform.Services.Database.Questions
 {
+    using System.Collections.Generic;
     using AutoMapper;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Repositories.Interfaces;
@@ -13,10 +14,21 @@
         {
         }
 
-        public async Task<IQueryable<T>> FindUserQuestionsAsQueryable<T>(Guid userId)
+        public IQueryable<T> FindUserQuestionsAsQueryable<T>(Guid userId)
         {
-            var userQuestions = this.FindAllAsQueryable<QuestionCopy>()
+            var userQuestions = this.FindAllAsQueryable()
                 .Where(q => q.CreatedBy == userId)
+                .To<T>();
+
+            return userQuestions;
+        }
+
+        public IQueryable<T> FindUserQuestionsForTestAsQueryable<T>(Guid userId, IEnumerable<Guid> subjectTagsId, IEnumerable<Guid> testQuestionsIds)
+        {
+            var userQuestions = this.FindAllAsQueryable()
+                .Where(q => q.CreatedBy == userId)
+                .Where(q => subjectTagsId.Contains(q.SubjectTagId))
+                .Where(q => !testQuestionsIds.Contains(q.Id))
                 .To<T>();
 
             return userQuestions;

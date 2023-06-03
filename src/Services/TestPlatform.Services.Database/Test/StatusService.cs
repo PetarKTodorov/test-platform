@@ -19,7 +19,7 @@
 
         public async Task<T> FindByNameAsync<T>(string name)
         {
-            var status = await this.FindAllAsQueryable<Status>()
+            var status = await this.FindAllAsQueryable()
                .Where(s => s.Name == name)
                .To<T>()
                .FirstOrDefaultAsync();

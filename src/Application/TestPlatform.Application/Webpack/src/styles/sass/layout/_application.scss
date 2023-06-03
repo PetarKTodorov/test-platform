@@ -1,4 +1,6 @@
 .application {
+    position: relative;
+
     display: flex;
     flex-direction: column;
 
@@ -7,8 +9,6 @@
     }
 
     &__main {
-        position: relative;
-
         flex-grow: 1;
     }
 

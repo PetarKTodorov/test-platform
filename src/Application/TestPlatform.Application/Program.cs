@@ -29,7 +29,8 @@
     using TestPlatform.Application.Infrastructures.Searcher.MVC;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Questions;
-    using TestPlatform.Database.Entities.Questions;
+    using TestPlatform.Services.Database.Rooms.Interfaces;
+    using TestPlatform.Services.Database.Rooms;
 
     public class Program
     {
@@ -154,10 +155,19 @@
             services.AddTransient<IQuestionTypeService, QuestionTypeService>();
             services.AddTransient<IAnswerService, AnswerService>();
             services.AddTransient<IQuestionAnswerMapService, QuestionAnswerMapService>();
+            services.AddTransient<IQuestionTestMapService, QuestionTestMapService>();
 
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<ITestApprovalMapService, TestApprovalMapService>();
+            services.AddTransient<ITestUserMapService, TestUserMapService>();
+
+            services.AddTransient<IGradeScaleService, GradeScaleService>();
+            services.AddTransient<IGradeScaleTestEvaluationMapService, GradeScaleTestEvaluationMapService>();
+            services.AddTransient<ITestEvaluationService, TestEvaluationService>();
+
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
@@ -165,6 +175,7 @@
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IQuestionAnswerMananger, QuestionAnswerMananger>();
             services.AddTransient<ISearchPageableMananager, SearchPageableMananager>();
+            services.AddTransient<ITestGradeScaleManager, TestGradeScaleManager>();
         }
     }
 }

@@ -7,8 +7,8 @@
     using Microsoft.Extensions.Logging;
 
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Database.Seed.BindingModels.Tests;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.Services.Database.Test.Interfaces;
 
     internal class TestSeeder : BaseSeeder
@@ -31,7 +31,7 @@
                     dto.CreatedBy = new Guid(GlobalConstants.ADMINISTRATOR_ID);
                 }
 
-                await testService.CreateAsync<Test, SeedTestBM>(dto, dto.CreatedBy.Value);
+                await testService.CreateAsync<BaseBM, SeedTestBM>(dto, dto.CreatedBy.Value);
             }
         }
     }

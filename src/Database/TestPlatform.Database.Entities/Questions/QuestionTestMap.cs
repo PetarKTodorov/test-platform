@@ -11,5 +11,7 @@
 
         public Guid TestId { get; set; }
         public virtual Test Test { get; set; }
+
+        public int Points { get; set; }
     }
 }

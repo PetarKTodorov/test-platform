@@ -2,7 +2,6 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Common.Constants;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Rooms;
@@ -35,15 +34,11 @@
         public Guid StatusId { get; set; }
         public virtual Status Status { get; set; }
 
-        public Guid? ЕvaluationId { get; set; }
-        public virtual TestЕvaluation Еvaluation { get; set; }
+        public Guid? EvaluationId { get; set; }
+        public virtual TestEvaluation Evaluation { get; set; }
 
         [Required]
         public bool HasRandomizeQuestions { get; set; }
-
-        // TODO: calculate property
-        [NotMapped]
-        public double TotalPoints { get; set; }
 
         public virtual ICollection<TestApprovalMap> Approvers { get; set; }
 
