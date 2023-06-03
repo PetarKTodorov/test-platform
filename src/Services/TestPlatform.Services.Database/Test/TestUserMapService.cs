@@ -42,7 +42,7 @@
                 .AsNoTracking()
                 .SingleOrDefault(tu => tu.TestId == testId
                     && tu.UserId == currentUserId)
-                .Grade;
+                ?.Grade;
         }
     }
 }
