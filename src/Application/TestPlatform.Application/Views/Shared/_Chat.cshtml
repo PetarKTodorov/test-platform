@@ -1,21 +1,27 @@
-﻿<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+﻿<button class="btn btn-primary chat-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <span class="icon-font icon-font--chat-2 fs-4"></span>
+    <span>Chat</span>
+</button>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Room chat</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
         <div class="chat custom-scroll-bar">
-
         </div>
 
-        <div class="d-flex align-items-center gap-3">
-            <input type="hidden" name="room" class="form-control js-chat-room-input" value="@Model.RoomId" />
-            <input type="hidden" name="email" class="form-control js-chat-user-input" value="@Model.Email" />
+        <form>
+            <div class="d-flex align-items-center gap-3">
+                <input type="hidden" name="room" class="form-control js-chat-room-input" value="@Model.RoomId" />
+                <input type="hidden" name="email" class="form-control js-chat-user-input" value="@Model.Email" />
 
-            <input type="text" class="form-control js-chat-message-input" />
-            <button type="button" class="btn btn-primary js-chat-submit-button">
-                <span class="icon-font icon-font--chat"></span>
-            </button>
-        </div>
+                <input type="text" class="form-control js-chat-message-input" />
+                <button type="submit" class="btn btn-primary js-chat-submit-button">
+                    <span class="icon-font icon-font--chat"></span>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

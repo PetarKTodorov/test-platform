@@ -3,6 +3,7 @@
   <ItemGroup>
     <Folder Include="Webpack\src\js\answers\" />
     <Folder Include="Webpack\src\js\main\buttons\" />
+    <Folder Include="Webpack\src\js\main\chats\" />
   </ItemGroup>
 	
   <ItemGroup>

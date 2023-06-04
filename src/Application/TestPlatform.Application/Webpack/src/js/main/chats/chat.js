@@ -1,5 +1,5 @@
 (() => {
-    const entityMap = {
+    const escapeSymbolsMap = {
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
@@ -11,6 +11,10 @@
     };
 
     const room = $(".js-chat-room-input").val();
+    if (!room) {
+        return;
+    }
+
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(`/test-chat?roomId=${room}`)
         .build();
@@ -55,14 +59,16 @@
         const userEmail = $(".js-chat-user-input").val();
         const message = $(".js-chat-message-input").val();
 
-        connection
-            .invoke("SendMessageAsync", userEmail, message)
-            .catch(function (err) { });
+        if (message && userEmail) {
+            connection
+                .invoke("SendMessageAsync", userEmail, message)
+                .catch(function (err) { });
+        }
     });
 
     function escapeHtml(string) {
         const result = String(string).replace(/[&<>"'`=\/]/g, function (s) {
-            return entityMap[s];
+            return escapeSymbolsMap[s];
         });
 
         return result;

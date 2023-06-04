@@ -35,7 +35,7 @@
             </span>
         </div>
 
-        @if (Model.StartDateTime > DateTime.UtcNow && !Model.IsDeleted)
+        @if (Model.StartDateTime > DateTime.Now && !Model.IsDeleted)
         {
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-success">Update</button>
