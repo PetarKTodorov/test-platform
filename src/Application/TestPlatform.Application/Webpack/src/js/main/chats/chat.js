@@ -57,7 +57,7 @@
         event.preventDefault();
 
         const userEmail = $(".js-chat-user-input").val();
-        const message = $(".js-chat-message-input").val();
+        const message = $(".js-chat-message-input").val().trim();
 
         if (message && userEmail) {
             connection
