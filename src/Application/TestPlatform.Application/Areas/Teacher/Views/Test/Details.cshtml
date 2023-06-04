@@ -144,9 +144,19 @@
                     </a>
                 }
             }
-            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">
-                Go back
-            </a>
+            
+            @if (Model.StatusName == StatusType.Pending.GetDisplayName())
+            {
+                <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ListPending">
+                    Go back
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">
+                    Go back
+                </a>
+            }
         </div>
 
         @Html.PartialAsync("_DetailsGradeScale", Model.Evaluation).Result
