@@ -11,6 +11,7 @@
         public Room()
         {
             this.Participants = new HashSet<RoomParticipantMap>();
+            this.ChatMessages = new HashSet<ChatMessage>();
         }
 
         [Required]
@@ -23,13 +24,11 @@
         public Guid TestId { get; set; }
         public virtual Test Test { get; set; }
 
-        public Guid? ChatConnectionId { get; set; }
-
-        public virtual ChatConnection ChatConnetion { get; set; }
-
         [NotMapped]
         public int ParticipantsCount => this.Participants.Count();
 
         public virtual ICollection<RoomParticipantMap> Participants { get; set; }
+
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
     }
 }
