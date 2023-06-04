@@ -32,6 +32,8 @@
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Rooms;
     using TestPlatform.Application.Hubs;
+    using TestPlatform.Services.Database.Comments.Interfaces;
+    using TestPlatform.Services.Database.Comments;
 
     public class Program
     {
@@ -173,6 +175,8 @@
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
             services.AddTransient<IChatMessageService, ChatMessageService>();
+
+            services.AddTransient<ITestCommentService, TestCommentService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)
