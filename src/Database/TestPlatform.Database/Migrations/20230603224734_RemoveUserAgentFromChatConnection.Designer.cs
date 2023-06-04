@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestPlatform.Database;
 
@@ -11,9 +12,10 @@ using TestPlatform.Database;
 namespace TestPlatform.Database.Migrations
 {
     [DbContext(typeof(TestPlatformDbContext))]
-    partial class TestPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230603224734_RemoveUserAgentFromChatConnection")]
+    partial class RemoveUserAgentFromChatConnection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,50 @@ namespace TestPlatform.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("TestPlatform.Database.Entities.Authorization.ChatConnetion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Connected")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ConnectionID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatConnetions");
+                });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Authorization.Role", b =>
                 {
@@ -418,53 +464,6 @@ namespace TestPlatform.Database.Migrations
                         .IsUnique();
 
                     b.ToTable("QuestionTypes");
-                });
-
-            modelBuilder.Entity("TestPlatform.Database.Entities.Rooms.ChatMessage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChatMessages");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Rooms.Room", b =>
@@ -987,6 +986,17 @@ namespace TestPlatform.Database.Migrations
                     b.ToTable("TestsUsersMap");
                 });
 
+            modelBuilder.Entity("TestPlatform.Database.Entities.Authorization.ChatConnetion", b =>
+                {
+                    b.HasOne("TestPlatform.Database.Entities.Authorization.User", "User")
+                        .WithMany("ChatConnections")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TestPlatform.Database.Entities.Authorization.UserRoleMap", b =>
                 {
                     b.HasOne("TestPlatform.Database.Entities.Authorization.Role", "Role")
@@ -1069,25 +1079,6 @@ namespace TestPlatform.Database.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("Test");
-                });
-
-            modelBuilder.Entity("TestPlatform.Database.Entities.Rooms.ChatMessage", b =>
-                {
-                    b.HasOne("TestPlatform.Database.Entities.Rooms.Room", "Room")
-                        .WithMany("ChatMessages")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TestPlatform.Database.Entities.Authorization.User", "User")
-                        .WithMany("ChatMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Rooms.Room", b =>
@@ -1244,7 +1235,7 @@ namespace TestPlatform.Database.Migrations
                 {
                     b.Navigation("ApprovedTests");
 
-                    b.Navigation("ChatMessages");
+                    b.Navigation("ChatConnections");
 
                     b.Navigation("Roles");
 
@@ -1279,8 +1270,6 @@ namespace TestPlatform.Database.Migrations
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Rooms.Room", b =>
                 {
-                    b.Navigation("ChatMessages");
-
                     b.Navigation("Participants");
                 });
 

@@ -11,6 +11,7 @@
         public Room()
         {
             this.Participants = new HashSet<RoomParticipantMap>();
+            this.ChatMessages = new HashSet<ChatMessage>();
         }
 
         [Required]
@@ -27,5 +28,7 @@
         public int ParticipantsCount => this.Participants.Count();
 
         public virtual ICollection<RoomParticipantMap> Participants { get; set; }
+
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
     }
 }

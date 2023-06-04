@@ -44,7 +44,7 @@
                         </h5>
                         <div class="card-body">
                             <h5 class="card-title">Test instructions</h5>
-                            <div class="scrollable-container mb-2">
+                            <div class="scrollable-container custom-scroll-bar mb-2">
                                 <p class="card-text">@row.TestInstructions</p>
                             </div>
 
@@ -64,6 +64,13 @@
                                         </button>
                                     </div>
                                 }
+                            }
+                            else if (DateTime.Now > @row.EndDateTime)
+                            {
+                                <p class="text-muted">
+                                    The test has finished, you can see your results in 
+                                    <a asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="List">My Tests</a>
+                                </p>
                             }
                             else
                             {

@@ -66,7 +66,7 @@
         </table>
 
         <div class="d-flex justify-content-center gap-1">
-            @if (Model.StartDateTime > DateTime.UtcNow)
+            @if (Model.StartDateTime > DateTime.Now)
             {
                 @if (Model.IsDeleted == false)
                 {
@@ -82,5 +82,13 @@
                 Go back
             </a>
         </div>
+
+        @if (Model.StartDateTime < DateTime.Now && DateTime.Now < Model.EndDateTime)
+        {
+            @Html.PartialAsync("_Chat", new {
+                RoomId = Model.Id,
+                Email =  this.User.FindFirst(UserClaimTypes.EMAIL).Value
+            }).Result
+        }
     </div>
 </div>

@@ -6,4 +6,6 @@ require("../main/form/delete-form.js");
 require("../main/modals/restore-modal.js");
 require("../main/modals/approve-modal.js");
 
-require("../main/buttons/post-buttons");
+require("../main/buttons/post-buttons.js");
+
+require("../main/chats/chat.js");

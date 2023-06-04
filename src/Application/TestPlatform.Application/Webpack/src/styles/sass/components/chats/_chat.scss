@@ -1,26 +1,48 @@
 @use "../../abstracts/__index.scss"as *;
 
 .chat {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    
+    overflow-y: auto;
+
+    margin-bottom: 0.6rem;
 
     &__message {
+        width: 90%;
 
+        margin-bottom: 1rem;
+    }
+
+    &__message--current-user {
+        align-self: flex-end;
+       
+        margin-right: 0.3rem;
+
+        .chat__message-text {
+            background-color: var(--bs-blue);
+        }
+
+        .chat__message-time {
+            text-align: right;
+        }
     }
 
     &__message-text {
-        padding: 1rem;
+        padding: 0.6rem;
 
-        background-color: var(--bs-blue);
+        background-color: var(--bs-gray-600);
 
         border-radius: 8px;
 
         color: $color-white-500;
+        overflow-wrap: break-word;
     }
 
     &__message-time {
         padding: 0 0.1rem;
 
-        text-align: right;
         color: var(--bs-gray-500);
     }
 }

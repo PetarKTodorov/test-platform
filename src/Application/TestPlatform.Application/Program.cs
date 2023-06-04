@@ -31,6 +31,7 @@
     using TestPlatform.Services.Database.Questions;
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Rooms;
+    using TestPlatform.Application.Hubs;
 
     public class Program
     {
@@ -59,6 +60,8 @@
                 // add custom binder to beginning of collection
                 options.ModelBinderProviders.Insert(0, new AbstractSearchModelBinderProvider());
             });
+
+            services.AddSignalR();
 
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -117,6 +120,7 @@
 
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            app.MapHub<ChatHub>("/test-chat");
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -168,6 +172,7 @@
 
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
+            services.AddTransient<IChatMessageService, ChatMessageService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)

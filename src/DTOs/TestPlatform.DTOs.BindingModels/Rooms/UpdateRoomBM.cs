@@ -30,6 +30,8 @@
 
         public Guid TestId { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         [DisplayName("Test Title")]
         public string TestTitle { get; set; }
 

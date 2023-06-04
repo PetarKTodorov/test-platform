@@ -18,6 +18,7 @@
             this.ApprovedTests = new HashSet<TestApprovalMap>();
             this.SubjectTags = new HashSet<UserSubjectTagMap>();
             this.Tests = new HashSet<TestUserMap>();
+            this.ChatMessages = new HashSet<ChatMessage>();
         }
 
         [Required]
@@ -56,5 +57,7 @@
         public virtual ICollection<UserSubjectTagMap> SubjectTags { get; set; }
 
         public virtual ICollection<TestUserMap> Tests { get; set; }
+
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
     }
 }
