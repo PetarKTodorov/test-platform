@@ -6,6 +6,8 @@
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Subjects;
     using TestPlatform.DTOs.ViewModels.Subjects;
+    using TestPlatform.DTOs.ViewModels.Users;
+    using TestPlatform.Services.Database.Authorization.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Managers.Interfaces;
 
@@ -13,12 +15,15 @@
     {
         private readonly ISubjectTagService subjectTagService;
         private readonly ISearchPageableMananager searchPageableMananager;
+        private readonly IUserService userService;
 
         public SubjectTagController(ISubjectTagService subjectTagService,
-            ISearchPageableMananager searchPageableMananager)
+            ISearchPageableMananager searchPageableMananager,
+            IUserService userService)
         {
             this.subjectTagService = subjectTagService;
             this.searchPageableMananager = searchPageableMananager;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -49,6 +54,16 @@
         public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
         {
             var subjectTag = await this.subjectTagService.FindByIdAsync<DetailsSubjectTagVM>(id, isDeleted);
+
+            subjectTag.CreatedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(subjectTag.CreatedBy)).Email;
+            if (subjectTag.ModifiedBy != null)
+            {
+                subjectTag.ModifiedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(subjectTag.ModifiedBy.Value)).Email;
+            }
+            if (subjectTag.DeletedBy != null)
+            {
+                subjectTag.DeletedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(subjectTag.DeletedBy.Value)).Email;
+            }
 
             return this.View(subjectTag);
         }
