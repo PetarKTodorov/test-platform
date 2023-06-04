@@ -10,8 +10,6 @@
     <form class="js-delete-form" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" method="post">
         @Html.AntiForgeryToken()
 
-        @Html.FormGroupFor(model => model.Id, isDisabled)
-
         @Html.FormGroupFor(model => model.Name, isDisabled)
 
         <div class="d-flex justify-content-end">
