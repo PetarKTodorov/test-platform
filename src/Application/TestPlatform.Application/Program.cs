@@ -31,7 +31,6 @@
     using TestPlatform.Services.Database.Questions;
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Rooms;
-    using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Application.Hubs;
 
     public class Program

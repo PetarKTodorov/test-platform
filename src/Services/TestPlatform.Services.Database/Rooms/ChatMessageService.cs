@@ -2,10 +2,11 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
     using TestPlatform.Database.Entities.Rooms;
-    using TestPlatform.Database.Entities.Tests;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Mapper;

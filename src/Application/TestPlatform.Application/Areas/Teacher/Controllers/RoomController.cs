@@ -132,8 +132,8 @@
             if (room.StartDateTime <= DateTime.Now && DateTime.Now <= room.EndDateTime)
             {
                 this.ViewData["RoomError"] = "The room is now live, any changes will not be accepted, till the end date comes.";
-                this.ViewData["AllStudents"] = 
-                    (await this.userService.FindAllUsersForRoomAsync<SelectListItem>(Roles.Student.GetUid(), model.TestId, model.Id))
+                this.ViewData["AllStudents"] = (await this.userService
+                    .FindAllUsersForRoomAsync<SelectListItem>(Roles.Student.GetUid(), model.TestId, model.Id))
                     .ToList();
                 return this.View(model);
             }
@@ -187,8 +187,8 @@
 
             if (this.ModelState.IsValid == false)
             {
-                this.ViewData["AllStudents"] = 
-                    (await this.userService.FindAllUsersForRoomAsync<SelectListItem>(Roles.Student.GetUid(), model.TestId, model.Id))
+                this.ViewData["AllStudents"] = (await this.userService
+                    .FindAllUsersForRoomAsync<SelectListItem>(Roles.Student.GetUid(), model.TestId, model.Id))
                     .ToList();
 
                 return this.View(model);
