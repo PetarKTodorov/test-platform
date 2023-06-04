@@ -173,7 +173,7 @@
 
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomParticipantMapService, RoomParticipantMapService>();
-            services.AddTransient<IChatConnectionService, ChatConnectionService>();
+            services.AddTransient<IChatMessageService, ChatMessageService>();
         }
 
         private static void RegisterManagers(IServiceCollection services)

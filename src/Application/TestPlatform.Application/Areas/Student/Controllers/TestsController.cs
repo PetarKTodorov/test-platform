@@ -1,10 +1,9 @@
 ﻿namespace TestPlatform.Application.Areas.Student.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
+
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Rooms;

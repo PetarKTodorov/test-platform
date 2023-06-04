@@ -15,12 +15,14 @@
             return console.error(err.toString());
         });
 
-    connection.on("ReceiveMessageAsync", function (user, message) {
-        const date = new Date();
+    connection.on("ReceiveMessageAsync", function (userEmail, message, time, isCurrentUser) {
+        const currentUserMessageClass = isCurrentUser ? "chat__message--current-user" : null;
+        const chatMessageTime = isCurrentUser ? time : `${userEmail} - ${time}`;
+
         const chatMessage = `
-            <div class="chat__message">
+            <div class="chat__message ${currentUserMessageClass}">
                 <p class="chat__message-text">${message}</p>
-                <div class="chat__message-time">${user} - ${date.getHours()}:${date.getMinutes()}</div>
+                <div class="chat__message-time">${chatMessageTime}</div>
             </div>
         `;
 
@@ -33,11 +35,11 @@
     chatSubmitButton.addEventListener("click", function (event) {
         event.preventDefault();
 
-        var user = document.querySelector(".js-chat-user-input").value;
+        var userEmail = document.querySelector(".js-chat-user-input").value;
         var message = document.querySelector(".js-chat-message-input").value;
 
         connection
-            .invoke("SendMessageAsync", user, message)
+            .invoke("SendMessageAsync", userEmail, message)
             .catch(function (err) {
                 return console.error(err.toString());
             });

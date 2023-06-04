@@ -118,43 +118,16 @@
         Launch leave test modal
     </button>
 
-    
     <button class="btn btn-primary chat-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <span class="icon-font icon-font--chat-2 fs-4"></span>
         <span>Chat</span>
     </button>
-
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Room chat</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body d-flex flex-column">
-            <div class="chat">
-                <div class="chat__message">
-                    <p class="chat__message-text">How are you?</p>
-                    <div class="chat__message-time">10:35</div>
-                </div>
-
-
-            </div> 
-
-            <div>
-                <form>
-                    <div class="d-flex align-items-center gap-3">
-                        <input type="hidden" name="room" class="form-control js-chat-room-input" value="@Model.Id" />
-                        <input type="hidden" name="email" class="form-control js-chat-user-input" value="@this.User.FindFirst(UserClaimTypes.EMAIL).Value" />
-
-                        <input type="text" class="form-control js-chat-message-input" />
-                        <button type="submit" class="btn btn-primary js-chat-submit-button">
-                            <span class="icon-font icon-font--chat"></span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+    @Html.PartialAsync("_Chat", new 
+        { 
+            RoomId = Model.Id,
+            Email =  this.User.FindFirst(UserClaimTypes.EMAIL).Value
+        }
+    ).Result 
 
     @section Scripts {
         <script asp-src-include="~/js/conduct-test*.js" defer></script>
