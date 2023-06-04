@@ -1,4 +1,15 @@
 (() => {
+    const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;',
+        '`': '&#x60;',
+        '=': '&#x3D;'
+    };
+
     const room = $(".js-chat-room-input").val();
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(`/test-chat?roomId=${room}`)
@@ -22,9 +33,9 @@
         const currentUserMessageClass = isCurrentUser ? "chat__message--current-user" : null;
         const chatMessageTime = isCurrentUser ? time : `${userEmail} - ${time}`;
 
-        const chatMessage = `
+        const chatMessageTemplate = `
             <div class="chat__message ${currentUserMessageClass}">
-                <p class="chat__message-text">${message}</p>
+                <p class="chat__message-text">${escapeHtml(message)}</p>
                 <div class="chat__message-time">${chatMessageTime}</div>
             </div>
         `;
@@ -33,7 +44,7 @@
         inputChatText.val(null);
 
         const chatContainer = $(".chat");
-        chatContainer.append(chatMessage);
+        chatContainer.append(chatMessageTemplate);
 
         chatContainer.scrollTop(chatContainer[0].scrollHeight);
     });
@@ -48,4 +59,12 @@
             .invoke("SendMessageAsync", userEmail, message)
             .catch(function (err) { });
     });
+
+    function escapeHtml(string) {
+        const result = String(string).replace(/[&<>"'`=\/]/g, function (s) {
+            return entityMap[s];
+        });
+
+        return result;
+    }
 })();
