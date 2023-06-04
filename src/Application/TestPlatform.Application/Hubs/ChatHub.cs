@@ -37,9 +37,8 @@
                 .CreateAsync<ChatMessageVM, CreateChatMessageBM>(createChatMessageBM, currentUserId);
 
             var messageTime = newChatMessage.CreatedDate.ToString("HH:mm");
-            var isCurrentUser = userEmail == this.Context.User.FindFirstValue(UserClaimTypes.EMAIL);
 
-            await this.Clients.Group(roomId).SendAsync("ReceiveMessageAsync", userEmail, message, messageTime, isCurrentUser);
+            await this.Clients.Group(roomId).SendAsync("ReceiveMessageAsync", userEmail, message, messageTime);
         }
 
         public override async Task OnConnectedAsync()
@@ -53,10 +52,9 @@
             foreach (var chatMessage in chatMessages)
             {
                 var messageTime = chatMessage.CreatedDate.ToString("HH:mm");
-                var isCurrentUser = chatMessage.UserEmail == this.Context.User.FindFirstValue(UserClaimTypes.EMAIL);
 
                 await this.Clients.Client(this.Context.ConnectionId)
-                    .SendAsync("ReceiveMessageAsync", chatMessage.UserEmail, chatMessage.Message, messageTime, isCurrentUser);
+                    .SendAsync("ReceiveMessageAsync", chatMessage.UserEmail, chatMessage.Message, messageTime);
             }
 
             await base.OnConnectedAsync();
