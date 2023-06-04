@@ -57,6 +57,8 @@
 
         public DbSet<TestEvaluation> TestEvaluations { get; set; }
 
+        public DbSet<ChatConnection> ChatConnections { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

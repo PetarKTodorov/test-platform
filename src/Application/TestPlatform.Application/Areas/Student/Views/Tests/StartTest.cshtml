@@ -142,8 +142,11 @@
             <div>
                 <form>
                     <div class="d-flex align-items-center gap-3">
-                        <input type="text" class="form-control" />
-                        <button type="submit" class="btn btn-primary">
+                        <input type="hidden" name="room" class="form-control js-chat-room-input" value="@Model.Id" />
+                        <input type="hidden" name="email" class="form-control js-chat-user-input" value="@this.User.FindFirst(UserClaimTypes.EMAIL).Value" />
+
+                        <input type="text" class="form-control js-chat-message-input" />
+                        <button type="submit" class="btn btn-primary js-chat-submit-button">
                             <span class="icon-font icon-font--chat"></span>
                         </button>
                     </div>

@@ -23,6 +23,10 @@
         public Guid TestId { get; set; }
         public virtual Test Test { get; set; }
 
+        public Guid? ChatConnectionId { get; set; }
+
+        public virtual ChatConnection ChatConnetion { get; set; }
+
         [NotMapped]
         public int ParticipantsCount => this.Participants.Count();
 
