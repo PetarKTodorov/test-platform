@@ -5,8 +5,6 @@
     using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Common.Constants;
-    using TestPlatform.Database.Entities.Rooms;
-    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Rooms;
     using TestPlatform.DTOs.ViewModels.Rooms;
     using TestPlatform.Services.Database.Rooms.Interfaces;
