@@ -12,7 +12,7 @@
 
         @Html.AntiForgeryToken()
 
-        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+        @Html.HiddenFor(model => model.Id)
 
         @Html.FormGroupFor(model => model.Email, true)
 

@@ -10,7 +10,7 @@
     <form class="js-delete-form" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Delete" method="post">
         @Html.AntiForgeryToken()
 
-        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+        @Html.HiddenFor(model => model.Id)
 
         @Html.FormGroupFor(model => model.OriginalQuestionTitle, isDisabled)
 
