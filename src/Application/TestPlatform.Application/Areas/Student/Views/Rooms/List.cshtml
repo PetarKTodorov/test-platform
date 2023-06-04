@@ -65,6 +65,13 @@
                                     </div>
                                 }
                             }
+                            else if (DateTime.Now > @row.EndDateTime)
+                            {
+                                <p class="text-muted">
+                                    The test has finished, you can see your results in 
+                                    <a asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="List">My Tests</a>
+                                </p>
+                            }
                             else
                             {
                                 <p class="text-muted">The room is locked, it will be unlocked on @row.StartDateTime.ToString(dateFormat) till @row.EndDateTime.ToString(dateFormat)</p>
