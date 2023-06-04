@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TestUserVM>
+
+<div class="table-responsive-md mt-3">
+    <h4>
+        @Html.DisplayNameFor(model => model)
+    </h4>
+    <p>
+        Users that entered the test
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.UserEmail)
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.Grade)
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.CreatedDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.OrderBy(tu => tu.UserEmail))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => row.UserEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(modelItem => row.Grade)
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(modelItem => row.CreatedDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
