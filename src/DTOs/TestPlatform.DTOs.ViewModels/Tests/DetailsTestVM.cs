@@ -20,6 +20,12 @@
         [DisplayName("Created Date")]
         public DateTime CreatedDate { get; set; }
 
+        [DisplayName("Created By")]
+        public Guid CreatedBy { get; set; }
+
+        [DisplayName("Created By")]
+        public string CreatedByEmail { get; set; }
+
         [DisplayName("Modified By")]
         public Guid? ModifiedBy { get; set; }
 

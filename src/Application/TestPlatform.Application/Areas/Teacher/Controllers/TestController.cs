@@ -11,6 +11,8 @@
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
+    using TestPlatform.DTOs.ViewModels.Users;
+    using TestPlatform.Services.Database.Authorization.Interfaces;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -28,6 +30,7 @@
         private readonly IQuestionTestMapService questionTestMapService;
         private readonly ITestGradeScaleManager testGradeScaleManager;
         private readonly IRoomService roomService;
+        private readonly IUserService userService;
 
         public TestController(ITestService testService,
             IStatusService statusService,
@@ -37,7 +40,8 @@
             IQuestionCopyService questionCopyService,
             IQuestionTestMapService questionTestMapService,
             ITestGradeScaleManager testGradeScaleManager,
-            IRoomService roomService)
+            IRoomService roomService,
+            IUserService userService)
         {
             this.testService = testService;
             this.statusService = statusService;
@@ -48,6 +52,7 @@
             this.questionTestMapService = questionTestMapService;
             this.testGradeScaleManager = testGradeScaleManager;
             this.roomService = roomService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -110,6 +115,7 @@
         public async Task<IActionResult> Details(Guid id, bool isDeleted = false)
         {
             var test = await this.testService.FindByIdAsync<DetailsTestVM>(id, isDeleted);
+            test.CreatedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(test.CreatedBy)).Email;
 
             return this.View(test);
         }

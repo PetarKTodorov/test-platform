@@ -64,16 +64,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedBy)</th>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedByEmail)</th>
                     <td>
-                        @if (Model.ModifiedBy == null)
-                        {
-                            <span>No data information</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => model.ModifiedBy)
-                        }
+                        @Html.DisplayFor(model => model.CreatedByEmail)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
                     </td>
                 </tr>
                 <tr>
@@ -86,19 +85,6 @@
                         else
                         {
                             @Html.DisplayFor(model => model.ModifiedDate)
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedBy)</th>
-                    <td>
-                        @if (Model.DeletedBy == null)
-                        {
-                            <span>No data information</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => model.DeletedBy)
                         }
                     </td>
                 </tr>
