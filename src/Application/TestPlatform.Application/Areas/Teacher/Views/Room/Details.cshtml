@@ -93,9 +93,9 @@
         @if (Model.StartDateTime < DateTime.Now && DateTime.Now < Model.EndDateTime)
         {
             @Html.PartialAsync("_Chat", new {
-        RoomId = Model.Id,
-        Email =  this.User.FindFirst(UserClaimTypes.EMAIL).Value
-        }).Result
+                RoomId = Model.Id,
+                Email =  this.User.FindFirst(UserClaimTypes.EMAIL).Value
+            }).Result
         }
     </div>
 </div>
