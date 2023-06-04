@@ -14,9 +14,9 @@
 
         @Html.AntiForgeryToken()
 
-        <input name="@Html.DisplayNameFor(model => model.Id)" value="@Model.Id" hidden />
+        @Html.HiddenFor(model => model.Id)
 
-        <input name="@Html.DisplayNameFor(model => model.OriginalQuestionId)" value="@Model.OriginalQuestionId" hidden />
+        @Html.HiddenFor(model => model.OriginalQuestionId)
 
         @Html.FormGroupFor(model => model.OriginalQuestionTitle)
 

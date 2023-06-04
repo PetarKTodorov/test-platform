@@ -21,13 +21,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.Id)</th>
-                    <td>@Html.DisplayFor(model => model.Id)</td>
-                </tr>
-                <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedBy)</th>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedByEmail)</th>
                     <td>
-                        @Html.DisplayFor(model => model.CreatedBy)
+                        @Html.DisplayFor(model => model.CreatedByEmail)
                     </td>
                 </tr>
                 <tr>
@@ -37,7 +33,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedBy)</th>
+                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedByEmail)</th>
                     <td>
                         @if (Model.ModifiedBy == null)
                         {
@@ -45,7 +41,7 @@
                         }
                         else
                         {
-                            @Html.DisplayFor(model => model.ModifiedBy)
+                            @Html.DisplayFor(model => model.ModifiedByEmail)
                         }
                     </td>
                 </tr>
@@ -63,7 +59,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedBy)</th>
+                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedByEmail)</th>
                     <td>
                         @if (Model.DeletedBy == null)
                         {
@@ -71,7 +67,7 @@
                         }
                         else
                         {
-                            @Html.DisplayFor(model => model.DeletedBy)
+                            @Html.DisplayFor(model => model.DeletedByEmail)
                         }
                     </td>
                 </tr>

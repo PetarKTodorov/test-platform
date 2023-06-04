@@ -13,9 +13,9 @@
     <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" method="post">
         @Html.AntiForgeryToken()
 
-        <input name="Id" value="@Model.Id" hidden />
+        @Html.HiddenFor(model => model.Id)
 
-        <input name="CreatedBy" value="@Model.CreatedBy" hidden />
+        @Html.HiddenFor(model => model.CreatedBy)
 
         @Html.FormGroupFor(model => model.Title, true)
 

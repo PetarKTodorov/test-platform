@@ -12,17 +12,26 @@
         [DisplayName("Created By")]
         public Guid CreatedBy { get; set; }
 
+        [DisplayName("Created By")]
+        public string CreatedByEmail { get; set; }
+
         [DisplayName("Created Date")]
         public DateTime CreatedDate { get; set; }
 
         [DisplayName("Modified By")]
         public Guid? ModifiedBy { get; set; }
 
+        [DisplayName("Modified By")]
+        public string ModifiedByEmail { get; set; }
+
         [DisplayName("Modified Date")]
         public DateTime? ModifiedDate { get; set; }
 
         [DisplayName("Deleted By")]
         public Guid? DeletedBy { get; set; }
+
+        [DisplayName("Deleted By")]
+        public string DeletedByEmail { get; set; }
 
         [DisplayName("Deleted Date")]
         public DateTime? DeletedDate { get; set; }
