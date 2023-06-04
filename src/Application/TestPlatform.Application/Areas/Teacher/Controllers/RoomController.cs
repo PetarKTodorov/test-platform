@@ -86,6 +86,10 @@
         {
             var room = await this.roomService.FindByIdAsync<DetailsRoomVM>(id, isDeleted);
 
+            this.ViewData["StudentsThatDidntEnterTheRoom"] = room.Participants
+                .Where(p => !room.TestUsers.Any(tu => tu.UserEmail == p.UserEmail))
+                .ToList();
+
             return this.View(room);
         }
 

@@ -21,6 +21,14 @@
             </thead>
             <tbody>
                 <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.TestTitle)</th>
+                    <td>
+                        <a asp-controller="Test" asp-action="Details" asp-route-id="@Model.TestId">
+                            @Html.DisplayFor(model => model.TestTitle)
+                        </a>
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
                     <td>
                         @Html.DisplayFor(model => model.CreatedDate)
@@ -78,6 +86,9 @@
                 Go back
             </a>
         </div>
+
+        @Html.PartialAsync("_UserThatEnteredTheTest", Model.TestUsers).Result
+        @Html.PartialAsync("_UserThatDidntEnteredTheTest", Model.TestUsers).Result
 
         @if (Model.StartDateTime < DateTime.Now && DateTime.Now < Model.EndDateTime)
         {
