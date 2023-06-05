@@ -60,6 +60,9 @@
         [DisplayName("Total points")]
         public int TotalPoints { get; set; }
 
+        [DisplayName("Approvals count")]
+        public int ApproversCount { get; set; }
+
         [DisplayName("Questions count")]
         public int QuestionsCount { get; set; }
 

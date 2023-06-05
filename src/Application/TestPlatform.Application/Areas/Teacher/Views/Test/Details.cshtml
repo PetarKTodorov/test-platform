@@ -50,6 +50,15 @@
                         @Html.DisplayTextFor(model => model.HasRandomizeQuestions)
                     </td>
                 </tr>
+                @if (Model.StatusName == StatusType.Pending.GetDisplayName())
+                {
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.ApproversCount)</th>
+                        <td>
+                            @Html.DisplayTextFor(model => model.ApproversCount)
+                        </td>
+                    </tr>
+                }
                 <tr>
                     <th scope="row">@Html.DisplayNameFor(model => model.SubjectTagNames)</th>
                     <td>
