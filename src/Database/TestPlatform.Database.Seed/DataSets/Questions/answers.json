@@ -373,5 +373,205 @@
         "Id": "11021a23-2861-4136-84d1-9448bd51e8d0",
         "Content": "8, 64, 128, 192",
         "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "a1d4659b-6663-4149-956e-049ce395db1f",
+        "Content": "retur",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "370f56ae-bbd6-4b7e-b843-06efb8cd627e",
+        "Content": "const x = 2.8;",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8bbe4b12-36fc-4dc8-8674-08562551f827",
+        "Content": "long",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "9f354341-92e0-4e28-963d-1008de5dbc0b",
+        "Content": "The + sig",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "fef18365-ff3e-4ec6-bfce-11c32f2fe32c",
+        "Content": "The * sig",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "a4ea2e42-1f6e-4d7f-9fbb-181adfb9bb69",
+        "Content": "byte x = 2.8;",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c9e49f5a-a363-4f4d-97c5-1b25c981329b",
+        "Content": "True",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "80208da9-d1f3-46e1-ae17-23b168e663d5",
+        "Content": "string",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "4ab015b0-573b-468a-8065-34192159658b",
+        "Content": "class MyClass = new myObj();",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "62ff01fa-a71b-4324-b252-34a72292f0d7",
+        "Content": ".GetAllCars()",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8665149e-37c5-4d53-a7ff-39b03ea9c05b",
+        "Content": "GetAllCars{}",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "33a5b1b3-40e7-45bb-a6d3-3ec68cf47933",
+        "Content": "0",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "d987b3d3-4b6b-4691-b377-42b6c5554f2d",
+        "Content": "GetAllCars[]",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "76155099-4bad-4b1c-b9d0-48a67fab9961",
+        "Content": "class myObj = new MyClass();",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "325d1e89-2776-4691-8519-57f592323d2c",
+        "Content": "Refers to the current instance of the class and is also used as a modifier of the first parameter of an extension method.",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "bffc34b8-165f-48d9-89ee-586dc13f2579",
+        "Content": "Refers to the instance of the class that is static.",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "0607c4de-d8e7-498e-938f-5b62b3a1ed5f",
+        "Content": "exit",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "223d85c7-2c3b-4f03-9fec-5d7d9143c765",
+        "Content": "var",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "21f20409-f847-4502-aa59-6b5954e6707e",
+        "Content": "double x = 2.8;",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "f4246b9b-2592-4365-a2c2-6e129745f029",
+        "Content": "str",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "53d29e27-50f7-4560-bd32-7138c3b331a1",
+        "Content": "break",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "bc188fff-161a-4a7e-abff-7264d8e0c6ed",
+        "Content": "int",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8bbee1f1-e3bd-42fa-9bb1-7ba1fc6598ba",
+        "Content": "The & sig",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "5387a0fa-f12c-40be-ae1d-7d0f7be91862",
+        "Content": "Number",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "ada43e8a-b0d0-4f75-bc92-83e57d395e38",
+        "Content": "get",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "3b0e4d75-f515-4206-9287-8fe1b9485b99",
+        "Content": "decimal",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "f516b2b7-0cf0-4863-aeff-9bfd4a0b93b0",
+        "Content": "void",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "6e1256a5-4554-4bce-9710-a74aea009430",
+        "Content": "stop",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "92d5a377-4e92-4951-8b55-b28d88c4b733",
+        "Content": "GetAllCars()",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "e0d53a63-2ae5-40ea-aae7-b73903a8dba6",
+        "Content": "bool",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "f14113c1-a0f9-41ff-9700-b8665d456c3c",
+        "Content": "{}",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "4750f7cc-f2c6-46e4-a638-baf4cb3bcc82",
+        "Content": "()",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "3dd609a0-4830-476e-ab0e-bbd18bdea011",
+        "Content": "-1",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "4705aed1-563d-46d7-ba4a-be642ea6f2e8",
+        "Content": "new myObj = MyClass();",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c5db0f46-7a20-4ae2-9bfc-c9ca9a59f56f",
+        "Content": "text",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b28b07a9-7899-402e-bd2e-e49dc99c2287",
+        "Content": "MyClass myObj = new MyClass();",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "b2356184-06e1-4271-9c41-e96556bd87bc",
+        "Content": "[]",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "8af22205-6782-4361-8d4d-ebfcd341bace",
+        "Content": "int x = 2.8;",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "5f477920-08c1-40d3-b85a-f35439e17ded",
+        "Content": "2^2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "76154f66-cb4b-446e-9307-fcaeaa4a9ae8",
+        "Content": "False",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
     }
 ]

@@ -51,5 +51,14 @@
         "IsApproved": "false",
         "HasRandomizeQuestions": "true",
         "StatusId": "109D17AA-04CD-4A20-8ECD-DDB450C2DF8B"
+    },
+    {
+        "Id": "DF4823FE-E9B2-44B2-9FEB-888AC6A84858",
+        "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350",
+        "Title": "Introducing to C#",
+        "Instructions": "Please read the conditions of the questions very well.",
+        "IsApproved": "false",
+        "HasRandomizeQuestions": "false",
+        "StatusId": "109D17AA-04CD-4A20-8ECD-DDB450C2DF8B"
     }
 ]
