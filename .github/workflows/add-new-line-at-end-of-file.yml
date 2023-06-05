@@ -2,7 +2,7 @@ name: Add empty line at the end of file
 
 on:
   push:
-    branches: [ 'develop' ]
+    branches: [ 'test' ]
 
 jobs:
   build:
