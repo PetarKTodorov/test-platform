@@ -1,0 +1,20 @@
+[
+    {
+        "Id": "672ddfae-b01d-492e-b3f7-18ab1385dadb",
+        "UserId": "cb83f7e5-491d-4432-86c9-4af50d1a803b",
+        "RoomId": "63523cf9-ef72-41fc-976e-35104bb3acc5",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "5df45c88-4ef5-4881-a778-26403d31e46f",
+        "UserId": "6fa1e60f-41d6-4f7e-93ed-f95e0435b448",
+        "RoomId": "63523cf9-ef72-41fc-976e-35104bb3acc5",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "930388b9-a575-4888-81a1-c1af13bafadc",
+        "UserId": "4ee73bf7-fe5d-4096-be3a-8e35400fd350",
+        "RoomId": "63523cf9-ef72-41fc-976e-35104bb3acc5",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    }
+]

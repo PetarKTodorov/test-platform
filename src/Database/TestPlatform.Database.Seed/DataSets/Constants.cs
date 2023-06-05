@@ -37,5 +37,9 @@
         public const string GRADE_SCALE_JSON_FILE_NAME = "gradeScales";
 
         public const string GRADE_SCALE_TEST_EVALUATION_MAP_JSON_FILE_NAME = "gradeScalesTestEvaluationMap";
+
+        public const string ROOMS_JSON_FILE_NAME = "rooms";
+
+        public const string ROOMS_PARTICIPANTS_MAP_JSON_FILE_NAME = "roomsParticipantsMap";
     }
 }

@@ -7,6 +7,7 @@
     using TestPlatform.Database.Seed.Interfaces;
     using TestPlatform.Database.Seed.Seeders.Authorization;
     using TestPlatform.Database.Seed.Seeders.Questions;
+    using TestPlatform.Database.Seed.Seeders.Rooms;
     using TestPlatform.Database.Seed.Seeders.Subjects;
     using TestPlatform.Database.Seed.Seeders.Tests;
 
@@ -45,6 +46,9 @@
                     new TestEvaluationSeeder(serviceProvider, logger, Constants.TEST_EVALUATION_JSON_FILE_NAME),
                     new GradeScaleSeeder(serviceProvider, logger, Constants.GRADE_SCALE_JSON_FILE_NAME),
                     new GradeScalesTestEvaluationsMapSeeder(serviceProvider, logger, Constants.GRADE_SCALE_TEST_EVALUATION_MAP_JSON_FILE_NAME),
+
+                    new RoomSeeder(serviceProvider, logger, Constants.ROOMS_JSON_FILE_NAME),
+                    new RoomParticipantMapSeeder(serviceProvider, logger, Constants.ROOMS_PARTICIPANTS_MAP_JSON_FILE_NAME),
                 };
 
             foreach (var seeder in seeders)
