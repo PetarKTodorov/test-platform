@@ -132,8 +132,7 @@
         </table>
 
         <div class="d-flex justify-content-center gap-1">
-            @if ((Model.StatusName == StatusType.Ready.GetDisplayName() && Model.CreatedBy == Guid.Parse(this.User.FindFirst(UserClaimTypes.ID).Value))
-                || Model.StatusName == StatusType.Public.GetDisplayName())
+            @if (Model.StatusName == StatusType.Ready.GetDisplayName() && Model.CreatedBy == Guid.Parse(this.User.FindFirst(UserClaimTypes.ID).Value))
             {
                 <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@Model.Id">
                     Create room
