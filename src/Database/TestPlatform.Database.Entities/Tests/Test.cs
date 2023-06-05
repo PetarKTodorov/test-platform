@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Database.Entities.Comments;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Entities.Subjects;
@@ -18,6 +19,7 @@
             this.Questions = new HashSet<QuestionTestMap>();
             this.Users = new HashSet<TestUserMap>();
             this.Rooms = new HashSet<Room>();
+            this.Comments = new HashSet<TestComment>();
         }
 
         [Required]
@@ -49,5 +51,7 @@
         public virtual ICollection<TestUserMap> Users { get; set; }
 
         public virtual ICollection<Room> Rooms { get; set; }
+
+        public virtual ICollection<TestComment> Comments { get; set; }
     }
 }

@@ -8,15 +8,18 @@
 <h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="container-fluid px-5">
-    <form method="get" class="search-form">
-        <div class="d-flex flex-wrap justify-content-between gap-3">
-            @Html.EditorFor(m => m.SearchCriteria)
-        </div>
+    @if (this.Model.Data.Items.Any())
+    {
+        <form method="get" class="search-form">
+            <div class="d-flex flex-wrap justify-content-between gap-3">
+                @Html.EditorFor(m => m.SearchCriteria)
+            </div>
 
-        <div class="d-flex">
-            <button type="submit" class="btn btn-success">Apply filters</button>
-        </div>
-    </form>
+            <div class="d-flex">
+                <button type="submit" class="btn btn-success">Apply filters</button>
+            </div>
+        </form>
+    }
 
     @{
         if (this.Model.Data.Items.Any() == false)

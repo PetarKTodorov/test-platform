@@ -37,6 +37,3 @@ npm install
     * `npm run watch`
     * `npm run stats`  
 
-### Steps to add a new icon
-
-## Other

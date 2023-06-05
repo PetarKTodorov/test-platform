@@ -28,5 +28,65 @@
         "GradeScaleId": "A905077F-7C7F-4AA2-8BB3-57A0143CD3D5",
         "TestEvaluationId": "AE863C82-7764-4532-9C7D-600C7B0D1B08",
         "CreatedBy": "3EE73BF7-FE5D-4096-BE3A-8E35400FD350"
+    },
+    {
+        "Id": "6ab02a82-0f95-4d22-b58b-095a119190d7",
+        "GradeScaleId": "71faa769-5737-4cd3-871d-e4d021e5ff91",
+        "TestEvaluationId": "b5805b57-a45e-4431-ab37-ec06fab97d87",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "3713c68a-262c-469e-9215-b0879d1b2add",
+        "GradeScaleId": "a3d2533a-099b-4df9-996c-b34a13f566f5",
+        "TestEvaluationId": "b5805b57-a45e-4431-ab37-ec06fab97d87",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "517c581a-502f-40b5-b64b-b5d7b4601e17",
+        "GradeScaleId": "ec7afa9c-4bba-48e5-a9de-24cac1f56b06",
+        "TestEvaluationId": "b5805b57-a45e-4431-ab37-ec06fab97d87",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "9003ed08-ebe7-409b-9749-c819a60e04b5",
+        "GradeScaleId": "d3deba13-6336-4262-ad36-c8247b7ae31c",
+        "TestEvaluationId": "b5805b57-a45e-4431-ab37-ec06fab97d87",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "c7905e30-a99f-4bca-9773-fb1564caa683",
+        "GradeScaleId": "f046a599-9b63-44a0-8802-67ceca437ed0",
+        "TestEvaluationId": "b5805b57-a45e-4431-ab37-ec06fab97d87",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "2468bf41-a9d4-47f6-82a7-116d1d568249",
+        "GradeScaleId": "b127fe93-080f-4f09-962a-d307be0aa2e4",
+        "TestEvaluationId": "a593a325-4b34-4fdd-b14a-2a91d19a6bf2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "3295780b-ca08-430f-abf5-41922a68d1b3",
+        "GradeScaleId": "20bffe85-d458-4873-a20d-6ad2d95fe029",
+        "TestEvaluationId": "a593a325-4b34-4fdd-b14a-2a91d19a6bf2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "11ff31ee-3270-4472-bdd6-7454f27ef792",
+        "GradeScaleId": "51d0c3de-31c2-4948-b15a-3cb80d0d67dd",
+        "TestEvaluationId": "a593a325-4b34-4fdd-b14a-2a91d19a6bf2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "a274feb6-6173-44a8-a903-8a4cad9bb0f8",
+        "GradeScaleId": "0f8a060d-f4a3-4569-89e5-40b0fdf8dd64",
+        "TestEvaluationId": "a593a325-4b34-4fdd-b14a-2a91d19a6bf2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "97a3e115-4b89-43c2-a94a-f5f537ce0e0f",
+        "GradeScaleId": "a5514a70-4bf7-4d6c-bd97-044d367631c0",
+        "TestEvaluationId": "a593a325-4b34-4fdd-b14a-2a91d19a6bf2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
     }
 ]

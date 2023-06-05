@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestPlatform.Database;
 
@@ -11,9 +12,10 @@ using TestPlatform.Database;
 namespace TestPlatform.Database.Migrations
 {
     [DbContext(typeof(TestPlatformDbContext))]
-    partial class TestPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230604192038_CreateTableTestComments")]
+    partial class CreateTableTestComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,8 +174,6 @@ namespace TestPlatform.Database.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(8192)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("CreatedBy")
@@ -197,12 +197,17 @@ namespace TestPlatform.Database.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ParentCommentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("TestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ParentCommentId");
 
                     b.HasIndex("TestId");
 
@@ -1058,11 +1063,17 @@ namespace TestPlatform.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TestPlatform.Database.Entities.Comments.TestComment", "ParentComment")
+                        .WithMany("Comments")
+                        .HasForeignKey("ParentCommentId");
+
                     b.HasOne("TestPlatform.Database.Entities.Tests.Test", "Test")
                         .WithMany("Comments")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParentComment");
 
                     b.Navigation("Test");
 
@@ -1318,6 +1329,11 @@ namespace TestPlatform.Database.Migrations
                     b.Navigation("SubjectTags");
 
                     b.Navigation("Tests");
+                });
+
+            modelBuilder.Entity("TestPlatform.Database.Entities.Comments.TestComment", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("TestPlatform.Database.Entities.Questions.Answer", b =>

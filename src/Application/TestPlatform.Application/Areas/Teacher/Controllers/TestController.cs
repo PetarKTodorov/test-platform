@@ -3,16 +3,19 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
+    using TestPlatform.Application.Infrastructures.Filtres;
     using TestPlatform.Application.Infrastructures.Searcher.Types;
     using TestPlatform.Common.Constants;
     using TestPlatform.Common.Enums;
     using TestPlatform.Common.Extensions;
+    using TestPlatform.DTOs.BindingModels.Comments;
     using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.DTOs.BindingModels.Questions;
     using TestPlatform.DTOs.BindingModels.Tests;
     using TestPlatform.DTOs.ViewModels.Tests;
     using TestPlatform.DTOs.ViewModels.Users;
     using TestPlatform.Services.Database.Authorization.Interfaces;
+    using TestPlatform.Services.Database.Comments.Interfaces;
     using TestPlatform.Services.Database.Questions.Interfaces;
     using TestPlatform.Services.Database.Rooms.Interfaces;
     using TestPlatform.Services.Database.Subjects.Interfaces;
@@ -31,6 +34,7 @@
         private readonly ITestGradeScaleManager testGradeScaleManager;
         private readonly IRoomService roomService;
         private readonly IUserService userService;
+        private readonly ITestCommentService testCommentService;
 
         public TestController(ITestService testService,
             IStatusService statusService,
@@ -41,7 +45,8 @@
             IQuestionTestMapService questionTestMapService,
             ITestGradeScaleManager testGradeScaleManager,
             IRoomService roomService,
-            IUserService userService)
+            IUserService userService,
+            ITestCommentService testCommentService)
         {
             this.testService = testService;
             this.statusService = statusService;
@@ -53,6 +58,7 @@
             this.testGradeScaleManager = testGradeScaleManager;
             this.roomService = roomService;
             this.userService = userService;
+            this.testCommentService = testCommentService;
         }
 
         [HttpGet]
@@ -118,6 +124,24 @@
             test.CreatedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(test.CreatedBy)).Email;
 
             return this.View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WriteComment(CreateCommentBM model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                var test = await this.testService.FindByIdAsync<DetailsTestVM>(model.TestId, false);
+                test.CreatedByEmail = (await this.userService.FindByIdAsync<UserEmailVM>(test.CreatedBy)).Email;
+
+                test.CreateCommentBM = model;
+
+                return this.View(nameof(Details), test);
+            }
+
+            await this.testCommentService.CreateAsync<BaseBM, CreateCommentBM>(model, this.CurrentUserId);
+
+            return this.RedirectToAction(nameof(Details), new { id = model.TestId });
         }
 
         [HttpGet]

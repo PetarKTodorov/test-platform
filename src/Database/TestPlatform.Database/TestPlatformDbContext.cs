@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Database.Entities.Comments;
     using TestPlatform.Database.Entities.Questions;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Entities.Subjects;
@@ -58,6 +59,8 @@
         public DbSet<TestEvaluation> TestEvaluations { get; set; }
 
         public DbSet<ChatMessage> ChatMessages { get; set; }
+
+        public DbSet<TestComment> TestComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
