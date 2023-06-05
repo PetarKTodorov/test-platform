@@ -8,6 +8,8 @@
 <h1 class="text-center my-5">@ViewData["Title"]</h1>
 
 <div class="container">
+    
+
     @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
 
     <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" method="post">
