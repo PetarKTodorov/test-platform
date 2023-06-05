@@ -1,5 +1,7 @@
 # Test Platform
 
+![Build](https://github.com/PetarKTodorov/test-platform/actions/workflows/dotnet.yml/badge.svg)
+
 ## Requirements
 
 |  Name                      | version       | Details                              |
@@ -34,7 +36,3 @@ npm install
     * `npm run build-dev`
     * `npm run watch`
     * `npm run stats`  
-
-### Steps to add a new icon
-
-## Other

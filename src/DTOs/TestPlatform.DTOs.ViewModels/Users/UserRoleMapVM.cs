@@ -5,6 +5,10 @@
 
     public class UserRoleMapVM : IMapFrom<UserRoleMap>
     {
+        public Guid Id { get; set; }
+
+        public Guid RoleId { get; set; }
+
         public string RoleName { get; set; }
     }
 }

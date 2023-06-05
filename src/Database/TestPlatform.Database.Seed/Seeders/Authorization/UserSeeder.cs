@@ -2,11 +2,13 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Seed.BindingModels.Authorization;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.Services.Database.Authorization.Interfaces;
 
     internal class UserSeeder : BaseSeeder
@@ -24,7 +26,8 @@
 
             foreach (var dto in dtoObjects)
             {
-                await userService.CreateAsync<User, SeedCreateUserBM>(dto);
+                var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                await userService.CreateAsync<BaseBM, SeedCreateUserBM>(dto, administratorId);
             }
         }
     }

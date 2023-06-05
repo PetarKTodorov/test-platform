@@ -30,8 +30,5 @@
         [Required]
         [RegularExpression(Validations.PASSWORD_REGEX)]
         public string Password { get; set; }
-
-        [Required]
-        public Guid CreatedBy { get; set; }
     }
 }

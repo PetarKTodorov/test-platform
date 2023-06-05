@@ -1,0 +1,101 @@
+﻿@model DetailsRoomVM
+
+@{
+    ViewData["Title"] = "Room Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.TestTitle)</th>
+                    <td>
+                        <a asp-controller="Test" asp-action="Details" asp-route-id="@Model.TestId">
+                            @Html.DisplayFor(model => model.TestTitle)
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.StartDateTime)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.StartDateTime)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.EndDateTime)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.EndDateTime)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Participants)</th>
+                    <td>
+                        @if (Model.Participants.Any() == false)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @string.Join(", ", Model.Participants.Select(p => p.UserEmail))
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.IsDeleted)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            @if (Model.StartDateTime > DateTime.Now)
+            {
+                @if (Model.IsDeleted == false)
+                {
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Update" asp-route-id="@Model.Id">
+                        Update
+                    </a>
+                    <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Delete" asp-route-id="@Model.Id">
+                        Delete
+                    </a>
+                }
+            }
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="List">
+                Go back
+            </a>
+        </div>
+
+        @Html.PartialAsync("_UserThatEnteredTheTest", Model.TestUsers).Result
+        @Html.PartialAsync("_UserThatDidntEnteredTheTest", Model.TestUsers).Result
+
+        @if (Model.StartDateTime < DateTime.Now && DateTime.Now < Model.EndDateTime)
+        {
+            @Html.PartialAsync("_Chat", new {
+                RoomId = Model.Id,
+                Email =  this.User.FindFirst(UserClaimTypes.EMAIL).Value
+            }).Result
+        }
+    </div>
+</div>

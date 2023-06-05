@@ -1,0 +1,15 @@
+@use "../../abstracts/__index.scss" as *;
+
+.chat-button {
+    position: fixed;
+    right: 3rem;
+    bottom: 1rem;
+
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    border: 1px solid $color-white-500;
+}

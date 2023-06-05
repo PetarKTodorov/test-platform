@@ -1,11 +1,102 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom border-white">
+﻿@{
+    CustomClaimsPrincipal currentUser = new CustomClaimsPrincipal(this.User);
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom border-white">
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TestPlatform</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="main-navbar">
+        <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+
+                @{
+                    if (currentUser.IsInRole(ApplicationRoles.ADMINISTRATOR))
+                    {
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Users
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="Users" asp-action="List">List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject Tags
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="List">List</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Create">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    if (currentUser.IsInRole(ApplicationRoles.TEACHER))
+                    {
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Test
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">Yours</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ListPending">Pending for approvals</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Create">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Questions
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="List">List</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Questions" asp-action="Create">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Rooms
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="List">List</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    if (currentUser.IsInRole(ApplicationRoles.STUDENT))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="@ApplicationAreas.STUDENT" asp-controller="Rooms" asp-action="List">My Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="@ApplicationAreas.STUDENT" asp-controller="Tests" asp-action="List">My Tests</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                 @{
                     if(!this.User.Identity.IsAuthenticated)
                     {
@@ -18,8 +109,18 @@
                     }
                     else
                     {
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="user-profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.FindFirst(UserClaimTypes.EMAIL).Value
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="user-profile">
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Profile">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Logout">Logout</a>
+                                </li>
+                            </ul>
                         </li>
                     }
                 }

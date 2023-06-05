@@ -1,0 +1,143 @@
+﻿@model SearchFilterVM<UserInformationVM>
+
+@{
+    ViewData["Title"] = "List All Users";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form method="get" class="search-form">
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            @Html.EditorFor(m => m.SearchCriteria)
+        </div>
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+    </form>
+
+
+    <div class="table-responsive mt-3">
+        <table id="users-table" class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.CreatedDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.Roles)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.IsDeleted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameForInnerType((UserInformationVM model) => model.DeletedDate)
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Data.Items)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.CreatedDate)
+                        </td>
+                        <td>
+                            @string.Join(", ", user.Roles.Select(r => r.RoleName))
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(model => user.IsDeleted)
+                        </td>
+                        <td>
+                            @if (user.IsDeleted)
+                            {
+                                @Html.DisplayFor(modelItem => user.DeletedDate)
+                            }
+                            else
+                            {
+                                <span>Not deleted</span>
+                            }
+                        </td>
+                        <td>
+                            @{
+                                var updateUserUrl = Url.Action("Update", new { userId = user.Id });
+                                var deleteUrl = Url.Action("Delete", new { userId = user.Id });
+                                var restoreUrl = Url.Action("Restore", new { userId = user.Id });
+                            }
+
+                            @if (!this.User.FindFirst(UserClaimTypes.ID).Value.ToUpper().Equals(user.Id.ToUpper()))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if (!user.IsDeleted)
+                                        {
+                                            <li>
+                                                <button type="button" class="dropdown-item js-update-user-button" data-user-id="@user.Id" data-url="@updateUserUrl" data-bs-toggle="modal" data-bs-target="#update-user-modal">
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button type="button" class="dropdown-item delete-user-button" title="Delete user" data-user-id="@user.Id" data-url="@deleteUrl" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <button type="button" class="dropdown-item restore-user-button" title="Restore user" data-user-id="@user.Id" data-url="@restoreUrl" data-bs-toggle="modal" data-bs-target="#restoreUserModal">
+                                                    Restore
+                                                </button>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
+    </div>
+</div>
+
+@Html.PartialAsync("_UpdateUserModal").Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "deleteUserModal",
+    Action = "Delete",
+    Title = "Delete user",
+    ConfirmText = "Confirm deletion",
+}).Result
+@Html.PartialAsync("_UserModal", new {
+    ModalId = "restoreUserModal",
+    Action = "Restore",
+    Title = "Restore user",
+    ConfirmText = "Confirm Restoration",
+}).Result
+
+@section Scripts {
+    <script asp-src-include="~/js/users*.js" defer></script>
+}

@@ -6,9 +6,10 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
-
-    using TestPlatform.Application.Infrastructures.Helpers;
+    using TestPlatform.Application.Infrastructures.ApplicationUser;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Common.Enums;
+    using TestPlatform.Common.Extensions;
     using TestPlatform.Database.Entities.Authorization;
     using TestPlatform.DTOs.BindingModels.User;
     using TestPlatform.DTOs.ViewModels.Users;
@@ -42,11 +43,10 @@
                 new Claim(UserClaimTypes.ID, user.Id.ToString()),
                 new Claim(UserClaimTypes.EMAIL, user.Email),
                 new Claim(UserClaimTypes.FULL_NAME, user.FullName),
-                new Claim(UserClaimTypes.ROLE, "Admin"),
             };
 
-            var userRoles = await this.userService.FindUserRolesAsync<UserRolesVM>(user.Id);
-            userRoles.Roles
+            var userRoles = await this.userRoleMapService.FindUserRolesAsync<UserRoleMapVM>(user.Id);
+            userRoles
                 .ToList()
                 .ForEach(role => claims.Add(new Claim(UserClaimTypes.ROLE, role.RoleName)));
 
@@ -58,11 +58,19 @@
             return true;
         }
 
-        public async Task RegisterAsync(RegisterUserBM model)
+        public async Task<bool> RegisterAsync(RegisterUserBM model)
         {
-            var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model);
+            var registeredUser = await this.userService.FindByEmailAsync<User>(model.Email);
 
-            var roleTask = this.roleService.FindByNameAsync<Role>(ApplicationRoles.STUDENT);
+            if (registeredUser != null)
+            {
+                return false;
+            }
+
+            var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+            var userTask = this.userService.CreateAsync<User, RegisterUserBM>(model, administratorId);
+
+            var roleTask = this.roleService.FindByNameAsync<Role>(Roles.Student.GetDisplayName());
 
             Task.WaitAll(userTask, roleTask);
 
@@ -75,7 +83,9 @@
                 RoleId = role.Id
             };
 
-            await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap);
+            await this.userRoleMapService.CreateAsync<UserRoleMap, CreateUserRoleMap>(userRoleMap, administratorId);
+
+            return true;
         }
 
         public async Task Logout(HttpContext httpContext)

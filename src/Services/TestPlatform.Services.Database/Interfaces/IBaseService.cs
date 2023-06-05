@@ -7,12 +7,22 @@
     {
         Task<T> FindByIdAsync<T>(Guid id);
 
-        Task<T> CreateAsync<T, TBindingModel>(TBindingModel model);
+        Task<T> FindByIdAsync<T>(Guid id, bool isDeletedFlag);
 
-        Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model);
+        Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId);
 
-        Task<T> DeleteAsync<T>(Guid id);
+        Task<T> UpdateAsync<T, TBindingModel>(Guid id, TBindingModel model, Guid currentUserId);
 
-        Task<IEnumerable<TEntity>> FindAllAsync();
+        Task<T> HardDeleteAsync<T>(Guid id);
+
+        Task<T> DeleteAsync<T>(Guid id, Guid currentUserId);
+
+        Task<T> RestoryAsync<T>(Guid id, Guid currentUserId);
+
+        IQueryable<TEntity> FindAllAsQueryable();
+
+        Task<IEnumerable<T>> FindAllAsync<T>();
+
+        Task<IEnumerable<T>> FindAllAsync<T>(bool isDeletedFlag);
     }
 }

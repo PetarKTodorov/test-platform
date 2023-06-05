@@ -9,6 +9,8 @@
 
         Task<T> FindByEmailAsync<T>(string email);
 
-        Task<T> FindUserRolesAsync<T>(Guid userId);
+        IQueryable<T> FindAllUsersAsQueryable<T>();
+
+        Task<IEnumerable<T>> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId, Guid? roomId = null);
     }
 }

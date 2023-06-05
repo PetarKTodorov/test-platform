@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TestUserVM>
+
+@{
+    var studentsThatDidntEnterTheRoom = (IEnumerable<RoomParticipantMapVM>)this.ViewData["StudentsThatDidntEnterTheRoom"];
+}
+
+<div class="table-responsive-md mt-3">
+    <h4>
+        User Grades
+    </h4>
+    <p>
+        Users that didn't entered the test
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.UserEmail)
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.Grade)
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayNameForInnerType((TestUserVM model) => model.CreatedDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in studentsThatDidntEnterTheRoom)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => row.UserEmail)
+                    </td>
+                    <td>
+                        Not Entered
+                    </td>
+                    <td>
+                        Not Entered
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -6,8 +6,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Common.Constants;
     using TestPlatform.Database.Seed.BindingModels.Authorization;
+    using TestPlatform.DTOs.BindingModels.Common;
     using TestPlatform.Services.Database.Authorization.Interfaces;
 
     internal class RolesSeeder : BaseSeeder
@@ -25,7 +26,8 @@
 
             foreach (var dto in dtoObjects)
             {
-                await roleService.CreateAsync<Role, SeedRoleBM>(dto);
+                var administratorId = new Guid(GlobalConstants.ADMINISTRATOR_ID);
+                await roleService.CreateAsync<BaseBM, SeedRoleBM>(dto, administratorId);
             }
         }
     }

@@ -1,0 +1,223 @@
+﻿@model DetailsTestVM
+
+@{
+    ViewData["Title"] = "Test Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Title)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Instructions)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Instructions)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.IsApproved)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.IsApproved)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.StatusName)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.StatusName)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.HasRandomizeQuestions)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.HasRandomizeQuestions)
+                    </td>
+                </tr>
+                @if (Model.StatusName == StatusType.Pending.GetDisplayName())
+                {
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.ApproversCount)</th>
+                        <td>
+                            @Html.DisplayTextFor(model => model.ApproversCount)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.SubjectTagNames)</th>
+                    <td>
+                        @if (Model.SubjectTagNames.Any() == false)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @string.Join(", ", Model.SubjectTagNames)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedByEmail)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedByEmail)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                    <td>
+                        @if (Model.ModifiedDate == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.ModifiedDate)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedDate)</th>
+                    <td>
+                        @if (Model.DeletedDate == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.DeletedDate)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.IsDeleted)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.QuestionsCount)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.QuestionsCount)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.TotalPoints)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.TotalPoints)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            @if (Model.StatusName == StatusType.Ready.GetDisplayName() && Model.CreatedBy == Guid.Parse(this.User.FindFirst(UserClaimTypes.ID).Value))
+            {
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Room" asp-action="Create" asp-route-testId="@Model.Id">
+                    Create room
+                </a>
+            }
+            else if (Model.StatusName == StatusType.Private.GetDisplayName())
+            {
+                @if (!Model.IsDeleted)
+                {
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" asp-route-testId="@Model.Id">
+                        Add questions
+                    </a>
+                    <a class="btn btn-warning" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Update" asp-route-id="@Model.Id">
+                        Update
+                    </a>
+                    <a class="btn btn-danger" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Delete" asp-route-id="@Model.Id">
+                        Delete
+                    </a>
+                }
+            }
+            
+            @if (Model.StatusName == StatusType.Pending.GetDisplayName())
+            {
+                <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="ListPending">
+                    Go back
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-secondary" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="List">
+                    Go back
+                </a>
+            }
+        </div>
+
+        @Html.PartialAsync("_DetailsGradeScale", Model.Evaluation).Result
+        @Html.PartialAsync("_DetailsQuestions", Model).Result
+
+        @if (Model.StatusName == StatusType.Pending.GetDisplayName())
+        {
+            <section class="mb-3">
+                <h4>
+                    Write comment:
+                </h4>
+
+                <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="WriteComment" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="TestId" value="@Model.Id" />
+
+                    @* @Html.HiddenFor(model => model.CreateCommentBM.TestId, new { value = Model.Id })*@
+
+                    <div class="mb-3">
+                        <label for="Content" class="form-label">Content</label>
+                        <textarea id="Content" name="Content" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success">
+                            Comment
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            @if (Model.CreatedComments.Any())
+            {
+                <section class="mb-3">
+                    <h4>
+                        Comments:
+                    </h4>
+
+                    <div>
+                        @foreach (var comment in Model.CreatedComments)
+                        {
+                            <div class="card mb-3 bg-light">
+                                <div class="card-body">
+                                    <p class="card-text">@comment.Content</p>
+                                    <p class="card-text"><small class="text-muted">By: @comment.UserEmail</small></p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </section>
+            }
+        }     
+    </div>
+</div>

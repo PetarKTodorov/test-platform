@@ -1,3 +1,16 @@
 ﻿@using TestPlatform.Application.Infrastructures.Helpers.HTML;
 @using TestPlatform.Common.Constants;
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers;
+@using TestPlatform.DTOs.ViewModels.Tests;
+@using TestPlatform.DTOs.BindingModels.Tests;
+@using TestPlatform.DTOs.ViewModels.Common;
+@using TestPlatform.DTOs.ViewModels.Questions;
+@using TestPlatform.DTOs.BindingModels.Questions;
+@using TestPlatform.DTOs.BindingModels.Rooms;
+@using TestPlatform.DTOs.ViewModels.Rooms;
+@using TestPlatform.Common.Enums;
+@using TestPlatform.Common.Extensions;
+@using TestPlatform.Application.Infrastructures.ApplicationUser;
+
+@using Microsoft.AspNetCore.Http.Extensions;
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

@@ -1,0 +1,10 @@
+﻿@for (var boundaryIndex = Model.StartingBoundaryIndex; boundaryIndex <= Model.EndingBoundaryIndex; boundaryIndex++)
+{
+    var isPageLinkSelected = boundaryIndex == Model.CurrentPage;
+    var pageLinkActiveClass = isPageLinkSelected ? "active" : string.Empty;
+    var queryString = UrlHelper.SetParameters(Model.QueryString, KeyValuePair.Create("page", boundaryIndex.ToString()));
+
+    <li class="page-item @pageLinkActiveClass">
+        <a class="page-link" href="@queryString">@boundaryIndex</a>
+    </li>
+}

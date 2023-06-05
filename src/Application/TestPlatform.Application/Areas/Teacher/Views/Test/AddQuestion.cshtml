@@ -1,0 +1,43 @@
+﻿@model AddQuestionToTestBM
+@{
+    ViewData["Title"] = "Add question to Test";
+
+    var userQuestions = (List<SelectListItem>)this.ViewData["UserQuestions"];
+}
+
+<h1 class="text-center my-5">@ViewData["Title"]</h1>
+
+<div class="container">
+    
+
+    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
+    <form asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="AddQuestion" method="post">
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.HiddenFor(model => model.CreatedBy)
+
+        @Html.FormGroupFor(model => model.Title, true)
+
+        @Html.FormGroupFor(model => model.StatusName, true)
+
+        @Html.FormGroupFor(model => model.QuestionPoints)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.QuestionId, new { @class = "form-label"})
+
+            <select class="js-select2 form-control" asp-for="QuestionId" asp-items="@userQuestions">
+                <option disabled selected>Please select</option>
+            </select>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.QuestionId)
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>

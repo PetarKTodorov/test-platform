@@ -1,0 +1,84 @@
+﻿@model SearchFilterVM<ListPendingTestVM>
+
+@{
+    ViewData["Title"] = "Pending Tests";
+    var approveModalId = "approve-modal";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form method="get" class="search-form">
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            @Html.EditorFor(m => m.SearchCriteria)
+        </div>
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success">Apply filters</button>
+        </div>
+    </form>
+
+    @{
+        if (this.Model.Data.Items.Any() == false)
+        {
+            <div class="text-center fs-3 mt-5">There are no results found.</div>
+            return;
+        }
+    }
+
+    <div class="table-responsive-md mt-3">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListPendingTestVM model) => model.Title)
+                    </th>
+                    <th class="text-nowrap">
+                        @Html.DisplayNameForInnerType((ListPendingTestVM model) => model.ApproversCount)
+                    </th>
+                    <th class="text-nowrap">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Data.Items)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => row.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => row.ApproversCount)
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="@ApplicationAreas.TEACHER" asp-controller="Test" asp-action="Details" asp-route-id="@row.Id" asp-route-isDeleted="@row.IsDeleted">
+                                            Details
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item js-approve-modal-button" data-bs-toggle="modal" data-bs-target="#@approveModalId" data-model-id="@row.Id">
+                                            Approve
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @Html.PartialAsync("Pagination/_Pagination", Model.Data.Paging).Result
+</div>
+
+@Html.PartialAsync("_ApproveTestModal", new {
+    ModalId = approveModalId,
+}).Result

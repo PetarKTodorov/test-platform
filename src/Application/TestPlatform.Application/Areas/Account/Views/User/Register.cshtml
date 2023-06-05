@@ -6,6 +6,8 @@
 <h1 class="text-center my-5">Register</h1>
 
 <div class="container">
+    @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.RegisterError }).Result
+
     <form asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Register" method="post">
         @Html.AntiForgeryToken()
 

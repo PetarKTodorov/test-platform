@@ -23,6 +23,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+    &--trash:before {
+        content: "\e900";
+    }
+
     &--heart:before {
         content: "\f004";
     }
@@ -49,5 +53,13 @@
 
     &--home:before {
         content: "\f015";
+    }
+
+    &--chat:before {
+        content: "\f075";
+    }
+
+    &--chat-2:before {
+        content: "\f086";
     }
 }

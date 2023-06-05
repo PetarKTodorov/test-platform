@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using TestPlatform.Common.Constants;
+    using TestPlatform.Database.Entities.Comments;
     using TestPlatform.Database.Entities.Rooms;
     using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Entities.Tests;
@@ -18,6 +19,8 @@
             this.ApprovedTests = new HashSet<TestApprovalMap>();
             this.SubjectTags = new HashSet<UserSubjectTagMap>();
             this.Tests = new HashSet<TestUserMap>();
+            this.ChatMessages = new HashSet<ChatMessage>();
+            this.Comments = new HashSet<TestComment>();
         }
 
         [Required]
@@ -56,5 +59,9 @@
         public virtual ICollection<UserSubjectTagMap> SubjectTags { get; set; }
 
         public virtual ICollection<TestUserMap> Tests { get; set; }
+
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+
+        public virtual ICollection<TestComment> Comments { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace TestPlatform.Services.Database.Authorization
+﻿namespace TestPlatform.Services.Database.Authorization
 {
     using System;
     using System.Threading.Tasks;
@@ -8,21 +8,38 @@ namespace TestPlatform.Services.Database.Authorization
 
     using TestPlatform.Common.Helpers;
     using TestPlatform.Database.Entities.Authorization;
+    using TestPlatform.Database.Entities.Subjects;
     using TestPlatform.Database.Repositories.Interfaces;
     using TestPlatform.Services.Database.Authorization.Interfaces;
+    using TestPlatform.Services.Database.Subjects.Interfaces;
     using TestPlatform.Services.Mapper;
 
     public class UserService : BaseService<User>, IUserService
     {
-        public UserService(IBaseRepository<User> userRepository, IMapper mapper)
+        private readonly IUserSubjectTagMapService userSubjectTagMapService;
+
+        public UserService(IBaseRepository<User> userRepository,
+            IMapper mapper,
+            IUserSubjectTagMapService userSubjectTagMapService)
             : base(userRepository, mapper)
         {
+            this.userSubjectTagMapService = userSubjectTagMapService;
+        }
+
+        public override async Task<T> DeleteAsync<T>(Guid id, Guid currentUserId)
+        {
+            var resultFromDelete = await base.DeleteAsync<T>(id, currentUserId);
+
+            await this.HardDeleteUserSubjectTagsMapAsync(id);
+
+            return resultFromDelete;
 
         }
 
-        public override async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model)
+        public override async Task<T> CreateAsync<T, TBindingModel>(TBindingModel model, Guid currentUserId)
         {
             User entity = this.Mapper.Map<User>(model);
+            entity.CreatedBy = currentUserId;
             entity.Password = PasswordHasher.HashPassword(entity.Password);
 
             entity = await this.BaseRepository.AddAsync(entity);
@@ -58,6 +75,7 @@ namespace TestPlatform.Services.Database.Authorization
         {
             User entity = await this.BaseRepository
                 .GetAllAsQueryable()
+                .Where(u => u.IsDeleted == false)
                 .SingleOrDefaultAsync(u => u.Email == email);
 
             T entityToReturn = this.Mapper.Map<T>(entity);
@@ -65,14 +83,44 @@ namespace TestPlatform.Services.Database.Authorization
             return entityToReturn;
         }
 
-        public async Task<T> FindUserRolesAsync<T>(Guid userId)
+        public IQueryable<T> FindAllUsersAsQueryable<T>()
         {
-            var user = await this.BaseRepository
-                .GetByIdAsQueryable(userId)
-                .To<T>()
-                .SingleOrDefaultAsync();
+            return this.FindAllAsQueryable()
+                .To<T>();
+        }
 
-            return user;
+        public async Task<IEnumerable<T>> FindAllUsersForRoomAsync<T>(Guid roleId, Guid testId, Guid? roomId = null)
+        {
+            var query = this.BaseRepository
+                .GetAllAsQueryable()
+                .Where(u => u.Roles.Any(r => r.RoleId == roleId));
+
+            if (roomId.HasValue)
+            {
+                query = query.Where(u => !u.Rooms
+                        .Any(r => r.Room.TestId == testId && r.RoomId != roomId.Value));
+            }
+            else
+            {
+                query = query.Where(u => !u.Rooms
+                        .Any(r => r.Room.TestId == testId));
+            }
+
+            var entities = await query
+                .To<T>()
+                .ToListAsync();
+
+            return entities;
+        }
+
+        private async Task HardDeleteUserSubjectTagsMapAsync(Guid userId)
+        {
+            var userSubjectTags = await this.userSubjectTagMapService.FindUserSubjectTagsAsync<UserSubjectTagMap>(userId);
+
+            foreach (var userSubjectTag in userSubjectTags)
+            {
+                await this.userSubjectTagMapService.HardDeleteAsync<UserSubjectTagMap>(userSubjectTag.Id);
+            }
         }
     }
 }

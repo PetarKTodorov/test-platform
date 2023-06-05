@@ -10,7 +10,10 @@
     "stats": "cross-env NODE_ENV=production webpack --json bundle-stats.json"
   },
   "dependencies": {
-    "bootstrap": "5.2.3"
+    "@microsoft/signalr": "^6.0.16",
+    "bootstrap": "5.2.3",
+    "jquery": "^3.7.0",
+    "select2": "^4.1.0-rc.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

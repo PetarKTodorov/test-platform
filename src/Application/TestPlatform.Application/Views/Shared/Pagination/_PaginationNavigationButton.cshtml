@@ -1,0 +1,13 @@
+﻿<li class="page-item">
+    @{
+        var isPageSelected = Model.CurrentPage == Model.PageToCheck;
+        var pageLinkDisabledClass = isPageSelected ? "disabled" : string.Empty;
+
+        var symbol = Model.ButtonType == "Next" ? "&raquo;" : "&laquo;";
+
+        var queryString = UrlHelper.SetParameters(Model.QueryString, KeyValuePair.Create("page", Model.NewPage.ToString()));
+    }
+    <a class="page-link @pageLinkDisabledClass" href="@queryString" aria-label="@Model.ButtonType">
+        <span aria-hidden="true">@Html.Raw(symbol)</span>
+    </a>
+</li>

@@ -1,0 +1,44 @@
+﻿@model DetailsTestEvaluationVM
+
+@if (Model != null)
+{
+    <div>
+        <h4>
+            @Html.DisplayNameFor(model => model.GradeScales)
+        </h4>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-nowrap">
+                            @Html.DisplayNameForInnerType((DetailsGradeScaleVM model) => model.GradeScaleGrade)
+                        </th>
+                        <th class="text-nowrap">
+                            @Html.DisplayNameForInnerType((DetailsGradeScaleVM model) => model.GradeScaleLowerBound)
+                        </th>
+                        <th class="text-nowrap">
+                            @Html.DisplayNameForInnerType((DetailsGradeScaleVM model) => model.GradeScaleUpperBound)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in Model.GradeScales.OrderByDescending(gc => gc.GradeScaleLowerBound))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayTextFor(modelItem => row.GradeScaleGrade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => row.GradeScaleLowerBound)
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(modelItem => row.GradeScaleUpperBound)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

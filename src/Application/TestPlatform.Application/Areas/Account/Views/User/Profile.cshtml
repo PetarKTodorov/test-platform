@@ -1,0 +1,29 @@
+﻿@model ProfileUserBM
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <form class="w-50 mx-auto js-question-form" asp-area="@ApplicationAreas.ACCOUNT" asp-controller="User" asp-action="Profile" method="post">
+        @Html.PartialAsync("Errors/_ToastErrorMessage", new { ErrorMessage = ViewBag.StatusError }).Result
+
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.FormGroupFor(model => model.Email, true)
+
+        @Html.FormGroupFor(model => model.FirstName)
+
+        @Html.FormGroupFor(model => model.MiddleName)
+
+        @Html.FormGroupFor(model => model.LastName)
+
+        <div class="d-flex justify-content-end gap-1">
+            <button type="submit" class="btn btn-warning">Update</button>
+        </div>
+    </form>
+</div>

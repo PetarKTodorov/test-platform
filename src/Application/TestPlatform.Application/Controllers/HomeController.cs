@@ -2,8 +2,9 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return this.View();

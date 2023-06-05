@@ -1,0 +1,134 @@
+﻿@model DetailsSubjectTagVM
+
+@{
+    ViewData["Title"] = "Subject Tag Details";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-nowrap" scope="col">
+                        Fields
+                    </th>
+                    <th class="text-nowrap" scope="col">
+                        Data
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedByEmail)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedByEmail)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedByEmail)</th>
+                    <td>
+                        @if (Model.ModifiedBy == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.ModifiedByEmail)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                    <td>
+                        @if (Model.ModifiedDate == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.ModifiedDate)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedByEmail)</th>
+                    <td>
+                        @if (Model.DeletedBy == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.DeletedByEmail)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.DeletedDate)</th>
+                    <td>
+                        @if (Model.DeletedDate == null)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.DeletedDate)
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.IsDeleted)</th>
+                    <td>
+                        @Html.DisplayTextFor(model => model.IsDeleted)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Name)</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Users)</th>
+                    <td>
+                        @{
+                            var userEmauls = Model.Users?.Select(u => u.UserEmail).ToArray();
+                        }
+
+                        @if (userEmauls == null || userEmauls.Length == 0)
+                        {
+                            <span>No data information</span>
+                        }
+                        else
+                        {
+                            @string.Join(", ", userEmauls)
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-1">
+            @if (Model.IsDeleted == false && Model.QuestionsCount == 0 && Model.TestsCount == 0 && Model.UsersCount == 0)
+            {
+                <a class="btn btn-warning" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Update" asp-route-id="@Model.Id">
+                    Update
+                </a>
+                <a class="btn btn-danger" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="Delete" asp-route-id="@Model.Id">
+                    Delete
+                </a>
+            }
+            <a class="btn btn-secondary" asp-area="@ApplicationAreas.ADMINISTRATOR" asp-controller="SubjectTag" asp-action="List">
+                Go back
+            </a>
+        </div>
+    </div>
+</div>

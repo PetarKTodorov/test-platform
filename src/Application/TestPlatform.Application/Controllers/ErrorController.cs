@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Route("Error")]
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         public IActionResult Index()
         {

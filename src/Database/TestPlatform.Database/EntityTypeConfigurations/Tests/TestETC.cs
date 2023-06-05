@@ -15,9 +15,9 @@
                 .HasForeignKey(t => t.StatusId);
 
             builder
-                .HasOne(t => t.Еvaluation)
+                .HasOne(t => t.Evaluation)
                 .WithOne(e => e.Test)
-                .HasForeignKey<Test>(t => t.ЕvaluationId);
+                .HasForeignKey<Test>(t => t.EvaluationId);
         }
     }
 }

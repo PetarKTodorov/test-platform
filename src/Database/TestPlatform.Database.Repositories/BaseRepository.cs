@@ -56,7 +56,7 @@
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            entity.CreatedDate = DateTime.UtcNow;
+            entity.CreatedDate = DateTime.Now;
 
             var entityEntry = await this.DbSet
                 .AddAsync(entity)
@@ -67,7 +67,7 @@
 
         public TEntity Update(TEntity entity)
         {
-            entity.ModifiedDate = DateTime.UtcNow;
+            entity.ModifiedDate = DateTime.Now;
             var entry = this.DbContext.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
@@ -79,14 +79,28 @@
             return entry.Entity;
         }
 
-        public virtual TEntity Delete(TEntity entity)
+        public TEntity HardDelete(TEntity entity)
         {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = true;
-            entry.Entity.DeletedDate = DateTime.UtcNow;
+            var entry = this.DbContext.Remove(entity);
 
-            // Set deletedByUserID
             return entry.Entity;
+        }
+
+        public TEntity Delete(TEntity entity)
+        {
+            entity.IsDeleted = true;
+            entity.DeletedDate = DateTime.Now;
+
+            return this.Update(entity);
+        }
+
+        public TEntity Restore(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            entity.DeletedDate = null;
+            entity.DeletedBy = null;
+
+            return this.Update(entity);
         }
 
         public Task<int> SaveChangesAsync()
@@ -100,22 +114,24 @@
             GC.SuppressFinalize(this);
         }
 
+        public virtual void DetachLocal(TEntity entity)
+        {
+            var local = this.DbSet
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(entity.Id));
+            if (local != null)
+            {
+                this.DbContext.Entry(local).State = EntityState.Detached;
+            }
+            this.DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this.DbContext?.Dispose();
             }
-        }
-
-        public TEntity Restore(TEntity entity)
-        {
-            var entry = this.DbContext.Entry(entity);
-            entry.Entity.IsDeleted = false;
-            entry.Entity.DeletedDate = null;
-
-            // Remove deletedByUserID
-            return entry.Entity;
         }
     }
 }
