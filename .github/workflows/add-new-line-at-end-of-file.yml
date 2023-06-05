@@ -26,6 +26,7 @@ jobs:
         
       - name: Git commit and push
         run: |
+          echo "{$(git diff --cached --numstat | wc -l)}"
           if [[ $(git diff --cached --numstat | wc -l) > 0 ]]
           then
             git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
