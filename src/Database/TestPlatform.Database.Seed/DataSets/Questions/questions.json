@@ -78,5 +78,20 @@
         "Id": "1ab84521-ac9a-44f4-b0f5-e7ba1fb5f582",
         "Title": "Pollination is best defined as",
         "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "041b65a6-8a64-4169-8bd8-360c54b8bc14",
+        "Title": "Calculate (8 - 2 x 5 + 4) / 2",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "cf08328d-0a31-4644-8944-aaa4e29cec27",
+        "Title": "I bought an item for $ 25.13.  How much change did I get from $ 30 ?",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
+    },
+    {
+        "Id": "96accb8c-4de1-4d6a-b501-cd9a44ae6e22",
+        "Title": "List the factors of 64.",
+        "CreatedBy": "3ee73bf7-fe5d-4096-be3a-8e35400fd350"
     }
 ]
