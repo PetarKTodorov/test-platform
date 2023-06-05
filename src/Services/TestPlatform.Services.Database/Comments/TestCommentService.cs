@@ -7,9 +7,10 @@
 
     public class TestCommentService : BaseService<TestComment>, ITestCommentService
     {
-        public TestCommentService(IBaseRepository<TestComment> baseRepository, IMapper mapper) 
+        public TestCommentService(IBaseRepository<TestComment> baseRepository, IMapper mapper)
             : base(baseRepository, mapper)
         {
+
         }
     }
 }

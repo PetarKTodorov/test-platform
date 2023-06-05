@@ -5,6 +5,7 @@
     using AutoMapper;
 
     using TestPlatform.Database.Entities.Tests;
+    using TestPlatform.DTOs.BindingModels.Comments;
     using TestPlatform.DTOs.ViewModels.Questions;
     using TestPlatform.Services.Mapper.Interfaces;
 
@@ -65,14 +66,19 @@
 
         public DetailsTestEvaluationVM Evaluation { get; set; }
 
+        public CreateCommentBM CreateCommentBM { get; set; }
+
         public IEnumerable<DetailsQuestionTestVM> Questions { get; set; }
+
+        public IEnumerable<CreateCommentBM> CreatedComments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Test, DetailsTestVM>()
                 .ForMember(ctbm => ctbm.SubjectTagNames,
                     mo => mo.MapFrom(t => t.SubjectTags.Select(tsm => tsm.SubjectTag.Name)))
-                .ForMember(ctbm => ctbm.TotalPoints, mo => mo.MapFrom(t => t.Questions.Sum(q => q.Points)));
+                .ForMember(ctbm => ctbm.TotalPoints, mo => mo.MapFrom(t => t.Questions.Sum(q => q.Points)))
+                .ForMember(ctbm => ctbm.CreatedComments, mo => mo.MapFrom(t => t.Comments.Where(x => x.TestId == t.Id)));
         }
     }
 }

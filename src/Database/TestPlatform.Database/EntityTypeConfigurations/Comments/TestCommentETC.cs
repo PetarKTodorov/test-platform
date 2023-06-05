@@ -17,11 +17,6 @@
                 .HasOne(tc => tc.User)
                 .WithMany(t => t.Comments)
                 .HasForeignKey(tc => tc.CreatedBy);
-
-            builder
-                .HasOne(tc => tc.ParentComment)
-                .WithMany(t => t.Comments)
-                .HasForeignKey(tc => tc.ParentCommentId);
         }
     }
 }
