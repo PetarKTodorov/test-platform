@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.3.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="3.5.0" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\TestPlatform.Application.Infrastructures\TestPlatform.Application.Infrastructures.csproj" />
+    <ProjectReference Include="..\..\Application\TestPlatform.Application\TestPlatform.Application.csproj" />
+    <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Entities\TestPlatform.Database.Entities.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Repositories\TestPlatform.Database.Repositories.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database.Seed\TestPlatform.Database.Seed.csproj" />
+    <ProjectReference Include="..\..\Database\TestPlatform.Database\TestPlatform.Database.csproj" />
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.BindingModels\TestPlatform.DTOs.BindingModels.csproj" />
+    <ProjectReference Include="..\..\DTOs\TestPlatform.DTOs.ViewModels\TestPlatform.DTOs.ViewModels.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Database\TestPlatform.Services.Database.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Managers\TestPlatform.Services.Managers.csproj" />
+    <ProjectReference Include="..\..\Services\TestPlatform.Services.Mapper\TestPlatform.Services.Mapper.csproj" />
+  </ItemGroup>
+
+</Project>
