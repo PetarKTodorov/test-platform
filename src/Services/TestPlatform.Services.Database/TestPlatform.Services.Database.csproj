@@ -2,6 +2,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="6.0.16" />
+    <PackageReference Include="Selenium.Support" Version="4.16.2" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.16.2" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="120.0.6099.7100" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\TestPlatform.Common\TestPlatform.Common.csproj" />
